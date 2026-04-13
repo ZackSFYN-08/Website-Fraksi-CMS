@@ -144,14 +144,9 @@ onUnmounted(() => document.removeEventListener('click', handleClickOutside))
 .nav-menu {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: nowrap;
   width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.nav-menu::-webkit-scrollbar {
-  display: none;
 }
 .nav-menu > li > a,
 .nav-menu > li > .router-link-active {
