@@ -45,7 +45,7 @@ const formatDate = (d) => {
 }
 const getCategory = (a) => {
   const cat = a?.category || a?.attributes?.category
-  if (typeof cat === 'object') return cat?.data?.attributes?.name || ''
+  if (typeof cat === 'object') return cat?.name || cat?.data?.attributes?.name || ''
   return cat || ''
 }
 
@@ -264,9 +264,11 @@ const whatsappShareUrl = computed(() => {
 
 .article-hero-wrap {
   position: relative;
-  width: 100%;
+  width: auto;
+  margin: 0 40px;
   max-height: 500px;
   overflow: hidden;
+  border-radius: 16px;
 }
 
 .hero-image {
@@ -459,6 +461,7 @@ const whatsappShareUrl = computed(() => {
 @media (max-width: 640px) {
   .article-header { padding: 30px 20px; }
   .article-title { font-size: 1.6rem; }
+  .article-hero-wrap { margin: 0 20px; border-radius: 12px; }
   .article-body { padding: 25px 20px; }
   .content-text { font-size: 1rem; }
   .article-footer { padding: 25px 20px 30px; }

@@ -104,7 +104,7 @@ onMounted(async () => {
 const getField = (a, field) => a?.[field] || a?.attributes?.[field] || ''
 const getCategory = (a) => {
   const cat = a?.category || a?.attributes?.category
-  if (typeof cat === 'object') return cat?.data?.attributes?.name || ''
+  if (typeof cat === 'object') return cat?.name || cat?.data?.attributes?.name || ''
   return cat || ''
 }
 const getImageUrl = (a) => {
