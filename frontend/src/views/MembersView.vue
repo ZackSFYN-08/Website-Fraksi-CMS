@@ -23,26 +23,28 @@ onMounted(async () => {
 
 <template>
   <div class="members-view">
-    <section class="container page-banner">
-      <div class="banner-box">
+    <section class="container page-banner" data-reveal="fade-up">
+      <div class="banner-card">
         <h1>Anggota Fraksi PKS</h1>
-        <p>Mengenal lebih dekat para wakil rakyat dari Fraksi PKS di DPRD Kota Bandung periode 2024-2029.</p>
+        <p>Mengenal lebih dekat para wakil rakyat yang berkhidmat untuk warga Kota Bandung periode 2024-2029.</p>
+        <div class="banner-blob"></div>
       </div>
     </section>
 
     <section class="container members-section">
       <div v-if="loading" class="loading-state">
-        <i class="fas fa-spinner fa-spin"></i> Memuat data anggota...
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Memuat data legislator...</span>
       </div>
 
-      <div v-else-if="members.length === 0" class="empty-state" data-reveal="fade-up">
-        <i class="fas fa-users"></i>
-        <p>Belum ada data anggota.</p>
-        <p class="empty-hint">Tambahkan anggota melalui <a href="http://localhost:1337/admin" target="_blank">Strapi Admin Panel</a>.</p>
+      <div v-else-if="members.length === 0" class="empty-state glass-card" data-reveal="fade-up">
+        <i class="fas fa-users-slash"></i>
+        <p>Data anggota belum tersedia.</p>
+        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Kelola di Admin Panel</a>
       </div>
 
       <div v-else class="members-grid">
-        <div v-for="(member, index) in members" :key="member.id || member.nama" data-reveal="fade-up" :data-reveal-delay="index * 80">
+        <div v-for="(member, index) in members" :key="member.id || member.nama" data-reveal="fade-up" :data-reveal-delay="index * 100">
           <MemberCard :member="member" />
         </div>
       </div>
@@ -51,55 +53,55 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.page-banner { padding: 20px 0; }
-.banner-box {
-  background: linear-gradient(135deg, var(--pks-navy) 0%, #003366 50%, #001a33 100%);
-  color: white;
-  border-radius: 20px;
-  padding: 55px 40px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.banner-box::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(240, 122, 30, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.banner-box h1 {
-  font-size: 2.5rem;
-  color: white;
-  margin-bottom: 12px;
-  position: relative;
-}
-.banner-box p {
-  opacity: 0.8;
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-}
+.members-section { padding: 40px 0 80px; }
 
-.members-section { padding: 40px 0 60px; }
 .members-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
 }
 
-.loading-state, .empty-state { text-align: center; padding: 80px 20px; color: var(--pks-text-muted); }
-.loading-state i { font-size: 1.8rem; color: var(--pks-orange); }
-.empty-state i { font-size: 3.5rem; color: #d1d5db; margin-bottom: 16px; display: block; }
-.empty-state a { color: var(--pks-orange); font-weight: 600; }
-.empty-hint { font-size: 0.85rem; margin-top: 8px; }
+.banner-blob {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background: var(--pks-orange);
+  filter: blur(80px);
+  opacity: 0.15;
+  z-index: 1;
+}
 
-@media (max-width: 768px) {
-  .banner-box { padding: 40px 24px; }
-  .banner-box h1 { font-size: 1.8rem; }
+/* States */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 100px 0;
+  color: var(--pks-text-muted);
+}
+
+.loading-state i {
+  font-size: 2rem;
+  color: var(--pks-orange);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: var(--pks-gray);
+  margin-bottom: 20px;
+  display: block;
+}
+
+@media (max-width: 640px) {
   .members-grid { gap: 20px; }
 }
 </style>
+

@@ -1,16 +1,41 @@
 <template>
   <section class="hero-section">
-    <div class="container">
-      <div class="hero-banner">
-        <div class="banner-slide">
-          <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="banner-pks-logo" />
-          <div class="banner-content">
-            <h1 class="hero-title">Fraksi PKS<br/><span>DPRD Kota Bandung</span></h1>
-            <p class="hero-desc">Berkhidmat untuk Rakyat, Membangun Kota Bandung yang Bermartabat</p>
-            <div class="banner-actions">
-              <router-link to="/anggota" class="btn btn-primary">Kenali Wakil Rakyat <i class="fas fa-arrow-right"></i></router-link>
-              <router-link to="/kontak" class="btn btn-outline-blue">Sampaikan Aspirasi</router-link>
-            </div>
+    <div class="container hero-container">
+      <div class="hero-card">
+        <!-- Animated Background Blobs -->
+        <div class="hero-blob blob-1"></div>
+        <div class="hero-blob blob-2"></div>
+        <div class="hero-blob blob-3"></div>
+        
+        <div class="hero-content-wrap">
+          <div class="hero-badge" data-reveal="fade-down">
+            <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="badge-logo" />
+            <span>Website Resmi Fraksi PKS Kota Bandung</span>
+          </div>
+          
+          <h1 class="hero-title" data-reveal="fade-up">
+            Berkhidmat untuk <span>Rakyat</span>,<br/>
+            Membangun Kota <span>Bandung</span>.
+          </h1>
+          
+          <p class="hero-subtitle" data-reveal="fade-up" data-reveal-delay="100">
+            Wadah aspirasi dan informasi perjuangan Fraksi Partai Keadilan Sejahtera 
+            di DPRD Kota Bandung untuk kemaslahatan seluruh warga.
+          </p>
+          
+          <div class="hero-actions" data-reveal="fade-up" data-reveal-delay="200">
+            <router-link to="/anggota" class="btn btn-primary">
+              Profil Anggota <i class="fas fa-users-viewfinder"></i>
+            </router-link>
+            <router-link to="/aspirasi/form" class="btn btn-outline-white">
+              Sampaikan Aspirasi <i class="fas fa-paper-plane"></i>
+            </router-link>
+          </div>
+        </div>
+
+        <div class="hero-visual" data-reveal="fade-left" data-reveal-delay="300">
+          <div class="visual-placeholder">
+            <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="floating-logo" />
           </div>
         </div>
       </div>
@@ -20,95 +45,177 @@
 
 <style scoped>
 .hero-section {
-  padding: 20px 0 0;
-}
-.hero-banner {
-  background: linear-gradient(135deg, #F07A1E 0%, #f5a623 50%, #F07A1E 100%);
-  border-radius: var(--radius);
+  padding: calc(var(--nav-height) + 20px) 0 40px;
   overflow: hidden;
-  position: relative;
-  min-height: 420px;
-  animation: heroBannerIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-@keyframes heroBannerIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-.hero-banner::before {
-  content: '';
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/></svg>') repeat;
-  background-size: 80px;
-  pointer-events: none;
-}
-.banner-slide {
-  display: flex; align-items: center; justify-content: center;
-  padding: 60px 50px; position: relative; z-index: 1;
-  gap: 50px;
-}
-.banner-pks-logo {
-  width: 180px; height: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
-  animation: float 4s ease-in-out infinite, logoEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-@keyframes logoEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.7) rotate(-10deg);
-  }
-  to {
-    opacity: 0.9;
-    transform: scale(1) rotate(0deg);
-  }
-}
-.banner-content { max-width: 550px; color: white; }
-.hero-title {
-  font-size: 2.8rem; color: white; margin-bottom: 16px;
-  font-weight: 800; line-height: 1.15;
-  animation: heroTextIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-}
-.hero-title span { font-weight: 400; font-size: 2rem; }
-.hero-desc {
-  font-size: 1.05rem; opacity: 0.9; margin-bottom: 30px; line-height: 1.7;
-  animation: heroTextIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
-}
-.banner-actions {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  animation: heroTextIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
-}
-@keyframes heroTextIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.btn-outline-blue {
-  background: transparent; border: 2px solid white; color: white;
-}
-.btn-outline-blue:hover {
-  background: white; color: var(--pks-orange);
 }
 
-@media (max-width: 768px) {
-  .banner-slide { flex-direction: column; text-align: center; padding: 40px 24px; gap: 20px; }
-  .banner-pks-logo { width: 120px; }
-  .hero-title { font-size: 2rem; }
-  .hero-title span { font-size: 1.4rem; }
-  .banner-actions { justify-content: center; }
+.hero-card {
+  position: relative;
+  background: var(--pks-navy-gradient);
+  border-radius: var(--radius-lg);
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 40px;
+  padding: 60px;
+  overflow: hidden;
+  box-shadow: var(--shadow-premium);
+}
+
+/* Background Blobs */
+.hero-blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.35;
+  border-radius: 50%;
+  z-index: 0;
+  animation: blob-float 15s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--pks-orange);
+  top: -100px;
+  right: -50px;
+}
+
+.blob-2 {
+  width: 300px;
+  height: 300px;
+  background: #00a8ff;
+  bottom: -50px;
+  left: 30%;
+  animation-delay: -5s;
+}
+
+.blob-3 {
+  width: 250px;
+  height: 250px;
+  background: #ff4757;
+  top: 20%;
+  left: -50px;
+  animation-delay: -10s;
+}
+
+@keyframes blob-float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.hero-content-wrap {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-logo { width: 22px; height: auto; }
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 24px;
+}
+
+.hero-title span {
+  color: var(--pks-orange);
+  position: relative;
+  display: inline-block;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  line-height: 1.8;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-outline-white {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.btn-outline-white:hover {
+  background: white;
+  color: var(--pks-navy);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.visual-placeholder {
+  width: 280px;
+  height: 280px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floating-logo {
+  width: 140px;
+  filter: brightness(0) invert(1);
+  opacity: 0.5;
+  animation: float 6s infinite ease-in-out;
+}
+
+@media (max-width: 1024px) {
+  .hero-card {
+    grid-template-columns: 1fr;
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .hero-content-wrap { display: flex; flex-direction: column; align-items: center; }
+  .hero-title { font-size: 2.8rem; }
+  .hero-visual { display: none; }
+  .hero-actions { justify-content: center; }
+}
+
+@media (max-width: 576px) {
+  .hero-card { padding: 40px 24px; }
+  .hero-title { font-size: 2.2rem; }
+  .hero-subtitle { font-size: 1rem; }
+  .hero-actions { flex-direction: column; width: 100%; gap: 12px; }
+  .btn { width: 100%; }
+}
+
+@media (max-width: 400px) {
+  .hero-title { font-size: 1.8rem; }
 }
 </style>

@@ -1,38 +1,68 @@
 <template>
-  <div class="page-view">
-    <section class="container page-banner"><div class="banner-box">
-      <h1>Berita Aspirasi</h1>
-      <p>Berita terkait aspirasi warga yang telah diperjuangkan oleh Fraksi PKS.</p>
-    </div></section>
-    <section class="container page-content">
-      <div v-if="articles.length === 0" class="empty-state" data-reveal="fade-up">
-        <i class="fas fa-bullhorn"></i>
-        <p>Belum ada berita aspirasi.</p>
-        <p class="empty-hint">Tambahkan konten melalui <a href="http://localhost:1337/admin" target="_blank">Strapi Admin Panel</a>.</p>
+  <div class="aspirasi-berita-view">
+    <!-- Page Header -->
+    <section class="container page-banner" data-reveal="fade-up">
+      <div class="banner-card">
+        <h1>Berita Aspirasi</h1>
+        <p>Liputan lengkap seputar perjuangan dan advokasi aspirasi warga oleh Fraksi PKS di parlemen.</p>
+        <div class="banner-blob"></div>
       </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="container page-content">
+      <!-- Loading State -->
+      <div v-if="loading" class="loading-state">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Menyelaraskan berita aspirasi...</span>
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="articles.length === 0" class="empty-state glass-card" data-reveal="fade-up">
+        <i class="fas fa-bullhorn"></i>
+        <p>Belum ada berita aspirasi yang diterbitkan.</p>
+        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Kelola di Admin Panel</a>
+      </div>
+
+      <!-- News List -->
       <div v-else class="news-list">
-        <router-link :to="`/berita/${a.documentId}`" class="news-item" v-for="(a, index) in articles" :key="a.id" data-reveal="fade-up" :data-reveal-delay="index * 100">
+        <router-link 
+          :to="`/berita/${a.documentId}`" 
+          class="news-item glass-card hover-lift" 
+          v-for="(a, index) in articles" 
+          :key="a.id" 
+          data-reveal="fade-up" 
+          :data-reveal-delay="index * 100"
+        >
           <div class="news-thumb">
             <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" />
             <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
+            <div class="thumb-overlay"></div>
           </div>
           <div class="news-body">
-            <span class="cat-badge">Aspirasi</span>
+            <div class="news-meta">
+              <span class="cat-tag">Aspirasi</span>
+              <span class="news-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(a, 'date') || getField(a, 'createdAt')) }}</span>
+            </div>
             <h3>{{ getField(a, 'title') }}</h3>
             <p>{{ getField(a, 'excerpt') }}</p>
-            <span class="news-time"><i class="far fa-clock"></i> {{ formatDate(getField(a, 'date') || getField(a, 'createdAt')) }}</span>
+            <div class="news-footer">
+              <span class="read-more">Baca Selengkapnya <i class="fas fa-chevron-right"></i></span>
+            </div>
           </div>
         </router-link>
       </div>
     </section>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
 import api, { STRAPI_URL } from '../services/api'
 
 useScrollReveal()
+
 const articles = ref([])
 const loading = ref(true)
 
@@ -65,26 +95,171 @@ const formatDate = (d) => {
   return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 </script>
+
 <style scoped>
-.page-banner { padding: 20px 0; }
-.banner-box { background: var(--pks-navy); color: white; border-radius: var(--radius); padding: 50px 40px; text-align: center; }
-.banner-box h1 { font-size: 2.5rem; color: white; margin-bottom: 12px; }
-.banner-box p { opacity: .8; max-width: 600px; margin: 0 auto; }
-.page-content { padding: 40px 0 50px; }
-.news-list { display: flex; flex-direction: column; gap: 16px; }
-.news-item { display: flex; gap: 20px; background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); cursor: pointer; }
-.news-item:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
-.news-thumb { width: 220px; min-width: 220px; min-height: 160px; background: var(--pks-navy); overflow: hidden; }
-.news-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 2rem; }
-.news-body { padding: 20px 24px 20px 0; flex: 1; }
-.cat-badge { background: var(--pks-orange); color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
-.news-body h3 { font-size: 1.1rem; color: var(--pks-navy); margin: 10px 0 8px; line-height: 1.4; }
-.news-body p { font-size: 0.88rem; color: var(--pks-text-muted); line-height: 1.6; }
-.news-time { font-size: 0.78rem; color: var(--pks-text-muted); display: flex; align-items: center; gap: 5px; margin-top: 10px; }
-.empty-state { text-align: center; padding: 80px 20px; color: var(--pks-text-muted); }
-.empty-state i { font-size: 3rem; color: #d1d5db; margin-bottom: 16px; display: block; }
-.empty-state a { color: var(--pks-orange); font-weight: 600; }
-.empty-hint { font-size: 0.85rem; margin-top: 8px; }
-@media (max-width: 576px) { .news-item { flex-direction: column; } .news-thumb { width: 100%; min-height: 180px; } .news-body { padding: 20px; } .banner-box h1 { font-size: 2rem; } }
+.page-content { padding: 40px 0 80px; }
+
+/* News List Modernized */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.news-item {
+  display: flex;
+  gap: 30px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.news-thumb {
+  width: 300px;
+  min-width: 300px;
+  position: relative;
+  overflow: hidden;
+  background: var(--pks-navy);
+}
+
+.news-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.news-item:hover .news-thumb img {
+  transform: scale(1.1);
+}
+
+.thumb-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
+}
+
+.news-body {
+  padding: 30px 30px 30px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+.cat-tag {
+  background: var(--pks-orange-light);
+  color: var(--pks-orange);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.news-date {
+  font-size: 0.8rem;
+  color: var(--pks-text-muted);
+}
+
+.news-body h3 {
+  font-size: 1.35rem;
+  color: var(--pks-navy);
+  margin-bottom: 10px;
+  line-height: 1.4;
+  transition: var(--transition-base);
+}
+
+.news-item:hover h3 {
+  color: var(--pks-orange);
+}
+
+.news-body p {
+  font-size: 0.95rem;
+  color: var(--pks-text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-footer {
+  margin-top: auto;
+}
+
+.read-more {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--pks-orange);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.banner-blob {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 250px;
+  height: 250px;
+  background: var(--pks-navy);
+  filter: blur(80px);
+  opacity: 0.15;
+}
+
+/* States */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 100px 0;
+  color: var(--pks-text-muted);
+}
+
+.loading-state i {
+  font-size: 2rem;
+  color: var(--pks-orange);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: var(--pks-gray);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .news-thumb { width: 240px; min-width: 240px; }
+}
+
+@media (max-width: 640px) {
+  .news-item { flex-direction: column; }
+  .news-thumb { width: 100%; height: 200px; }
+  .news-body { padding: 25px; }
+}
 </style>
+

@@ -1,52 +1,211 @@
 <template>
-  <div class="page-view">
-    <section class="container page-banner"><div class="banner-box">
-      <h1>Mekanisme Aspirasi</h1>
-      <p>Tata cara penyampaian aspirasi masyarakat kepada Fraksi PKS DPRD Kota Bandung.</p>
-    </div></section>
+  <div class="aspirasi-mekanisme-view">
+    <!-- Page Header -->
+    <section class="container page-banner" data-reveal="fade-up">
+      <div class="banner-card">
+        <h1>Mekanisme Aspirasi</h1>
+        <p>Alur tata cara penyampaian, pengolahan, hingga tindak lanjut aspirasi masyarakat oleh Fraksi PKS DPRD Kota Bandung.</p>
+        <div class="banner-blob"></div>
+      </div>
+    </section>
+
+    <!-- Content Section -->
     <section class="container page-content">
+      <div class="section-intro" data-reveal="fade-up" data-reveal-delay="100">
+        <span class="badge-primary">6 Langkah Perjuangan</span>
+        <h2>Bagaimana Kami Memperjuangkan Suara Anda?</h2>
+      </div>
+
       <div class="steps-grid">
-        <div class="step-card" v-for="(s, i) in steps" :key="i" data-reveal="fade-up" :data-reveal-delay="i * 100">
-          <div class="step-number">{{ i + 1 }}</div>
-          <h3>{{ s.title }}</h3>
-          <p>{{ s.desc }}</p>
+        <div 
+          class="step-card glass-card hover-lift" 
+          v-for="(s, i) in steps" 
+          :key="i" 
+          data-reveal="fade-up" 
+          :data-reveal-delay="150 + (i * 100)"
+        >
+          <div class="step-header">
+            <div class="step-num">{{ i + 1 }}</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-body">
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.desc }}</p>
+          </div>
         </div>
       </div>
-      <div class="content-card cta-box" data-reveal="zoom">
-        <h2>Siap Menyampaikan Aspirasi?</h2>
-        <p>Gunakan form aspirasi online kami untuk menyampaikan pendapat, keluhan, atau saran Anda.</p>
-        <router-link to="/aspirasi/form" class="btn btn-primary">Isi Form Aspirasi <i class="fas fa-arrow-right"></i></router-link>
+
+      <!-- CTA Section -->
+      <div class="cta-section glass-card" data-reveal="zoom" data-reveal-delay="200">
+        <div class="cta-content">
+          <h2>Siap Menyuarakan Aspirasi?</h2>
+          <p>Pendapat dan masukan Anda sangat berharga bagi pembangunan Kota Bandung yang lebih baik.</p>
+          <div class="cta-actions">
+            <router-link to="/aspirasi/form" class="btn btn-primary">
+              <i class="fas fa-edit"></i> Isi Form Aspirasi
+            </router-link>
+            <router-link to="/kontak" class="btn btn-navy-outline">
+              <i class="fas fa-phone-alt"></i> Hubungi Kami
+            </router-link>
+          </div>
+        </div>
+        <div class="cta-blob"></div>
       </div>
     </section>
   </div>
 </template>
+
 <script setup>
 import { useScrollReveal } from '../composables/useScrollReveal'
 useScrollReveal()
+
 const steps = [
-  { title: 'Sampaikan Aspirasi', desc: 'Warga dapat menyampaikan aspirasi melalui form online, surat, email, atau datang langsung ke kantor Fraksi PKS.' },
-  { title: 'Verifikasi & Kategorisasi', desc: 'Tim sekretariat fraksi akan memverifikasi dan mengkategorikan aspirasi berdasarkan bidang terkait.' },
-  { title: 'Disposisi ke Anggota', desc: 'Aspirasi didisposisi kepada anggota fraksi sesuai komisi dan bidang keahliannya.' },
-  { title: 'Pembahasan Internal', desc: 'Aspirasi dibahas dalam rapat internal fraksi untuk menentukan langkah tindak lanjut.' },
-  { title: 'Tindak Lanjut', desc: 'Fraksi menyalurkan aspirasi dalam rapat komisi, paripurna, atau hearing dengan pemerintah kota.' },
-  { title: 'Pelaporan', desc: 'Hasil tindak lanjut dilaporkan kembali kepada warga sebagai bentuk transparansi dan akuntabilitas.' },
+  { title: 'Sampaikan Aspirasi', desc: 'Warga dapat menyampaikan aspirasi melalui form online, surat, email, atau datang langsung ke kantor Fraksi PKS di DPRD Kota Bandung.' },
+  { title: 'Verifikasi & Kategorisasi', desc: 'Tim sekretariat fraksi akan meninjau kelengkapan data dan mengelompokkan aspirasi berdasarkan bidang/komisi terkait.' },
+  { title: 'Disposisi Anggota', desc: 'Aspirasi diteruskan kepada anggota fraksi yang bertugas di komisi yang bersesuaian guna pendalaman materi.' },
+  { title: 'Pembahasan Fraksi', desc: 'Aspirasi dikaji secara mendalam dalam rapat internal fraksi untuk menentukan strategi advokasi dan langkah nyata.' },
+  { title: 'Advokasi di DPRD', desc: 'Anggota fraksi menyalurkan aspirasi dalam rapat-rapat komisi, pandangan umum fraksi, hingga rapat paripurna.' },
+  { title: 'Laporan Balik', desc: 'Setiap perkembangan tindak lanjut akan diinformasikan kembali kepada pemohon aspirasi sebagai bentuk transparansi.' },
 ]
 </script>
+
 <style scoped>
-.page-banner { padding: 20px 0; }
-.banner-box { background: var(--pks-navy); color: white; border-radius: var(--radius); padding: 50px 40px; text-align: center; }
-.banner-box h1 { font-size: 2.5rem; color: white; margin-bottom: 12px; }
-.banner-box p { opacity: .8; max-width: 600px; margin: 0 auto; }
-.page-content { padding: 40px 0 50px; }
-.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
-.step-card { background: white; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow-sm); text-align: center; transition: var(--transition); }
-.step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.step-number { width: 50px; height: 50px; background: var(--pks-orange); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; margin: 0 auto 16px; font-family: 'Montserrat', sans-serif; }
-.step-card h3 { font-size: 1rem; color: var(--pks-navy); margin-bottom: 8px; }
-.step-card p { font-size: 0.85rem; color: var(--pks-text-muted); line-height: 1.6; }
-.content-card { background: white; border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow-sm); text-align: center; }
-.cta-box h2 { font-size: 1.5rem; color: var(--pks-navy); margin-bottom: 12px; }
-.cta-box p { color: var(--pks-text-muted); margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
-@media (max-width: 768px) { .steps-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 576px) { .steps-grid { grid-template-columns: 1fr; } .banner-box h1 { font-size: 2rem; } }
+.page-content { padding: 40px 0 80px; }
+
+.section-intro {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-intro h2 {
+  font-size: 2rem;
+  color: var(--pks-navy);
+  margin-top: 15px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.step-card {
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 4px solid transparent;
+  transition: var(--transition-smooth);
+}
+
+.step-card:hover { border-color: var(--pks-orange); }
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.step-num {
+  width: 45px;
+  height: 45px;
+  background: var(--pks-orange-gradient);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--pks-navy-light);
+  opacity: 0.3;
+}
+
+.step-body h3 {
+  font-size: 1.15rem;
+  color: var(--pks-navy);
+  margin-bottom: 12px;
+}
+
+.step-body p {
+  font-size: 0.9rem;
+  color: var(--pks-text-muted);
+  line-height: 1.6;
+}
+
+/* CTA Box */
+.cta-section {
+  padding: 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--pks-white-glass);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-content h2 {
+  font-size: 2.25rem;
+  color: var(--pks-navy);
+  margin-bottom: 15px;
+}
+
+.cta-content p {
+  color: var(--pks-text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cta-blob {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: var(--pks-orange);
+  filter: blur(100px);
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.banner-blob {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 250px;
+  height: 250px;
+  background: #2ecc71;
+  filter: blur(80px);
+  opacity: 0.15;
+}
+
+@media (max-width: 992px) {
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .steps-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 40px 20px; }
+  .cta-content h2 { font-size: 1.75rem; }
+  .cta-actions { flex-direction: column; }
+  .cta-actions .btn { width: 100%; }
+}
 </style>
+

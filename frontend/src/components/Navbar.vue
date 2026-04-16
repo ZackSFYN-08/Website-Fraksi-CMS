@@ -3,6 +3,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isMobileMenuOpen = ref(false)
 const activeDropdown = ref(null)
+const isScrolled = ref(false)
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
 
 const toggleDropdown = (name) => {
   activeDropdown.value = activeDropdown.value === name ? null : name
@@ -14,284 +19,352 @@ const closeAll = () => {
 }
 
 const handleClickOutside = (e) => {
-  if (!e.target.closest('.has-dropdown')) activeDropdown.value = null
+  if (!e.target.closest('.has-dropdown')) {
+    // If we click outside an open dropdown on mobile/desktop, close it
+    activeDropdown.value = null
+  }
 }
 
-onMounted(() => document.addEventListener('click', handleClickOutside))
-onUnmounted(() => document.removeEventListener('click', handleClickOutside))
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-  <header class="site-header">
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="container top-bar-content">
-        <router-link to="/" class="top-home"><i class="fas fa-home"></i> Fraksi PKS DPRD Kota Bandung</router-link>
-        <div class="top-social">
-          <a href="#"><i class="fab fa-youtube"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-x-twitter"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main Navigation -->
-    <nav class="main-nav">
-      <div class="container nav-content">
-        <div class="mobile-toggle" @click="isMobileMenuOpen = !isMobileMenuOpen">
-          <i :class="isMobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
-        </div>
-
-        <ul :class="['nav-menu', { open: isMobileMenuOpen }]">
-          <li><router-link to="/berita" @click="closeAll">Berita</router-link></li>
-
-          <li class="has-dropdown" @click.stop="toggleDropdown('profil')">
-            <a href="#" @click.prevent>Profil <i class="fas fa-chevron-down"></i></a>
-            <ul :class="['dropdown', { show: activeDropdown === 'profil' }]" @click.stop>
-              <li><router-link to="/profil" @click="closeAll">Profil dan Visi-Misi Fraksi PKS DPRD Kota Bandung</router-link></li>
-              <li><router-link to="/anggota" @click="closeAll">Profil Anggota</router-link></li>
-            </ul>
-          </li>
-
-          <li class="has-dropdown" @click.stop="toggleDropdown('galeri')">
-            <a href="#" @click.prevent>Galeri <i class="fas fa-chevron-down"></i></a>
-            <ul :class="['dropdown', { show: activeDropdown === 'galeri' }]" @click.stop>
-              <li><router-link to="/galeri/foto" @click="closeAll">Foto</router-link></li>
-              <li><router-link to="/galeri/video" @click="closeAll">Video</router-link></li>
-            </ul>
-          </li>
-
-          <li><router-link to="/wawancara-opini" @click="closeAll">Wawancara dan Opini</router-link></li>
-          <li><router-link to="/kutipan-media" @click="closeAll">Kutipan Media</router-link></li>
-
-          <li class="has-dropdown" @click.stop="toggleDropdown('aspirasi')">
-            <a href="#" @click.prevent>Aspirasi <i class="fas fa-chevron-down"></i></a>
-            <ul :class="['dropdown', { show: activeDropdown === 'aspirasi' }]" @click.stop>
-              <li><router-link to="/aspirasi/mekanisme" @click="closeAll">Mekanisme Aspirasi</router-link></li>
-              <li><router-link to="/aspirasi/form" @click="closeAll">Form Aspirasi</router-link></li>
-              <li><router-link to="/aspirasi/tindak-lanjut" @click="closeAll">Tindak Lanjut</router-link></li>
-              <li><router-link to="/aspirasi/berita" @click="closeAll">Berita Aspirasi</router-link></li>
-            </ul>
-          </li>
-
-          <li><router-link to="/event" @click="closeAll">Event</router-link></li>
-          <li><router-link to="/pandangan-fraksi" @click="closeAll">Pandangan Fraksi</router-link></li>
-          <li><router-link to="/internshipks" @click="closeAll">InternshiPKS</router-link></li>
-          <li><router-link to="/peraturan-daerah" @click="closeAll">Peraturan Daerah</router-link></li>
-          <li><router-link to="/pansus" @click="closeAll">Pansus</router-link></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- Brand Bar -->
-    <div class="brand-bar">
-      <div class="container brand-content">
-        <div class="brand-logos">
-          <img src="/logo-dprd.jpg" alt="DPRD Kota Bandung" class="logo-dprd" />
+  <header :class="['site-header', { 'is-scrolled': isScrolled }]">
+    <div class="container header-container">
+      <!-- Brand Section -->
+      <router-link to="/" class="brand-link" @click="closeAll">
+        <div class="logo-wrapper">
+          <img src="/logo-dprd.jpg" alt="DPRD" class="logo-dprd" />
+          <div class="logo-divider"></div>
           <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="logo-pks" />
         </div>
-        <div class="brand-text">
-          <span class="brand-title">Website Resmi</span>
-          <span class="brand-name">Fraksi Partai Keadilan Sejahtera DPRD Kota Bandung</span>
-          <span class="brand-tagline">Berkhidmat untuk Rakyat, Membangun Kota Bandung Bermartabat</span>
+        <div class="brand-info">
+          <span class="brand-top">FRAKSI <strong>PKS</strong></span>
+          <span class="brand-bottom">DPRD KOTA BANDUNG</span>
         </div>
-      </div>
+      </router-link>
+
+      <!-- Navigation Section -->
+      <nav :class="['nav-menu', { 'mobile-active': isMobileMenuOpen }]">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <router-link to="/berita" class="menu-link" @click="closeAll">Berita</router-link>
+          </li>
+          
+          <li class="nav-item has-dropdown" 
+            @mouseenter="!isMobileMenuOpen && (activeDropdown = 'profil')" 
+            @mouseleave="!isMobileMenuOpen && (activeDropdown = null)"
+          >
+            <button :class="['menu-btn', { 'is-active': activeDropdown === 'profil' }]" @click.stop="toggleDropdown('profil')">
+              Profil <i class="fas fa-chevron-down"></i>
+            </button>
+            <div :class="['glass-dropdown', { 'visible': activeDropdown === 'profil' }]">
+              <router-link to="/profil" class="drop-link" @click="closeAll">Visi & Misi</router-link>
+              <router-link to="/anggota" class="drop-link" @click="closeAll">Anggota Fraksi</router-link>
+            </div>
+          </li>
+
+          <li class="nav-item has-dropdown"
+            @mouseenter="!isMobileMenuOpen && (activeDropdown = 'aspirasi')" 
+            @mouseleave="!isMobileMenuOpen && (activeDropdown = null)"
+          >
+            <button :class="['menu-btn', { 'is-active': activeDropdown === 'aspirasi' }]" @click.stop="toggleDropdown('aspirasi')">
+              Aspirasi <i class="fas fa-chevron-down"></i>
+            </button>
+            <div :class="['glass-dropdown', { 'visible': activeDropdown === 'aspirasi' }]">
+              <router-link to="/aspirasi/mekanisme" class="drop-link" @click="closeAll">Mekanisme</router-link>
+              <router-link to="/aspirasi/form" class="drop-link" @click="closeAll">Sampaikan Aspirasi</router-link>
+              <router-link to="/aspirasi/tindak-lanjut" class="drop-link" @click="closeAll">Tindak Lanjut</router-link>
+              <router-link to="/aspirasi/berita" class="drop-link" @click="closeAll">Berita Aspirasi</router-link>
+            </div>
+          </li>
+
+          <li class="nav-item has-dropdown"
+            @mouseenter="!isMobileMenuOpen && (activeDropdown = 'kegiatan')" 
+            @mouseleave="!isMobileMenuOpen && (activeDropdown = null)"
+          >
+            <button :class="['menu-btn', { 'is-active': activeDropdown === 'kegiatan' }]" @click.stop="toggleDropdown('kegiatan')">
+              Kegiatan <i class="fas fa-chevron-down"></i>
+            </button>
+            <div :class="['glass-dropdown', { 'visible': activeDropdown === 'kegiatan' }]">
+              <router-link to="/event" class="drop-link" @click="closeAll">Agenda & Event</router-link>
+              <router-link to="/galeri/foto" class="drop-link" @click="closeAll">Galeri Foto</router-link>
+              <router-link to="/galeri/video" class="drop-link" @click="closeAll">Galeri Video</router-link>
+            </div>
+          </li>
+
+          <li class="nav-item has-dropdown"
+            @mouseenter="!isMobileMenuOpen && (activeDropdown = 'publikasi')" 
+            @mouseleave="!isMobileMenuOpen && (activeDropdown = null)"
+          >
+            <button :class="['menu-btn', { 'is-active': activeDropdown === 'publikasi' }]" @click.stop="toggleDropdown('publikasi')">
+              Publikasi <i class="fas fa-chevron-down"></i>
+            </button>
+            <div :class="['glass-dropdown', { 'visible': activeDropdown === 'publikasi' }]">
+              <router-link to="/pandangan-fraksi" class="drop-link" @click="closeAll">Pandangan Fraksi</router-link>
+              <router-link to="/peraturan-daerah" class="drop-link" @click="closeAll">Perda</router-link>
+              <router-link to="/pansus" class="drop-link" @click="closeAll">Pansus</router-link>
+              <div class="drop-divider"></div>
+              <router-link to="/wawancara-opini" class="drop-link" @click="closeAll">Opini</router-link>
+              <router-link to="/kutipan-media" class="drop-link" @click="closeAll">Kutipan Media</router-link>
+            </div>
+          </li>
+        </ul>
+        
+        <div class="nav-cta">
+          <router-link to="/internshipks" class="btn btn-navy cta-nav" @click="closeAll">
+            <i class="fas fa-graduation-cap"></i> InternshipKS
+          </router-link>
+        </div>
+      </nav>
+
+      <!-- Mobile Trigger -->
+      <button :class="['mobile-trigger', { 'is-active': isMobileMenuOpen }]" @click="isMobileMenuOpen = !isMobileMenuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Mobile Overlay -->
+      <div :class="['mobile-overlay', { 'is-active': isMobileMenuOpen }]" @click="closeAll"></div>
     </div>
   </header>
 </template>
 
 <style scoped>
-/* Top Bar */
-.top-bar {
-  background: white;
-  border-bottom: 1px solid #eee;
-  padding: 8px 0;
+.site-header {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: 90px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  background: transparent;
 }
-.top-bar-content {
+
+.site-header.is-scrolled {
+  height: 80px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 34, 68, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.top-home {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--pks-navy);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.top-home i { color: var(--pks-orange); }
-.top-social {
-  display: flex; gap: 14px;
-}
-.top-social a {
-  color: var(--pks-text-muted); font-size: 0.9rem;
-}
-.top-social a:hover { color: var(--pks-orange); }
-
-/* Main Navigation */
-.main-nav {
-  background: white;
-  border-bottom: 3px solid var(--pks-orange);
-  position: relative;
-  z-index: 1000;
-}
-.nav-content {
-  display: flex;
-  align-items: center;
-}
-.nav-menu {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
   width: 100%;
 }
-.nav-menu > li > a,
-.nav-menu > li > .router-link-active {
+
+/* Brand Link */
+.brand-link {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 12px 8px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--pks-text-dark);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: var(--transition);
-  border: none;
-  background: none;
-}
-.nav-menu > li > a:hover,
-.nav-menu > li > a.router-link-exact-active {
-  background: var(--pks-orange);
-  color: white;
-}
-.nav-menu > li > a .fa-chevron-down {
-  font-size: 0.55rem;
-  transition: transform 0.2s;
+  gap: 15px;
+  text-decoration: none;
+  position: relative;
+  z-index: 1011;
 }
 
-/* Dropdowns */
-.has-dropdown { position: relative; }
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 320px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-top: 3px solid var(--pks-orange);
-  box-shadow: var(--shadow-md);
-  display: none;
-  z-index: 999;
-}
-.dropdown.show { display: block; }
-.dropdown li a {
-  display: block;
-  padding: 12px 20px;
-  font-size: 0.88rem;
-  color: var(--pks-text-dark);
-  border-bottom: 1px solid #f3f4f6;
-}
-.dropdown li a:hover {
-  background: rgba(240,122,30,0.06);
-  color: var(--pks-orange);
-  padding-left: 26px;
-}
-.dropdown li:last-child a { border-bottom: none; }
-
-/* Brand Bar */
-.brand-bar {
-  background: white;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-  position: relative;
-  overflow: hidden;
-}
-.brand-bar::before {
-  content: '';
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,0,0,0.02)" stroke-width="1"/></svg>') repeat;
-  background-size: 60px;
-  pointer-events: none;
-}
-.brand-content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  z-index: 1;
-}
-.logo-pks { height: 70px; }
-.logo-dprd { height: 70px; }
-.brand-logos {
+.logo-wrapper {
   display: flex;
   align-items: center;
   gap: 12px;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
 }
-.brand-text { display: flex; flex-direction: column; }
-.brand-title {
-  font-size: 0.85rem;
-  color: var(--pks-text-muted);
-  font-weight: 400;
-}
-.brand-name {
+
+.logo-dprd { height: 32px; width: auto; }
+.logo-pks { height: 28px; width: auto; }
+.logo-divider { width: 1px; height: 20px; background: var(--pks-gray); }
+
+.brand-info { display: flex; flex-direction: column; }
+.brand-top {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
+  color: var(--pks-navy);
+  line-height: 1;
+  letter-spacing: -0.5px;
+  transition: font-size 0.3s ease;
+}
+.brand-top strong { color: var(--pks-orange); font-weight: 900; }
+.brand-bottom {
+  font-size: 0.7rem;
   font-weight: 800;
-  color: var(--pks-navy);
-  line-height: 1.3;
+  color: var(--pks-text-muted);
+  letter-spacing: 2.5px;
+  margin-top: 2px;
+  transition: all 0.3s ease;
 }
-.brand-tagline {
-  font-size: 0.85rem;
+
+@media (max-width: 480px) {
+  .brand-top { font-size: 1rem; }
+  .brand-bottom { font-size: 0.6rem; letter-spacing: 1.5px; }
+}
+
+/* Nav Menu */
+.nav-menu { display: flex; align-items: center; gap: 40px; }
+.nav-list { display: flex; align-items: center; gap: 8px; list-style: none; }
+
+.menu-link, .menu-btn {
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--pks-navy);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.menu-link:hover, .menu-btn:hover, .menu-btn.is-active, .router-link-active {
   color: var(--pks-orange);
-  font-weight: 500;
-  font-style: italic;
+  background: rgba(240, 122, 30, 0.08);
 }
 
-/* Mobile */
-.mobile-toggle {
+.menu-btn i { font-size: 0.7rem; opacity: 0.5; transition: transform 0.3s ease; }
+.menu-btn.is-active i { transform: rotate(180deg); opacity: 1; }
+
+.has-dropdown { position: relative; }
+.has-dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 15px; /* bridge the gap so mouseleave doesn't trigger */
+}
+.glass-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  z-index: 1000;
+  min-width: 240px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 20px 40px rgba(0, 34, 68, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  opacity: 0; transform: translateY(5px); pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.glass-dropdown.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.drop-link {
+  padding: 12px 18px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--pks-text-dark);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.drop-link:hover {
+  background: var(--pks-orange);
+  color: white;
+  padding-left: 24px;
+}
+
+.drop-divider { height: 1px; background: rgba(0, 34, 68, 0.05); margin: 6px 0; }
+
+.cta-nav { padding: 10px 24px; font-size: 0.85rem; }
+
+/* Mobile Trigger */
+.mobile-trigger {
   display: none;
-  font-size: 1.3rem;
-  padding: 14px 20px;
-  cursor: pointer;
-  color: var(--pks-navy);
+  width: 40px; height: 40px;
+  background: none; border: none; cursor: pointer;
+  position: relative; z-index: 1010;
 }
 
-@media (max-width: 992px) {
-  .mobile-toggle { display: block; }
-  .top-social { display: none; }
+.mobile-trigger span {
+  display: block; width: 24px; height: 2px;
+  background: var(--pks-navy);
+  margin: 5px auto;
+  transition: all 0.3s ease;
+}
+
+.mobile-trigger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mobile-trigger.is-active span:nth-child(2) { opacity: 0; }
+.mobile-trigger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile Overlay */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 34, 68, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 1004;
+}
+
+.mobile-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1100px) {
   .nav-menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
+    position: fixed; top: 0; right: -100%;
+    width: 340px; height: 100vh;
     background: white;
-    box-shadow: var(--shadow-lg);
-    z-index: 999;
+    flex-direction: column;
+    padding: 120px 30px;
+    box-shadow: -15px 0 40px rgba(0,34,68,0.08);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1005;
+    overflow-y: auto;
   }
-  .nav-menu.open { display: flex; }
-  .nav-menu > li > a { width: 100%; }
-  .dropdown {
-    position: static;
-    border: none;
-    box-shadow: none;
-    border-top: none;
-    background: #f9fafb;
-    min-width: unset;
+  .nav-menu.mobile-active { right: 0; }
+  .nav-list { flex-direction: column; width: 100%; align-items: flex-start; gap: 4px; }
+  .nav-item { width: 100%; }
+  .menu-link, .menu-btn { 
+    width: 100%; 
+    padding: 12px 15px; 
+    font-size: 1.05rem; 
+    justify-content: space-between; 
   }
-  .dropdown li a { padding-left: 40px; }
-  .brand-content { flex-wrap: wrap; }
-  .brand-name { font-size: 1.1rem; }
-}
-
-@media (max-width: 576px) {
-  .brand-name { font-size: 0.95rem; }
-  .logo-pks { height: 50px; }
-  .logo-dprd { height: 50px; }
+  .glass-dropdown {
+    position: static; opacity: 1; transform: none; 
+    pointer-events: auto; box-shadow: none; border: none;
+    background: var(--pks-white-smoke);
+    max-height: 0;
+    overflow: hidden;
+    display: flex; margin: 0;
+    padding: 0 10px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .glass-dropdown.visible { 
+    max-height: 500px; 
+    padding: 10px;
+    margin: 5px 0 10px;
+  }
+  .drop-link { padding: 10px 15px; }
+  .mobile-trigger { display: block; }
+  .logo-wrapper { padding: 6px 10px; }
+  .brand-top { font-size: 1rem; }
+  .nav-cta { width: 100%; margin-top: 20px; }
+  .cta-nav { width: 100%; padding: 15px; font-size: 1rem; }
 }
 </style>
+
+
+

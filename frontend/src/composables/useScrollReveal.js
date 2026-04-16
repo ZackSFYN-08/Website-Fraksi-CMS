@@ -11,8 +11,20 @@ import { onMounted, onUnmounted } from 'vue'
  */
 export function useScrollReveal() {
   let observer = null
+  let mutationObserver = null
+
+  const observeElements = (container = document) => {
+    const elements = container.querySelectorAll('[data-reveal]')
+    elements.forEach((el) => {
+      if (!el.classList.contains('reveal-hidden') && !el.classList.contains('revealed')) {
+        el.classList.add('reveal-hidden')
+        observer.observe(el)
+      }
+    })
+  }
 
   const initObserver = () => {
+    // 1. Setup IntersectionObserver
     observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -32,29 +44,38 @@ export function useScrollReveal() {
         })
       },
       {
-        threshold: 0.08,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
       }
     )
 
-    document.querySelectorAll('[data-reveal]').forEach((el) => {
-      el.classList.add('reveal-hidden')
-      observer.observe(el)
+    // 2. Initial observation
+    observeElements()
+
+    // 3. Setup MutationObserver to watch for new dynamic elements
+    mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          observeElements()
+        }
+      })
+    })
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
     })
   }
 
   onMounted(() => {
-    // Use nextTick-like delay to ensure DOM is fully rendered
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        initObserver()
-      })
-    })
+    // Small delay to ensure initial paint
+    setTimeout(() => {
+      initObserver()
+    }, 100)
   })
 
   onUnmounted(() => {
-    if (observer) {
-      observer.disconnect()
-    }
+    if (observer) observer.disconnect()
+    if (mutationObserver) mutationObserver.disconnect()
   })
 }

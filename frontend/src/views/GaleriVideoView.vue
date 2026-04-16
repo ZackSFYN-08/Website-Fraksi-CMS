@@ -1,36 +1,70 @@
 <template>
-  <div class="page-view">
-    <section class="container page-banner"><div class="banner-box">
-      <h1>Galeri Video</h1>
-      <p>Video kegiatan dan dokumentasi Fraksi PKS DPRD Kota Bandung.</p>
-    </div></section>
-    <section class="container page-content">
-      <div v-if="videos.length === 0" class="empty-state" data-reveal="zoom">
-        <i class="fas fa-video"></i>
-        <p>Belum ada video.</p>
-        <p class="empty-hint">Tambahkan video melalui <a href="http://localhost:1337/admin" target="_blank">Strapi Admin Panel</a>.</p>
+  <div class="galeri-video-view">
+    <!-- Page Header -->
+    <section class="container page-banner" data-reveal="fade-up">
+      <div class="banner-card">
+        <h1>Galeri Video</h1>
+        <p>Dokumentasi video kegiatan, pernyataan sikap, dan agenda perjuangan Fraksi PKS DPRD Kota Bandung.</p>
+        <div class="banner-blob"></div>
       </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="container page-content">
+      <!-- Loading State -->
+      <div v-if="loading" class="loading-state">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Menyiapkan galeri video...</span>
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="videos.length === 0" class="empty-state glass-card" data-reveal="fade-up">
+        <i class="fas fa-video-slash"></i>
+        <p>Koleksi video belum tersedia.</p>
+        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Kelola di Admin Panel</a>
+      </div>
+
+      <!-- Video Grid -->
       <div v-else class="video-grid">
-        <a class="video-card" v-for="(v, index) in videos" :key="v.id" :href="v.link_video" target="_blank" data-reveal="zoom" :data-reveal-delay="index * 100">
-          <div class="video-thumb" :style="getThumbnailStyle(v)">
-            <i class="fas fa-play-circle play-icon"></i>
+        <a 
+          class="video-card glass-card hover-lift" 
+          v-for="(v, index) in videos" 
+          :key="v.id" 
+          :href="v.link_video" 
+          target="_blank" 
+          data-reveal="fade-up" 
+          :data-reveal-delay="index * 100"
+        >
+          <div class="video-thumb-wrap">
+            <div class="video-thumb" :style="getThumbnailStyle(v)"></div>
+            <div class="video-overlay">
+              <div class="play-btn-circle">
+                <i class="fas fa-play"></i>
+              </div>
+            </div>
           </div>
           <div class="video-info">
             <h3>{{ v.title }}</h3>
-            <span><i class="far fa-clock"></i> {{ formatDate(v.date || v.createdAt) }}</span>
+            <div class="video-meta">
+              <span><i class="far fa-calendar-alt"></i> {{ formatDate(v.date || v.createdAt) }}</span>
+              <span class="platform-tag"><i class="fab fa-youtube"></i> YouTube</span>
+            </div>
           </div>
         </a>
       </div>
     </section>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
 import api, { STRAPI_URL } from '../services/api'
 
 useScrollReveal()
+
 const videos = ref([])
+const loading = ref(true)
 
 onMounted(async () => {
   try {
@@ -38,6 +72,8 @@ onMounted(async () => {
     videos.value = data || []
   } catch (e) {
     console.error('Failed to fetch videos:', e)
+  } finally {
+    loading.value = false
   }
 })
 
@@ -45,11 +81,11 @@ const getThumbnailStyle = (item) => {
   const img = item?.media || item?.attributes?.media
   if (img?.data?.attributes?.url) {
     const url = img.data.attributes.url
-    return { backgroundImage: `url(${url.startsWith('http') ? url : STRAPI_URL + url})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    return { backgroundImage: `url(${url.startsWith('http') ? url : STRAPI_URL + url})` }
   }
   if (img?.url) {
     const url = img.url
-    return { backgroundImage: `url(${url.startsWith('http') ? url : STRAPI_URL + url})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+    return { backgroundImage: `url(${url.startsWith('http') ? url : STRAPI_URL + url})` }
   }
   return {}
 }
@@ -60,25 +96,171 @@ const formatDate = (dateStr) => {
   return isNaN(d) ? dateStr : d.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 </script>
+
 <style scoped>
-.page-banner { padding: 20px 0; }
-.banner-box { background: var(--pks-navy); color: white; border-radius: var(--radius); padding: 50px 40px; text-align: center; }
-.banner-box h1 { font-size: 2.5rem; color: white; margin-bottom: 12px; }
-.banner-box p { opacity: .8; max-width: 600px; margin: 0 auto; }
-.page-content { padding: 40px 0 50px; }
-.video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.video-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); cursor: pointer; }
-.video-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.video-thumb { height: 200px; display: flex; align-items: center; justify-content: center; background: var(--pks-navy); }
-.play-icon { font-size: 3.5rem; color: rgba(255,255,255,0.8); transition: var(--transition); }
-.video-card:hover .play-icon { color: white; transform: scale(1.15); }
-.video-info { padding: 18px; }
-.video-info h3 { font-size: 0.95rem; color: var(--pks-navy); margin-bottom: 8px; line-height: 1.4; }
-.video-info span { font-size: 0.78rem; color: var(--pks-text-muted); display: flex; align-items: center; gap: 5px; }
-.empty-state { text-align: center; padding: 80px 20px; color: var(--pks-text-muted); }
-.empty-state i { font-size: 3rem; color: #d1d5db; margin-bottom: 16px; display: block; }
-.empty-state a { color: var(--pks-orange); font-weight: 600; }
-.empty-hint { font-size: 0.85rem; margin-top: 8px; }
-@media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 576px) { .video-grid { grid-template-columns: 1fr; } .banner-box h1 { font-size: 2rem; } }
+.page-content { padding: 40px 0 80px; }
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.video-card {
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-thumb-wrap {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: var(--transition-smooth);
+}
+
+.video-card:hover .video-thumb {
+  transform: scale(1.1);
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 34, 68, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-base);
+}
+
+.video-card:hover .video-overlay {
+  background: rgba(0, 34, 68, 0.6);
+}
+
+.play-btn-circle {
+  width: 60px;
+  height: 60px;
+  background: var(--pks-orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 0 0 0 rgba(240, 122, 30, 0.4);
+  transition: var(--transition-smooth);
+}
+
+.video-card:hover .play-btn-circle {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 15px rgba(240, 122, 30, 0);
+  background: var(--pks-white);
+  color: var(--pks-orange);
+}
+
+.play-btn-circle i {
+  margin-left: 4px;
+}
+
+.video-info {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-info h3 {
+  font-size: 1rem;
+  color: var(--pks-navy);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  height: 2.8em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: var(--transition-base);
+}
+
+.video-card:hover h3 {
+  color: var(--pks-orange);
+}
+
+.video-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.video-meta span {
+  font-size: 0.75rem;
+  color: var(--pks-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.platform-tag {
+  color: #ff0000 !important;
+  font-weight: 700;
+}
+
+.banner-blob {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 250px;
+  height: 250px;
+  background: #e74c3c;
+  filter: blur(80px);
+  opacity: 0.15;
+}
+
+/* States */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 100px 0;
+  color: var(--pks-text-muted);
+}
+
+.loading-state i {
+  font-size: 2rem;
+  color: var(--pks-orange);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: var(--pks-gray);
+  margin-bottom: 20px;
+  display: block;
+}
+
+@media (max-width: 992px) {
+  .video-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+@media (max-width: 640px) {
+  .video-grid { grid-template-columns: 1fr; }
+  .video-thumb-wrap { height: 180px; }
+}
 </style>
+
