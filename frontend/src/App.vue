@@ -27,6 +27,14 @@ import Footer from './components/Footer.vue'
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--pks-bg);
+  background-image: 
+    linear-gradient(rgba(248, 250, 252, 0.50), rgba(248, 250, 252, 0.50)),
+    url('@/assets/bg-pattern.jpg');
+  background-repeat: repeat;
+  background-position: top center;
+  background-size: 80px;
+  background-attachment: fixed;
 }
 
 .main-content {

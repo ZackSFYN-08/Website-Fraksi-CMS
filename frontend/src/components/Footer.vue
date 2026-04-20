@@ -4,343 +4,282 @@ useScrollReveal()
 </script>
 
 <template>
-  <footer class="pks-footer">
-    <!-- Decorative Blobs for Depth -->
+  <footer class="pks-footer-dark">
+    <!-- Decorative Blobs -->
     <div class="footer-decoration">
       <div class="blob-1"></div>
       <div class="blob-2"></div>
     </div>
 
-    <div class="container footer-main">
-      <div class="footer-grid">
-        <!-- Brand & Mission -->
-        <div class="footer-col brand-info" data-reveal="fade-up">
-          <div class="brand-header">
-            <div class="footer-logo-wrap">
-              <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="pks-logo" />
-              <div class="logo-glow"></div>
-            </div>
-            <div class="brand-titles">
-              <h3>Fraksi PKS</h3>
-              <span class="city-tag">DPRD Kota Bandung</span>
-            </div>
-          </div>
-          <p class="mission-text">
-            Berkhidmat untuk rakyat dengan integritas dan totalitas demi mewujudkan Kota Bandung yang unggul, nyaman, dan bermartabat.
-          </p>
-          <div class="social-wrapper">
-            <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-tiktok"></i></a>
-            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-          </div>
+    <div class="container footer-content relative-z2">
+      <!-- Left: Logos -->
+      <div class="footer-logos" data-reveal="fade-right">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Lambang_Kota_Bandung.svg/300px-Lambang_Kota_Bandung.svg.png" alt="DPRD Kota Bandung" class="dpr-logo" />
+        
+        <div class="pks-logo-box">
+          <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="pks-logo" />
+        </div>
+      </div>
+
+      <!-- Right: Info -->
+      <div class="footer-info" data-reveal="fade-left" data-reveal-delay="100">
+        <div class="info-group titles">
+          <h3 class="gradient-title">Fraksi Partai Keadilan Sejahtera</h3>
+          <p class="highlight-subtitle">DPRD Kota Bandung - Berkhidmat Untuk Rakyat</p>
         </div>
 
-        <!-- Navigation Links -->
-        <div class="footer-col" data-reveal="fade-up" data-reveal-delay="100">
-          <h4 class="col-title">Navigasi</h4>
-          <ul class="link-list">
-            <li><router-link to="/profil">Tentang Fraksi</router-link></li>
-            <li><router-link to="/berita">Berita Terbaru</router-link></li>
-            <li><router-link to="/anggota">Profil Anggota Fraksi</router-link></li>
-            <li><router-link to="/event">Agenda & Event</router-link></li>
-            <li><router-link to="/internshipks">InternshiPKS</router-link></li>
-          </ul>
+        <div class="info-group">
+          <p class="label-white">Alamat:</p>
+          <p class="text-gray">Gedung DPRD Kota Bandung</p>
+          <p class="text-gray">Jl. Sukabumi No.30, Kacapiring, Kec. Batununggal</p>
+          <p class="text-gray">Kota Bandung, Jawa Barat 40271</p>
         </div>
 
-        <!-- Resources -->
-        <div class="footer-col" data-reveal="fade-up" data-reveal-delay="200">
-          <h4 class="col-title">Publikasi</h4>
-          <ul class="link-list">
-            <li><router-link to="/pandangan-fraksi">Pandangan Fraksi</router-link></li>
-            <li><router-link to="/peraturan-daerah">Produk Hukum</router-link></li>
-            <li><router-link to="/pansus">Laporan Pansus</router-link></li>
-            <li><router-link to="/kutipan-media">Liputan Media</router-link></li>
-            <li><router-link to="/wawancara-opini">Opini Politik</router-link></li>
-          </ul>
+        <div class="info-group">
+          <p class="label-white">Hubungi Kami:</p>
+          <p class="text-gray" style="margin-bottom: -2px;">Telp: (022) 7208171</p>
+          <p class="highlight-link">fraksi@bandung.pks.id</p>
         </div>
 
-        <!-- Contact Detail -->
-        <div class="footer-col" data-reveal="fade-up" data-reveal-delay="300">
-          <h4 class="col-title">Hubungi Kami</h4>
-          <div class="contact-card">
-            <div class="contact-row">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>Gedung DPRD Kota Bandung, Jl. Sukabumi No.30, Bandung, Jawa Barat</p>
-            </div>
-            <div class="contact-row">
-              <i class="fas fa-phone-alt"></i>
-              <p>(022) 7208171</p>
-            </div>
-            <div class="contact-row">
-              <i class="fas fa-envelope-open"></i>
-              <p>fraksi@bandung.pks.id</p>
-            </div>
-          </div>
+        <div class="footer-social">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fas fa-rss"></i></a>
         </div>
       </div>
     </div>
-
-    <!-- Sub Footer -->
-    <div class="footer-bottom">
-      <div class="container bottom-wrap">
-        <p class="copyright">&copy; 2026 Fraksi PKS DPRD Kota Bandung. All Rights Reserved.</p>
-        <div class="legal-links">
-          <a href="#">Privasi</a>
-          <span class="sep">•</span>
-          <a href="#">Ketentuan Layanan</a>
-        </div>
+    
+    <div class="sub-footer">
+      <div class="container sub-footer-wrap">
+        <p class="copyright">&copy; 2026 Fraksi PKS. Hak Cipta Dilindungi.</p>
       </div>
     </div>
   </footer>
 </template>
 
 <style scoped>
-.pks-footer {
-  background: #001a33;
-  color: white;
-  padding-top: 50px;
+.pks-footer-dark {
+  background: linear-gradient(145deg, #0d1219 0%, #17202d 100%);
   position: relative;
   overflow: hidden;
-  margin-top: 80px;
+  padding-top: 80px;
+  border-top: 2px solid rgba(255, 255, 255, 0.03);
+  font-family: 'Poppins', sans-serif;
+  margin-top: 60px;
 }
 
-/* Decorations */
+/* Decorative Blobs for depth */
 .footer-decoration .blob-1 {
   position: absolute;
-  top: -100px;
-  right: -100px;
+  top: -150px;
+  right: -50px;
   width: 400px;
   height: 400px;
   background: var(--pks-orange);
-  filter: blur(120px);
-  opacity: 0.1;
+  filter: blur(180px);
+  opacity: 0.12;
 }
 
 .footer-decoration .blob-2 {
   position: absolute;
-  bottom: -150px;
-  left: -150px;
+  bottom: -200px;
+  left: -100px;
   width: 500px;
   height: 500px;
-  background: var(--pks-navy);
-  filter: blur(150px);
-  opacity: 0.2;
+  background: #2563eb;
+  filter: blur(200px);
+  opacity: 0.08;
 }
 
-.footer-main {
+.relative-z2 {
   position: relative;
   z-index: 2;
-  padding-bottom: 50px;
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 0.8fr 0.8fr 1.2fr;
-  gap: 60px;
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 60px;
 }
 
-/* Brand info */
-.brand-header {
+/* Logos */
+.footer-logos {
   display: flex;
   align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 30px;
 }
 
-.footer-logo-wrap {
-  position: relative;
-  width: 90px;
+.dpr-logo {
   height: 110px;
-  background: white;
-  padding: 15px;
-  border-radius: 0 0 20px 20px;
-  flex-shrink: 0;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+  transition: transform 0.5s ease;
+  margin-top: -10px; /* Pull up a bit */
+}
+
+.dpr-logo:hover {
+  transform: scale(1.05);
+}
+
+.pks-logo-box {
+  background: #FFFFFF;
+  width: 160px;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  margin-top: -50px;
+  padding: 25px;
+  border-radius: 0 0 32px 32px;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+  margin-top: -110px; /* Pulled much higher to the 'corner' */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.pks-logo { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: contain; 
-}
-.logo-glow {
-  position: absolute;
-  inset: 0;
-  background: var(--pks-orange);
-  filter: blur(20px);
-  opacity: 0.2;
-  z-index: -1;
+.pks-logo-box:hover {
+  transform: translateY(5px);
+  box-shadow: 0 20px 55px rgba(240,122,30,0.3);
 }
 
-.brand-titles {
+.pks-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Right-aligned Info Refined */
+.footer-info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  gap: 22px;
 }
 
-.brand-titles h3 {
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-group p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.gradient-title {
   font-size: 1.8rem;
   font-weight: 800;
-  margin-bottom: 5px;
+  margin: 0;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.highlight-subtitle {
+  color: var(--pks-orange);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-top: -5px;
+}
+
+.label-white {
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 2px;
+  opacity: 0.9;
+}
+
+.text-gray {
+  color: #CBD5E1;
+  font-weight: 300;
+}
+
+.highlight-link {
+  color: var(--pks-orange);
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.highlight-link:hover {
   color: white;
 }
 
-.city-tag {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--pks-orange);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.mission-text {
-  margin: 25px 0;
-  font-size: 0.95rem;
-  line-height: 1.8;
-  opacity: 0.7;
-  max-width: 320px;
-}
-
-.social-wrapper {
+/* Social Buttons */
+.footer-social {
   display: flex;
   gap: 12px;
+  margin-top: 10px;
 }
 
 .social-btn {
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--pks-orange);
+  font-size: 1.15rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .social-btn:hover {
   background: var(--pks-orange);
-  border-color: var(--pks-orange);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(240, 122, 30, 0.3);
-}
-
-/* Columns */
-.col-title {
-  font-size: 1.2rem;
-  font-weight: 800;
   color: white;
-  margin-bottom: 35px;
-  position: relative;
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(240,122,30,0.35);
+  border-color: transparent;
 }
 
-.col-title::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: var(--pks-orange);
-  border-radius: 2px;
-}
-
-.link-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.link-list a {
-  font-size: 0.95rem;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.link-list a:hover {
-  opacity: 1;
-  color: var(--pks-orange);
-  transform: translateX(8px);
-}
-
-/* Contact Info */
-.contact-card {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact-row {
-  display: flex;
-  gap: 15px;
-}
-
-.contact-row i {
-  color: var(--pks-orange);
-  font-size: 1.1rem;
-  margin-top: 3px;
-}
-
-.contact-row p {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  line-height: 1.5;
-}
-
-/* Bottom Bar */
-.footer-bottom {
+/* Sub footer */
+.sub-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 30px 0;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 24px 0;
+  background: rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
 }
 
-.bottom-wrap {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.sub-footer-wrap {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
 }
 
-.copyright { font-size: 0.85rem; opacity: 0.4; }
-
-.legal-links {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.legal-links a { font-size: 0.85rem; opacity: 0.4; transition: opacity 0.3s; }
-.legal-links a:hover { opacity: 1; }
-.sep { opacity: 0.2; font-size: 0.8rem; }
-
-@media (max-width: 1200px) {
-  .footer-grid { grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; }
-  .footer-col:last-child { grid-column: span 3; }
-}
-
-@media (max-width: 992px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .footer-col:last-child { grid-column: span 2; }
-}
-
-@media (max-width: 640px) {
-  .footer-grid { grid-template-columns: 1fr; }
-  .footer-col:last-child { grid-column: span 1; }
-  .pks-footer { padding-top: 60px; }
-  .footer-main { padding-bottom: 40px; }
-  .brand-info { text-align: center; align-items: center; }
-  .brand-header { justify-content: center; flex-direction: column; margin-bottom: 15px; }
-  .mission-text { margin: 20px auto; }
-  .social-wrapper { justify-content: center; }
-  .bottom-wrap { flex-direction: column; gap: 15px; text-align: center; }
-  .col-title { margin-bottom: 25px; }
+/* Responsiveness */
+@media (max-width: 1100px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 80px;
+  }
+  
+  .footer-info {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .pks-logo-box {
+    margin-top: -60px;
+  }
 }
 </style>
