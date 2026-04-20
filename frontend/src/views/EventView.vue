@@ -71,7 +71,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const data = await api.getArticlesByCategory('Event')
+    const data = await api.getEvents()
     events.value = data || []
   } catch (e) {
     console.error('Failed to fetch events:', e)

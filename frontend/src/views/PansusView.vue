@@ -11,34 +11,43 @@
 
     <!-- Content Section -->
     <section class="container page-content">
-      <div class="glass-card info-placeholder" data-reveal="fade-up">
-        <div class="visual-element">
-          <i class="fas fa-users-gear"></i>
-          <div class="pulse-layer"></div>
-        </div>
-        <h2>Informasi Segera Hadir</h2>
-        <p>Detail penugasan anggota, risalah rapat, dan hasil kerja Panitia Khusus sedang dalam proses kompilasi data untuk ditayangkan secara transparan kepada publik.</p>
-        
-        <div class="timeline-hint">
-          <div class="hint-item">
-            <span class="dot orange"></span>
-            <span>Kompilasi Data</span>
-          </div>
-          <div class="hint-item">
-            <span class="dot gray"></span>
-            <span>Verifikasi Internal</span>
-          </div>
-          <div class="hint-item">
-            <span class="dot gray"></span>
-            <span>Publikasi</span>
-          </div>
-        </div>
+      <!-- Loading State -->
+      <div v-if="loading" class="loading-state">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Memuat data Pansus...</span>
+      </div>
 
-        <div class="support-action">
-          <p>Butuh data Pansus untuk keperluan riset atau akademik?</p>
-          <router-link to="/kontak" class="btn btn-navy-outline">
-            <i class="fas fa-envelope-open-text"></i> Ajukan Permintaan Data
-          </router-link>
+      <!-- Empty State -->
+      <div v-else-if="documents.length === 0" class="empty-state glass-card" data-reveal="fade-up">
+        <i class="fas fa-folder-open"></i>
+        <p>Belum ada data Pansus yang tersedia saat ini.</p>
+        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Kelola di Admin Panel</a>
+      </div>
+
+      <!-- Result List -->
+      <div v-else class="doc-list">
+        <div 
+          class="doc-card glass-card hover-lift" 
+          v-for="(doc, index) in documents" 
+          :key="doc.id" 
+          data-reveal="fade-up" 
+          :data-reveal-delay="index * 100"
+        >
+          <div class="doc-info">
+            <span class="doc-year">{{ getField(doc, 'year') }}</span>
+            <h3>{{ getField(doc, 'title') }}</h3>
+            <p>{{ getField(doc, 'description') }}</p>
+            <div class="doc-meta">
+              <span class="status-badge">{{ getField(doc, 'status') || 'Aktif' }}</span>
+              <span class="doc-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(doc, 'publish_date')) }}</span>
+            </div>
+          </div>
+          <div class="doc-actions">
+            <a v-if="getFileUrl(doc)" :href="getFileUrl(doc)" target="_blank" class="btn btn-navy-outline btn-sm">
+              <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+            <span v-else class="no-file">File tidak tersedia</span>
+          </div>
         </div>
       </div>
     </section>
@@ -46,104 +55,135 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
+import api, { STRAPI_URL } from '../services/api'
+
 useScrollReveal()
+
+const documents = ref([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const data = await api.getLegislativeDocuments('Pansus')
+    documents.value = data || []
+  } catch (e) {
+    console.error('Failed to fetch Pansus documents:', e)
+  } finally {
+    loading.value = false
+  }
+})
+
+const getField = (d, field) => d?.[field] || d?.attributes?.[field] || ''
+const getFileUrl = (d) => {
+  const file = d?.file || d?.attributes?.file
+  const url = file?.data?.attributes?.url || file?.url
+  if (!url) return null
+  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`
+}
+const formatDate = (d) => {
+  if (!d) return '-'
+  return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+}
 </script>
 
 <style scoped>
 .page-content { padding: 40px 0 80px; }
 
-.info-placeholder {
-  max-width: 750px;
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 80px 40px;
-  text-align: center;
 }
 
-.visual-element {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 30px;
+.doc-card {
+  padding: 30px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  gap: 30px;
 }
 
-.visual-element i {
-  font-size: 4rem;
+.doc-info {
+  flex: 1;
+}
+
+.doc-year {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--pks-orange-light);
   color: var(--pks-orange);
-  z-index: 2;
-}
-
-.pulse-layer {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: var(--pks-orange);
-  border-radius: 50%;
-  filter: blur(25px);
-  opacity: 0.15;
-  animation: pulse-aura 3s infinite;
-}
-
-@keyframes pulse-aura {
-  0% { transform: scale(1); opacity: 0.15; }
-  50% { transform: scale(1.3); opacity: 0.05; }
-  100% { transform: scale(1); opacity: 0.15; }
-}
-
-.info-placeholder h2 {
-  font-size: 2rem;
-  color: var(--pks-navy);
-  margin-bottom: 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
   font-weight: 800;
+  margin-bottom: 12px;
 }
 
-.info-placeholder p {
+.doc-info h3 {
+  font-size: 1.35rem;
+  color: var(--pks-navy);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.doc-info p {
   color: var(--pks-text-muted);
-  font-size: 1.1rem;
-  line-height: 1.7;
-  max-width: 550px;
-  margin: 0 auto 35px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
 
-.timeline-hint {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-bottom: 40px;
-}
-
-.hint-item {
+.doc-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--pks-navy-light);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  gap: 20px;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--pks-success);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--pks-success);
   border-radius: 50%;
 }
 
-.dot.orange { background: var(--pks-orange); box-shadow: 0 0 8px var(--pks-orange); }
-.dot.gray { background: #d1d5db; }
-
-.support-action {
-  padding-top: 35px;
-  border-top: 1px solid var(--pks-white-smoke);
+.doc-date {
+  font-size: 0.8rem;
+  color: var(--pks-text-muted);
 }
 
-.support-action p {
-  font-size: 0.9rem;
-  font-weight: 600;
+.doc-actions {
+  flex-shrink: 0;
+}
+
+.no-file {
+  font-size: 0.85rem;
+  color: var(--pks-text-muted);
+  font-style: italic;
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.loading-state i, .empty-state i {
+  font-size: 3rem;
+  color: var(--pks-orange);
   margin-bottom: 20px;
+  display: block;
 }
 
 .banner-blob {
@@ -157,10 +197,19 @@ useScrollReveal()
   opacity: 0.12;
 }
 
-@media (max-width: 640px) {
-  .info-placeholder { padding: 50px 20px; }
-  .info-placeholder h2 { font-size: 1.65rem; }
-  .timeline-hint { flex-direction: column; align-items: center; gap: 12px; }
+@media (max-width: 768px) {
+  .doc-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .doc-actions {
+    width: 100%;
+  }
+  .doc-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
 

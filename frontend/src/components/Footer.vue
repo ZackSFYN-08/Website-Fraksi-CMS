@@ -13,11 +13,13 @@ useScrollReveal()
 
     <div class="container footer-content relative-z2">
       <!-- Left: Logos -->
-      <div class="footer-logos" data-reveal="fade-right">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Lambang_Kota_Bandung.svg/300px-Lambang_Kota_Bandung.svg.png" alt="DPRD Kota Bandung" class="dpr-logo" />
+      <div class="footer-logos">
+        <div class="logo-box">
+          <img src="/logo-dprd.jpg" alt="DPRD Kota Bandung" class="footer-logo-img" />
+        </div>
         
-        <div class="pks-logo-box">
-          <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="pks-logo" />
+        <div class="logo-box">
+          <img src="https://pks.id/img/logo-pks.png" alt="PKS" class="footer-logo-img" />
         </div>
       </div>
 
@@ -101,7 +103,7 @@ useScrollReveal()
 .footer-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 40px;
   padding-bottom: 60px;
 }
@@ -113,41 +115,24 @@ useScrollReveal()
   gap: 30px;
 }
 
-.dpr-logo {
-  height: 110px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
-  transition: transform 0.5s ease;
-  margin-top: -10px; /* Pull up a bit */
-}
-
-.dpr-logo:hover {
-  transform: scale(1.05);
-}
-
-.pks-logo-box {
+.logo-box {
   background: #FFFFFF;
-  width: 160px;
-  min-height: 200px;
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25px;
-  border-radius: 0 0 32px 32px;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.4);
-  margin-top: -110px; /* Pulled much higher to the 'corner' */
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  margin-top: 0; /* Aligned with text */
 }
 
-.pks-logo-box:hover {
-  transform: translateY(5px);
-  box-shadow: 0 20px 55px rgba(240,122,30,0.3);
-}
+/* Removed hover animation as per user request */
 
-.pks-logo {
-  width: 100%;
-  height: auto;
+.footer-logo-img {
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
 

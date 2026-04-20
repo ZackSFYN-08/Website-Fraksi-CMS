@@ -11,6 +11,7 @@ const router = createRouter({
     { path: '/berita', name: 'berita', component: () => import('../views/BeritaView.vue') },
     { path: '/berita/:documentId', name: 'berita-detail', component: () => import('../views/BeritaDetailView.vue') },
     { path: '/profil', name: 'profil', component: () => import('../views/ProfilView.vue') },
+    { path: '/profil-partai', name: 'profil-partai', component: () => import('../views/ProfilPartaiView.vue') },
     { path: '/anggota', name: 'anggota', component: () => import('../views/MembersView.vue') },
     { path: '/anggota/:documentId', name: 'anggota-detail', component: () => import('../views/MemberDetailView.vue') },
     { path: '/galeri/foto', name: 'galeri-foto', component: () => import('../views/GaleriFotoView.vue') },
@@ -27,6 +28,7 @@ const router = createRouter({
     { path: '/internshipks', name: 'internshipks', component: () => import('../views/InternshipksView.vue') },
     { path: '/peraturan-daerah', name: 'peraturan-daerah', component: () => import('../views/PeraturanDaerahView.vue') },
     { path: '/pansus', name: 'pansus', component: () => import('../views/PansusView.vue') },
+    { path: '/hasil-pemilu-2024', name: 'hasil-pemilu-2024', component: () => import('../views/HasilPemilu2024View.vue') },
   ],
 })
 

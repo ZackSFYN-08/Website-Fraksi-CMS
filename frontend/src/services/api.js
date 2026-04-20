@@ -72,6 +72,25 @@ export default {
       params: { sort: 'date:desc', ...params }
     })
     return response.data.data
+  },
+
+  async getEvents(params = {}) {
+    const response = await apiClient.get('/api/events', {
+      params: { sort: 'date:desc', populate: '*', ...params }
+    })
+    return response.data.data
+  },
+
+  async getLegislativeDocuments(type, params = {}) {
+    const response = await apiClient.get('/api/legislative-documents', {
+      params: {
+        'filters[type][$eq]': type,
+        sort: 'publish_date:desc',
+        populate: '*',
+        ...params
+      }
+    })
+    return response.data.data
   }
 }
 

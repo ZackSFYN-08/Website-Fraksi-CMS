@@ -67,6 +67,8 @@ onUnmounted(() => {
               Profil <i class="fas fa-chevron-down"></i>
             </button>
             <div :class="['glass-dropdown', { 'visible': activeDropdown === 'profil' }]">
+              <router-link to="/profil-partai" class="drop-link" @click="closeAll">Profil Partai</router-link>
+              <router-link to="/hasil-pemilu-2024" class="drop-link" @click="closeAll">Hasil Pemilu 2024</router-link>
               <router-link to="/profil" class="drop-link" @click="closeAll">Visi & Misi</router-link>
               <router-link to="/anggota" class="drop-link" @click="closeAll">Anggota Fraksi</router-link>
             </div>
@@ -193,7 +195,6 @@ onUnmounted(() => {
 
 .brand-info { display: flex; flex-direction: column; }
 .brand-top {
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.15rem;
   color: var(--pks-navy);
   line-height: 1;

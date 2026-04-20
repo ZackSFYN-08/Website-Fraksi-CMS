@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "legislative_documents",
+  "info": {
+    "singularName": "legislative-document",
+    "pluralName": "legislative-documents",
+    "displayName": "Legislative Document",
+    "description": "Dokumen legislatif seperti Pansus dan Perda"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Pansus",
+        "Perda"
+      ],
+      "required": true
+    },
+    "year": {
+      "type": "integer"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "status": {
+      "type": "string"
+    },
+    "publish_date": {
+      "type": "date"
+    }
+  }
+}

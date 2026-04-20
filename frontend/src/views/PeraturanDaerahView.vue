@@ -11,22 +11,43 @@
 
     <!-- Content Section -->
     <section class="container page-content">
-      <div class="glass-card placeholder-box" data-reveal="fade-up">
-        <div class="icon-stack">
-          <i class="fas fa-file-contract"></i>
-          <div class="icon-ring"></div>
-        </div>
-        <h2>Pusat Dokumentasi Perda</h2>
-        <p>Kami sedang melakukan digitalisasi arsip Peraturan Daerah untuk memudahkan akses publik. Daftar lengkap produk hukum daerah akan segera tersedia untuk diunduh.</p>
-        <div class="status-indicator">
-          <span class="dot pulse"></span> Sedang Diperbarui
-        </div>
-        
-        <div class="cta-section">
-          <p>Butuh informasi spesifik mengenai Perda tertentu?</p>
-          <router-link to="/kontak" class="btn btn-navy-outline">
-            <i class="fas fa-paper-plane"></i> Hubungi Sekretariat
-          </router-link>
+      <!-- Loading State -->
+      <div v-if="loading" class="loading-state">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Memuat data Perda...</span>
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="documents.length === 0" class="empty-state glass-card" data-reveal="fade-up">
+        <i class="fas fa-file-contract"></i>
+        <p>Belum ada database Perda yang diterbitkan di halaman ini.</p>
+        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Kelola di Admin Panel</a>
+      </div>
+
+      <!-- Result List -->
+      <div v-else class="doc-list">
+        <div 
+          class="doc-card glass-card hover-lift" 
+          v-for="(doc, index) in documents" 
+          :key="doc.id" 
+          data-reveal="fade-up" 
+          :data-reveal-delay="index * 100"
+        >
+          <div class="doc-info">
+            <span class="doc-year">{{ getField(doc, 'year') }}</span>
+            <h3>{{ getField(doc, 'title') }}</h3>
+            <p>{{ getField(doc, 'description') }}</p>
+            <div class="doc-meta">
+              <span class="status-badge">{{ getField(doc, 'status') || 'Berlaku' }}</span>
+              <span class="doc-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(doc, 'publish_date')) }}</span>
+            </div>
+          </div>
+          <div class="doc-actions">
+            <a v-if="getFileUrl(doc)" :href="getFileUrl(doc)" target="_blank" class="btn btn-navy-outline btn-sm">
+              <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+            <span v-else class="no-file">File tidak tersedia</span>
+          </div>
         </div>
       </div>
     </section>
@@ -34,119 +55,161 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
+import api, { STRAPI_URL } from '../services/api'
+
 useScrollReveal()
+
+const documents = ref([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const data = await api.getLegislativeDocuments('Perda')
+    documents.value = data || []
+  } catch (e) {
+    console.error('Failed to fetch Perda documents:', e)
+  } finally {
+    loading.value = false
+  }
+})
+
+const getField = (d, field) => d?.[field] || d?.attributes?.[field] || ''
+const getFileUrl = (d) => {
+  const file = d?.file || d?.attributes?.file
+  const url = file?.data?.attributes?.url || file?.url
+  if (!url) return null
+  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`
+}
+const formatDate = (d) => {
+  if (!d) return '-'
+  return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+}
 </script>
 
 <style scoped>
 .page-content { padding: 40px 0 80px; }
 
-.placeholder-box {
-  max-width: 750px;
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 80px 40px;
-  text-align: center;
 }
 
-.icon-stack {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 35px;
+.doc-card {
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.doc-info {
+  flex: 1;
+}
+
+.doc-year {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--pks-orange-light);
+  color: var(--pks-orange);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.doc-info h3 {
+  font-size: 1.35rem;
+  color: var(--pks-navy);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.doc-info p {
+  color: var(--pks-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.doc-meta {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 20px;
 }
 
-.icon-stack i {
-  font-size: 4.5rem;
-  color: var(--pks-orange);
-  z-index: 2;
-}
-
-.icon-ring {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 2px dashed rgba(240, 122, 30, 0.3);
-  border-radius: 50%;
-  animation: rotate 15s linear infinite;
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.placeholder-box h2 {
-  font-size: 1.85rem;
-  color: var(--pks-navy);
-  margin-bottom: 20px;
-  font-weight: 800;
-}
-
-.placeholder-box p {
-  color: var(--pks-text-muted);
-  font-size: 1.05rem;
-  line-height: 1.7;
-  max-width: 550px;
-  margin: 0 auto 30px;
-}
-
-.status-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--pks-white-smoke);
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 0.85rem;
+.status-badge {
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--pks-navy-light);
-  margin-bottom: 40px;
+  color: var(--pks-success);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.dot {
+.status-badge::before {
+  content: '';
   width: 8px;
   height: 8px;
-  background: #27ae60;
+  background: var(--pks-success);
   border-radius: 50%;
 }
 
-.pulse {
-  animation: pulse-green 2s infinite;
+.doc-date {
+  font-size: 0.8rem;
+  color: var(--pks-text-muted);
 }
 
-@keyframes pulse-green {
-  0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+.doc-actions {
+  flex-shrink: 0;
 }
 
-.cta-section {
-  padding-top: 30px;
-  border-top: 1px solid var(--pks-white-smoke);
+.no-file {
+  font-size: 0.85rem;
+  color: var(--pks-text-muted);
+  font-style: italic;
 }
 
-.cta-section p {
-  font-size: 0.9rem;
-  margin-bottom: 15px;
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.loading-state i, .empty-state i {
+  font-size: 3rem;
+  color: var(--pks-orange);
+  margin-bottom: 20px;
+  display: block;
 }
 
 .banner-blob {
   position: absolute;
-  bottom: -50px;
-  left: -50px;
-  width: 250px;
-  height: 250px;
-  background: var(--pks-orange);
-  filter: blur(80px);
-  opacity: 0.1;
+  top: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: var(--pks-navy);
+  filter: blur(100px);
+  opacity: 0.12;
 }
 
-@media (max-width: 640px) {
-  .placeholder-box { padding: 50px 25px; }
-  .placeholder-box h2 { font-size: 1.5rem; }
+@media (max-width: 768px) {
+  .doc-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .doc-actions {
+    width: 100%;
+  }
+  .doc-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
 

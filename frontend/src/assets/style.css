@@ -45,7 +45,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: var(--pks-bg);
   color: var(--pks-text-dark);
   line-height: 1.6;
@@ -54,7 +54,6 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   color: var(--pks-navy);
   line-height: 1.2;
@@ -178,7 +177,6 @@ img { max-width: 100%; height: auto; display: block; }
   cursor: pointer;
   transition: var(--transition-smooth);
   border: none;
-  font-family: 'Poppins', sans-serif;
   position: relative;
   overflow: hidden;
 }

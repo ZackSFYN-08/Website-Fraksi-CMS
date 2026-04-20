@@ -1,7 +1,7 @@
 import type { Core } from '@strapi/strapi';
 
 export default {
-  register() {},
+  register() { },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     // Seed Member data (foto is now media type, uploaded separately via admin)
@@ -135,8 +135,9 @@ export default {
         'api::gallery.gallery.find',
         'api::gallery.gallery.findOne',
         'api::aspiration.aspiration.create',
-        'api::followup.followup.find',
         'api::followup.followup.findOne',
+        'api::legislative-document.legislative-document.find',
+        'api::legislative-document.legislative-document.findOne',
         'plugin::upload.content-api.upload',
       ];
 
@@ -186,79 +187,6 @@ export default {
       }
     }
 
-    // --- Media Restoration Logic (Internal Strapi Service) ---
-    const fs = require('fs');
-    const path = require('path');
-    const uploadPath = path.join(process.cwd(), 'public', 'uploads');
-    
-    if (fs.existsSync(uploadPath)) {
-      const files = fs.readdirSync(uploadPath);
-      const members = await strapi.documents('api::member.member').findMany({ populate: ['foto'] });
-      
-      const photoMappings = [
-        { pattern: /Eko/i, nameSnippet: 'EKO KURNIANTO' },
-        { pattern: /Deni/i, nameSnippet: 'DENI NURSANI' },
-        { pattern: /Andri/i, nameSnippet: 'ANDRI RUSMANA' },
-        { pattern: /Siti/i, nameSnippet: 'SITI MARFUAH' },
-        { pattern: /Ahmad|Rahmat/i, nameSnippet: 'AHMAD RAHMAT PURNAMA' },
-        { pattern: /Susi/i, nameSnippet: 'SUSI SULASTRI' },
-        { pattern: /Elton/i, nameSnippet: 'ELTON AGUS MARJAN' },
-        { pattern: /Agus/i, nameSnippet: 'AGUS ANDI SETYAWAN' },
-        { pattern: /Asep/i, nameSnippet: 'ASEP MULYADI' },
-        { pattern: /Iman/i, nameSnippet: 'IMAN LESTARIYONO' },
-        { pattern: /Susanto/i, nameSnippet: 'SUSANTO TRIYOGO ADIPUTRO' },
-      ];
-
-      for (const member of members) {
-        if (!member.foto) {
-          const mapping = photoMappings.find(m => member.nama.includes(m.nameSnippet));
-          if (mapping) {
-            const matchingFile = files.find(f => mapping.pattern.test(f) && !f.startsWith('thumbnail_') && !f.startsWith('small_') && !f.startsWith('medium_') && !f.startsWith('large_'));
-            
-            if (matchingFile) {
-              console.log(`🔍 Found matching file for ${member.nama}: ${matchingFile}`);
-              
-              // Check if file is already in media library
-              const fileRecord = await strapi.query('plugin::upload.file').findOne({ 
-                where: { name: { $contains: mapping.nameSnippet.split(' ')[0] } } 
-              });
-
-              if (fileRecord) {
-                await strapi.documents('api::member.member').update({
-                  documentId: member.documentId,
-                  data: { foto: fileRecord.id }
-                });
-                console.log(`✅ Linked ${matchingFile} to ${member.nama}`);
-              } else {
-                console.log(`⚠️ File ${matchingFile} not in Media Library. Auto-uploading...`);
-                try {
-                  const filePath = path.join(uploadPath, matchingFile);
-                  const stat = fs.statSync(filePath);
-                  const uploadedFiles = await strapi.plugin('upload').service('upload').upload({
-                    data: {},
-                    files: {
-                      filepath: filePath,
-                      originalFilename: matchingFile,
-                      mimetype: 'image/jpeg',
-                      size: stat.size,
-                    },
-                  });
-                  if (uploadedFiles && uploadedFiles.length > 0) {
-                    await strapi.documents('api::member.member').update({
-                      documentId: member.documentId,
-                      data: { foto: uploadedFiles[0].id }
-                    });
-                    console.log(`✅ Successfully uploaded and linked ${matchingFile} to ${member.nama}`);
-                  }
-                } catch (e: any) {
-                  console.log(`⚠️ Could not auto-upload ${matchingFile}: ${e.message || e}. Upload photos manually via Strapi admin.`);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   },
 };
 
