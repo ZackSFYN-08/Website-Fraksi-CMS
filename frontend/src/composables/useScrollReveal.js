@@ -1,13 +1,13 @@
 import { onMounted, onUnmounted } from 'vue'
+import { revealAnimation } from '../utils/animations'
 
 /**
  * Composable that adds scroll-reveal animations using IntersectionObserver.
- * Elements with [data-reveal] attribute will animate in when scrolled into view.
+ * Elements with [data-reveal] attribute will animate in when scrolled into view using Anime.js.
  * 
  * Supports:
  *   data-reveal="fade-up" | "fade-down" | "fade-left" | "fade-right" | "zoom" | "flip"
  *   data-reveal-delay="100" (ms)
- *   data-reveal-duration="600" (ms)
  */
 export function useScrollReveal() {
   let observer = null
@@ -16,8 +16,10 @@ export function useScrollReveal() {
   const observeElements = (container = document) => {
     const elements = container.querySelectorAll('[data-reveal]')
     elements.forEach((el) => {
-      if (!el.classList.contains('reveal-hidden') && !el.classList.contains('revealed')) {
-        el.classList.add('reveal-hidden')
+      // Only set initial state if not already revealed
+      if (!el.classList.contains('revealed')) {
+        // Initial hidden state (can also be handled in CSS, but doing it here for clarity)
+        el.style.opacity = '0'
         observer.observe(el)
       }
     })
@@ -30,15 +32,13 @@ export function useScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const el = entry.target
+            const type = el.dataset.reveal || 'fade-up'
             const delay = el.dataset.revealDelay || 0
-            const duration = el.dataset.revealDuration || 600
 
-            el.style.transitionDuration = `${duration}ms`
-
-            setTimeout(() => {
-              el.classList.add('revealed')
-            }, Number(delay))
-
+            // Use Anime.js utility
+            revealAnimation(el, type, delay)
+            
+            el.classList.add('revealed')
             observer.unobserve(el)
           }
         })

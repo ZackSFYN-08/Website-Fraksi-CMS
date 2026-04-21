@@ -20,16 +20,18 @@ export default {
     ];
 
     const currentMembers = await strapi.documents('api::member.member').findMany();
+    let seededCount = 0;
     for (const item of memberItems) {
       const existing = currentMembers.find(m => m.nama.toLowerCase().includes(item.nama.split(',')[0].toLowerCase()));
-      if (existing) {
-        await strapi.documents('api::member.member').update({ documentId: existing.documentId, data: item });
-      } else {
+      if (!existing) {
         const created = await strapi.documents('api::member.member').create({ data: item });
         await strapi.documents('api::member.member').publish({ documentId: created.documentId });
+        seededCount++;
       }
     }
-    console.log('✓ Seeded/Updated 11 member data.');
+    if (seededCount > 0) {
+      console.log(`✓ Seeded ${seededCount} new member data.`);
+    }
 
     // Seed Article data from bandung.pks.id
     const articleItems = [

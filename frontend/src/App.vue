@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import { pageTransition } from './utils/animations'
 </script>
 
 <template>
@@ -10,7 +11,13 @@ import Footer from './components/Footer.vue'
     
     <main class="main-content">
       <RouterView v-slot="{ Component }">
-        <Transition name="page" mode="out-in">
+        <Transition 
+          :css="false"
+          @before-enter="pageTransition.beforeEnter"
+          @enter="pageTransition.enter"
+          @leave="pageTransition.leave"
+          mode="out-in"
+        >
           <component :is="Component" />
         </Transition>
       </RouterView>

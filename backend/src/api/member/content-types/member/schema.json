@@ -32,6 +32,15 @@
     },
     "bio": {
       "type": "richtext"
+    },
+    "total_suara": {
+      "type": "integer",
+      "default": 0
+    },
+    "suara_kecamatan": {
+      "type": "component",
+      "repeatable": true,
+      "component": "member.vote-breakdown"
     }
   }
 }

@@ -14,16 +14,24 @@ export { STRAPI_URL }
 export default {
   async getMembers(params = {}) {
     const response = await apiClient.get('/api/members', {
-      params: { populate: '*', ...params }
+      params: { 
+        populate: ['foto', 'suara_kecamatan'],
+        ...params 
+      }
     })
     return response.data.data
   },
 
   async getMember(documentId) {
-    const response = await apiClient.get(`/api/members/${documentId}`, {
-      params: { populate: '*' }
+    // Menggunakan endpoint koleksi dengan filter sebagai solusi untuk masalah populasi endpoint tunggal di Strapi v5
+    const response = await apiClient.get('/api/members', {
+      params: { 
+        'filters[documentId][$eq]': documentId,
+        populate: ['foto', 'suara_kecamatan']
+      }
     })
-    return response.data.data
+    // Mengembalikan item pertama dari hasil filter
+    return response.data.data?.[0] || null
   },
 
   async getArticles(params = {}) {

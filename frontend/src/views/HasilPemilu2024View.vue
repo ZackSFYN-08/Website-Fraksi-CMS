@@ -6,37 +6,34 @@
         <h1>Terima kasih telah memilih PKS 🙌</h1>
         <p>untuk semua Masyarakat Kota Bandung atas Kepercayaan yang diberikan kepada PKS Kota Bandung</p>
         
-        <!-- Alhamdulillah Highlight -->
-        <div class="alhamdulillah-highlight float-animation">
+        <!-- Alhamdulillah & Summary Highlight -->
+        <div class="alhamdulillah-highlight float-animation compact-highlight">
           <div class="font-amiri ar-text">الحمد لله</div>
-          <div class="vote-count">366.760</div>
-          <div class="vote-label">Total Suara PKS</div>
+          <div class="main-stats-grid">
+            <div class="pks-stat">
+              <div class="vote-count">{{ voteCountDisplay }}</div>
+              <div class="vote-label">Suara PKS</div>
+            </div>
+            <div class="pks-stat">
+              <div class="vote-count">{{ seatCountDisplay }}</div>
+              <div class="vote-label">Kursi PKS</div>
+            </div>
+          </div>
+          
+          <div class="city-summary-line">
+            <div class="cs-item text-sm">
+              <i class="fas fa-vote-yea"></i> Total Suara: <strong>1.228.259</strong>
+            </div>
+            <div class="cs-item text-sm">
+              <i class="fas fa-chair"></i> Total Kursi: <strong>50</strong>
+            </div>
+          </div>
+
           <div class="win-badge">
-            <i class="fas fa-trophy"></i> Menang di 3 dari 7 Dapil
+            <i class="fas fa-trophy"></i> 3 dari 7 Dapil
           </div>
         </div>
         <div class="banner-blob"></div>
-      </div>
-    </section>
-
-    <!-- Summary Section -->
-    <section class="container summary-section">
-      <div class="summary-grid">
-        <div class="summary-box glass-card" data-reveal="zoom" data-reveal-delay="100">
-          <div class="s-icon">🗳️</div>
-          <div class="s-value">1.228.259</div>
-          <div class="s-label">Total Suara Sah</div>
-        </div>
-        <div class="summary-box glass-card" data-reveal="zoom" data-reveal-delay="200">
-          <div class="s-icon">🪑</div>
-          <div class="s-value">50</div>
-          <div class="s-label">Total Kursi DPRD</div>
-        </div>
-        <div class="summary-box glass-card winner-box" data-reveal="zoom" data-reveal-delay="300">
-          <div class="s-icon">🏆</div>
-          <div class="s-value">11 Kursi</div>
-          <div class="s-label">Pemenang: PKS</div>
-        </div>
       </div>
     </section>
 
@@ -44,9 +41,9 @@
     <section class="container charts-section">
       <div class="charts-grid">
         <!-- Votes Chart -->
-        <div class="chart-card glass-card" data-reveal="fade-up">
+        <div class="chart-card glass-card compact-card" data-reveal="fade-up">
           <h3 class="chart-header">
-            <i class="fas fa-chart-bar"></i> 📊 Perolehan Suara per Partai
+            <i class="fas fa-chart-bar"></i> Perolehan Suara per Partai
           </h3>
           <div class="chart-wrapper">
             <canvas id="votesChart"></canvas>
@@ -54,9 +51,9 @@
         </div>
 
         <!-- Seats Chart -->
-        <div class="chart-card glass-card" data-reveal="fade-up" data-reveal-delay="200">
+        <div class="chart-card glass-card compact-card" data-reveal="fade-up" data-reveal-delay="200">
           <h3 class="chart-header">
-            <i class="fas fa-chair"></i> 🪑 Perolehan Kursi per Partai
+            <i class="fas fa-chair"></i> Perolehan Kursi per Partai
           </h3>
           <div class="chart-wrapper">
             <canvas id="seatsChart"></canvas>
@@ -69,9 +66,9 @@
     <section class="container details-section">
       <div class="details-grid">
         <!-- Donut Proporsi -->
-        <div class="donut-card glass-card float-independent" data-reveal="fade-right">
+        <div class="donut-card glass-card compact-card float-independent" data-reveal="fade-right">
           <h3 class="chart-header">
-            <i class="fas fa-chart-pie"></i> 🍩 Proporsi Kursi PKS
+            <i class="fas fa-chart-pie"></i> Proporsi Kursi PKS
           </h3>
           <div class="donut-wrapper">
             <canvas id="donutChart"></canvas>
@@ -80,13 +77,13 @@
               <span class="d-sub">Kursi PKS</span>
             </div>
           </div>
-          <p class="donut-footer">Total 50 Kursi DPRD Kota Bandung</p>
+          <p class="donut-footer">Total 50 Kursi DPRD</p>
         </div>
 
         <!-- Tabel Rekapitulasi -->
-        <div class="table-card glass-card" data-reveal="fade-left">
+        <div class="table-card glass-card compact-card" data-reveal="fade-left">
           <h3 class="chart-header">
-            <i class="fas fa-list-ol"></i> 📋 Rekapitulasi Lengkap
+            <i class="fas fa-list-ol"></i> Rekapitulasi Lengkap
           </h3>
           <div class="table-responsive">
             <table class="rekap-table">
@@ -129,10 +126,15 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
+import { staggerReveal } from '../utils/animations'
+import anime from 'animejs'
 
 useScrollReveal()
+
+const voteCountDisplay = ref(0)
+const seatCountDisplay = ref(0)
 
 const totalVotes = 1228259
 const electionData = [
@@ -149,6 +151,34 @@ const electionData = [
 let charts = []
 
 onMounted(() => {
+  // Counting Animation for Main Stats
+  anime({
+    targets: { val: 0 },
+    val: 366760,
+    duration: 2000,
+    easing: 'easeOutExpo',
+    update: (anim) => {
+      voteCountDisplay.value = Math.round(anim.animations[0].currentValue).toLocaleString('id-ID')
+    }
+  })
+
+  anime({
+    targets: { val: 0 },
+    val: 11,
+    duration: 1500,
+    delay: 500,
+    easing: 'easeOutExpo',
+    update: (anim) => {
+      seatCountDisplay.value = Math.round(anim.animations[0].currentValue)
+    }
+  })
+
+  // Stagger reveal for table rows
+  nextTick(() => {
+    const rows = document.querySelectorAll('.rekap-table tbody tr')
+    staggerReveal(rows, 800)
+  })
+
   // Load Chart.js CDN
   const script = document.createElement('script')
   script.src = 'https://cdn.jsdelivr.net/npm/chart.js'
@@ -246,59 +276,83 @@ const initCharts = () => {
 .hasil-pemilu-view {
   background-color: var(--pks-bg);
   min-height: 100vh;
-  padding-bottom: 80px;
+  padding-bottom: 40px;
 }
 
-/* Header Alhamdulillah */
+/* Header Alhamdulillah & Stats */
 .alhamdulillah-highlight {
-  margin-top: 40px;
+  margin-top: 25px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
-  padding: 30px;
-  border-radius: var(--radius-lg);
+  padding: 30px 40px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.2);
   display: inline-block;
-  min-width: 320px;
+  min-width: 420px;
+  max-width: 550px;
   position: relative;
   z-index: 5;
 }
 
 .ar-text {
-  font-size: 3.5rem;
+  font-size: 2.8rem;
   color: var(--pks-orange);
   margin-bottom: 15px;
   font-family: 'Amiri', serif;
 }
 
+.main-stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
 .vote-count {
-  font-size: 4rem;
+  font-size: 2.8rem;
   font-weight: 900;
   color: white;
   line-height: 1;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .vote-label {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  opacity: 0.8;
+  letter-spacing: 1.5px;
+  opacity: 0.7;
 }
 
+.city-summary-line {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 20px;
+}
+
+.cs-item {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cs-item i { color: var(--pks-orange); margin-right: 6px; }
+.cs-item strong { color: white; font-weight: 800; }
+
 .win-badge {
-  margin-top: 20px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: var(--pks-orange);
   color: white;
   padding: 8px 16px;
   border-radius: var(--radius-full);
   font-weight: 800;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  box-shadow: 0 10px 20px rgba(240, 122, 30, 0.3);
+  box-shadow: 0 10px 25px rgba(240, 122, 30, 0.4);
 }
 
 /* Summary Grid */
@@ -342,28 +396,33 @@ const initCharts = () => {
 .charts-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 40px;
+  gap: 30px;
+  margin-top: 30px;
 }
 
 .chart-card {
-  padding: 40px;
+  padding: 25px;
   background: white;
 }
 
+.compact-card {
+  padding: 25px !important;
+}
+
 .chart-header {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--pks-navy);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  font-weight: 700;
 }
 
 .chart-header i { color: var(--pks-orange); opacity: 0.5; }
 
 .chart-wrapper {
-  height: 480px;
+  height: 400px;
   position: relative;
 }
 
@@ -371,12 +430,12 @@ const initCharts = () => {
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 40px;
-  margin-top: 40px;
+  gap: 30px;
+  margin-top: 30px;
 }
 
 .donut-card {
-  padding: 40px;
+  padding: 30px;
   text-align: center;
   background: white;
 }
@@ -416,8 +475,8 @@ const initCharts = () => {
 
 .rekap-table th {
   text-align: left;
-  padding: 15px;
-  font-size: 0.75rem;
+  padding: 10px 15px;
+  font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--pks-text-muted);
@@ -425,15 +484,15 @@ const initCharts = () => {
 }
 
 .rekap-table td {
-  padding: 15px;
+  padding: 10px 15px;
   border-bottom: 1px solid var(--pks-gray);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
-.t-no { font-weight: 700; color: var(--pks-text-muted); width: 50px; }
+.t-no { font-weight: 700; color: var(--pks-text-muted); width: 40px; }
 .t-name { font-weight: 800; color: var(--pks-navy); }
 .t-votes, .t-seats { font-weight: 900; color: var(--pks-navy); }
-.t-perc { color: var(--pks-text-muted); font-weight: 500; }
+.t-perc { color: var(--pks-text-muted); font-size: 0.8rem; }
 
 .is-pks {
   background: var(--pks-orange-light);

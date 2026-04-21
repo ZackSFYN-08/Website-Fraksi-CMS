@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import anime from 'animejs'
 
 const isMobileMenuOpen = ref(false)
 const activeDropdown = ref(null)
@@ -20,7 +21,6 @@ const closeAll = () => {
 
 const handleClickOutside = (e) => {
   if (!e.target.closest('.has-dropdown')) {
-    // If we click outside an open dropdown on mobile/desktop, close it
     activeDropdown.value = null
   }
 }
@@ -28,6 +28,30 @@ const handleClickOutside = (e) => {
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   window.addEventListener('scroll', handleScroll)
+
+  // Entrance Animation
+  const tl = anime.timeline({
+    easing: 'easeOutExpo',
+    duration: 1000
+  })
+
+  tl.add({
+    targets: '.brand-link',
+    translateX: [-30, 0],
+    opacity: [0, 1],
+    delay: 500
+  })
+  .add({
+    targets: '.nav-item',
+    translateY: [-20, 0],
+    opacity: [0, 1],
+    delay: anime.stagger(100)
+  }, '-=700')
+  .add({
+    targets: '.nav-cta',
+    scale: [0.8, 1],
+    opacity: [0, 1]
+  }, '-=500')
 })
 
 onUnmounted(() => {

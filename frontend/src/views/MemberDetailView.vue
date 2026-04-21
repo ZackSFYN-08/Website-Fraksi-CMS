@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import api, { STRAPI_URL } from '../services/api'
 import { useScrollReveal } from '../composables/useScrollReveal'
+import anime from 'animejs'
 
 useScrollReveal()
 
@@ -10,21 +11,81 @@ const route = useRoute()
 const member = ref(null)
 const allMembers = ref([])
 const loading = ref(true)
+const totalSuaraDisplay = ref('0')
+const totalSuaraVal = computed(() => Number(f('total_suara', 0)) || 0)
+
+const hasVotes = computed(() => {
+  const breakdown = member.value?.suara_kecamatan || member.value?.attributes?.suara_kecamatan
+  return Array.isArray(breakdown) && breakdown.length > 0
+})
 
 // Function to fetch data
+// Watch for member data to trigger animations once DOM is ready
+watch(member, (newVal) => {
+  if (newVal) {
+    console.log('Member data loaded, triggering animations for:', newVal.nama || newVal.attributes?.nama)
+    nextTick(() => {
+      setTimeout(animateVotes, 200)
+    })
+  }
+}, { deep: true })
+
 const fetchData = async (documentId) => {
+  console.log('fetchData called with ID:', documentId)
   loading.value = true
   try {
     const data = await api.getMember(documentId)
+    console.log('API Response received:', data)
     member.value = data || null
     // Get other members
     const members = await api.getMembers({ sort: 'createdAt:asc' })
-    allMembers.value = (members || []).filter(m => (m.documentId || m.id) !== documentId)
+    allMembers.value = (members || []).filter(m => (m.documentId || m.id) !== (data?.documentId || data?.id))
   } catch (e) {
     console.error('Failed to fetch member:', e)
   } finally {
     loading.value = false
   }
+}
+
+const animateVotes = () => {
+  const total = totalSuaraVal.value
+  if (total > 0) {
+    anime({
+      targets: { val: 0 },
+      val: total,
+      duration: 1500,
+      easing: 'easeOutExpo',
+      update: (anim) => {
+        totalSuaraDisplay.value = Math.round(anim.animations[0].currentValue).toLocaleString('id-ID')
+      }
+    })
+  } else {
+    totalSuaraDisplay.value = '0'
+  }
+
+  nextTick(() => {
+    const items = document.querySelectorAll('.vote-bar-item')
+    if (items.length > 0) {
+      anime({
+        targets: items,
+        opacity: [0, 1],
+        translateX: [-30, 0],
+        delay: anime.stagger(100),
+        duration: 800,
+        easing: 'easeOutQuad'
+      })
+
+      // Animate progress bars
+      const progressBars = document.querySelectorAll('.progress-fill')
+      anime({
+        targets: progressBars,
+        width: (el) => el.dataset.width + '%',
+        duration: 1200,
+        delay: anime.stagger(100, { start: 200 }),
+        easing: 'easeOutExpo'
+      })
+    }
+  })
 }
 
 onMounted(() => {
@@ -37,7 +98,12 @@ watch(() => route.params.documentId, (newId) => {
   if (newId) fetchData(newId)
 })
 
-const f = (field) => member.value?.[field] || member.value?.attributes?.[field] || ''
+const f = (field, fallback = '') => {
+  if (!member.value) return fallback
+  // Handle both flat and nested structures
+  const val = member.value[field] !== undefined ? member.value[field] : member.value.attributes?.[field]
+  return val !== undefined && val !== null ? val : fallback
+}
 
 const fotoUrl = computed(() => {
   const m = member.value
@@ -188,6 +254,51 @@ const bioParagraphs = computed(() => {
                 <p v-for="(p, i) in bioParagraphs" :key="i">{{ p }}</p>
               </div>
             </div>
+
+            <!-- Vote Distribution Section -->
+            <div class="glass-card votes-card" v-if="hasVotes || f('total_suara')">
+              <div class="section-title">
+                <i class="fas fa-chart-simple"></i>
+                <h2>Perolehan Suara Legislator</h2>
+              </div>
+
+              <div class="votes-summary-row">
+                <div class="total-suara-highlight">
+                  <span class="ts-label">Total Suara Sah</span>
+                  <div class="ts-value">{{ totalSuaraDisplay }}</div>
+                  <div class="ts-sub">Hasil Pleno KPU 2024</div>
+                </div>
+                <div class="total-suara-icon">
+                  <i class="fas fa-envelope-open-text"></i>
+                </div>
+              </div>
+
+              <div class="kecamatan-breakdown" v-if="hasVotes">
+                <h3 class="breakdown-title">Distribusi per Wilayah</h3>
+                <div class="votes-list">
+                  <div 
+                    v-for="item in (member.suara_kecamatan || member.attributes?.suara_kecamatan)" 
+                    :key="item.id" 
+                    class="vote-bar-item"
+                  >
+                    <div class="v-header">
+                      <span class="v-kec">{{ item.kecamatan }}</span>
+                      <span class="v-val">{{ (item.suara || 0).toLocaleString('id-ID') }}</span>
+                    </div>
+                    <div class="v-progress-bg">
+                      <div 
+                        class="progress-fill" 
+                        :data-width="totalSuaraVal > 0 ? ((item.suara || 0) / totalSuaraVal * 100) : 0"
+                        style="width: 0%"
+                      ></div>
+                    </div>
+                    <div class="v-perc text-xs" v-if="totalSuaraVal > 0">
+                      {{ ((item.suara || 0) / totalSuaraVal * 100).toFixed(1) }}% dari total
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </main>
 
           <!-- Sidebar -->
@@ -198,7 +309,7 @@ const bioParagraphs = computed(() => {
                 <router-link
                   v-for="m in allMembers.slice(0, 5)"
                   :key="m.id"
-                  :to="`/anggota/${m.documentId}`"
+                  :to="`/anggota/${m.documentId || m.id}`"
                   class="other-member-link hover-lift"
                 >
                   <div class="m-avatar">
@@ -435,6 +546,78 @@ const bioParagraphs = computed(() => {
 
 .bio-text p { margin-bottom: 20px; text-align: justify; }
 .bio-text p:last-child { margin-bottom: 0; }
+
+/* Vote Section Scaling */
+.votes-card {
+  padding: 40px;
+}
+
+.votes-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--pks-navy-gradient);
+  padding: 35px;
+  border-radius: var(--radius-md);
+  margin-bottom: 40px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.total-suara-highlight { position: relative; z-index: 2; }
+.ts-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.7; display: block; margin-bottom: 8px; }
+.ts-value { font-size: 3rem; font-weight: 900; line-height: 1; margin-bottom: 8px; }
+.ts-sub { font-size: 0.8rem; font-weight: 600; opacity: 0.6; }
+
+.total-suara-icon { font-size: 4rem; opacity: 0.1; position: absolute; right: 20px; bottom: -10px; transform: rotate(-15deg); }
+
+.breakdown-title {
+  font-size: 0.95rem;
+  color: var(--pks-navy);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breakdown-title::after { content: ''; flex: 1; height: 1px; background: var(--pks-gray); }
+
+.votes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.vote-bar-item { opacity: 0; }
+
+.v-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.v-kec { color: var(--pks-navy); font-size: 0.95rem; }
+.v-val { color: var(--pks-orange); }
+
+.v-progress-bg {
+  height: 8px;
+  background: var(--pks-gray);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--pks-orange-gradient);
+  border-radius: 4px;
+}
+
+.v-perc { color: var(--pks-text-muted); font-weight: 600; font-size: 0.72rem; text-align: right; }
 
 /* Sidebar */
 .sidebar-list {

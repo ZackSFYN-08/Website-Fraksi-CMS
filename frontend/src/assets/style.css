@@ -300,8 +300,8 @@ img { max-width: 100%; height: auto; display: block; }
 [data-reveal="zoom"].reveal-hidden { transform: scale(0.9); }
 
 .revealed {
-  opacity: 1 !important;
-  transform: translate(0) scale(1) !important;
+  /* Let Anime.js manage the values, but ensure visibility */
+  visibility: visible !important;
 }
 
 /* Stagger Effects */
@@ -311,18 +311,7 @@ img { max-width: 100%; height: auto; display: block; }
 [data-reveal-delay="400"] { transition-delay: 400ms; }
 [data-reveal-delay="500"] { transition-delay: 500ms; }
 
-/* Page Transitions */
-.page-enter-active {
-  animation: fadeInUp 0.5s var(--ease-elastic);
-}
-.page-leave-active {
-  animation: fadeOutDown 0.3s ease-in;
-}
-
-@keyframes fadeOutDown {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(20px); }
-}
+/* Page Transitions handled by Anime.js */
 
 /* Responsive Optimization */
 @media (max-width: 768px) {

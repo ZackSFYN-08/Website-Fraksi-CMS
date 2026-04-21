@@ -39,7 +39,7 @@ const initials = computed(() => {
 
 <template>
   <router-link 
-    :to="`/anggota/${props.member.documentId}`" 
+    :to="`/anggota/${props.member.documentId || props.member.id}`" 
     class="member-card glass-card hover-lift" 
     :aria-label="`Lihat profil ${nama}`"
   >
@@ -64,7 +64,13 @@ const initials = computed(() => {
     </div>
 
     <div class="member-info-content">
-      <h3 class="name-display">{{ nama }}</h3>
+      <div class="name-row">
+        <h3 class="name-display">{{ nama }}</h3>
+        <div class="vote-badge" v-if="props.member?.total_suara || props.member?.attributes?.total_suara">
+          <i class="fas fa-vote-yea"></i>
+          {{ (props.member?.total_suara || props.member?.attributes?.total_suara).toLocaleString('id-ID') }}
+        </div>
+      </div>
       <div class="org-footer">
         <span class="org-name">Legislator Kota Bandung</span>
         <div class="social-mini">
@@ -184,10 +190,36 @@ const initials = computed(() => {
 .name-display {
   font-size: 1.2rem;
   color: var(--pks-navy);
-  margin-bottom: 12px;
   font-weight: 800;
   line-height: 1.3;
   transition: color 0.3s ease;
+  margin: 0;
+}
+
+.name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.vote-badge {
+  background: var(--pks-gray);
+  color: var(--pks-navy-light);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.vote-badge i {
+  color: var(--pks-orange);
+  font-size: 0.8rem;
 }
 
 .member-card:hover .name-display {

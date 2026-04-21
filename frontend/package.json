@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "animejs": "^3.2.2",
     "axios": "^1.14.0",
-    "scrollreveal": "^4.0.9",
     "vue": "^3.5.30",
     "vue-router": "^4.6.4"
   },
