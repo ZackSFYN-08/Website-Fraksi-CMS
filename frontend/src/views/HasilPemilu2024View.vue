@@ -228,7 +228,7 @@ const initCharts = () => {
     },
     options: {
       ...commonOptions,
-      animation: { duration: 2500, easing: 'easeOutElastic' }
+      animation: { duration: 2000, easing: 'easeOutQuart' }
     }
   }))
 
@@ -247,7 +247,7 @@ const initCharts = () => {
       },
       options: {
         ...commonOptions,
-        animation: { duration: 2000, easing: 'easeOutElastic' }
+        animation: { duration: 1800, easing: 'easeOutQuart' }
       }
     }))
   }, 1000)
@@ -266,7 +266,7 @@ const initCharts = () => {
     options: {
       cutout: '72%',
       plugins: { legend: { display: false } },
-      animation: { duration: 2800, animateRotate: true, easing: 'easeInOutBack' }
+      animation: { duration: 2000, animateRotate: true, easing: 'easeOutQuart' }
     }
   }))
 }

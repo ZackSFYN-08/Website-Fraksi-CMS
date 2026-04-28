@@ -18,7 +18,7 @@
         </div>
         <h2>Informasi Segera Hadir</h2>
         <p>Program InternshipKS sedang dalam tahap persiapan. Kami akan segera merilis mekanisme pendaftaran dan kriteria calon peserta magang untuk periode mendatang.</p>
-        <div class="coming-soon-badge">Coming Soon 2024</div>
+        <div class="coming-soon-badge">Coming Soon</div>
         
         <div class="action-hint">
           <p>Dapatkan update terbaru melalui media sosial kami:</p>

@@ -10,7 +10,7 @@ import { pageTransition } from './utils/animations'
     <Navbar />
     
     <main class="main-content">
-      <RouterView v-slot="{ Component }">
+      <RouterView v-slot="{ Component, route }">
         <Transition 
           :css="false"
           @before-enter="pageTransition.beforeEnter"
@@ -18,7 +18,7 @@ import { pageTransition } from './utils/animations'
           @leave="pageTransition.leave"
           mode="out-in"
         >
-          <component :is="Component" />
+          <component :is="Component" :key="route.path" />
         </Transition>
       </RouterView>
     </main>

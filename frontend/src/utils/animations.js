@@ -9,8 +9,7 @@ export const pageTransition = {
     if (!el) return
     anime.set(el, {
       opacity: 0,
-      translateY: 30,
-      scale: 0.98
+      translateY: 20
     })
   },
   
@@ -20,10 +19,9 @@ export const pageTransition = {
     anime({
       targets: el,
       opacity: [0, 1],
-      translateY: [30, 0],
-      scale: [0.98, 1],
-      duration: 800,
-      easing: 'easeOutElastic(1, .8)',
+      translateY: [20, 0],
+      duration: 600,
+      easing: 'easeOutExpo',
       complete: done // Anime.js ensures this is called
     })
     
@@ -39,10 +37,9 @@ export const pageTransition = {
     anime({
       targets: el,
       opacity: [1, 0],
-      translateY: [0, -20],
-      scale: [1, 0.98],
-      duration: 400,
-      easing: 'easeInSine',
+      translateY: [0, -15],
+      duration: 300,
+      easing: 'easeOutQuad',
       complete: done
     })
     
@@ -71,8 +68,8 @@ export const revealAnimation = (el, type = 'fade-up', delay = 0) => {
     targets: el,
     ...animation,
     delay: Number(delay),
-    duration: 1000,
-    easing: 'easeOutElastic(1, .6)'
+    duration: 800,
+    easing: 'easeOutExpo'
   })
 }
 

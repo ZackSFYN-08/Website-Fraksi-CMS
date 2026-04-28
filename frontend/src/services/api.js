@@ -15,7 +15,7 @@ export default {
   async getMembers(params = {}) {
     const response = await apiClient.get('/api/members', {
       params: { 
-        populate: ['foto', 'suara_kecamatan'],
+        populate: '*',
         ...params 
       }
     })
@@ -27,7 +27,7 @@ export default {
     const response = await apiClient.get('/api/members', {
       params: { 
         'filters[documentId][$eq]': documentId,
-        populate: ['foto', 'suara_kecamatan']
+        populate: '*'
       }
     })
     // Mengembalikan item pertama dari hasil filter

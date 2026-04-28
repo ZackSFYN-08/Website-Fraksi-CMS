@@ -1,0 +1,1189 @@
+
+> backend@0.1.0 dev
+> strapi develop
+
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (16ms)
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (132ms)
+- Creating admin
+✔ Creating admin (2130ms)
+✔ Loading Strapi (4541ms)
+- Generating types
+✔ Generating types (408ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (48ms)
+✔ Compiling TS (4375ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:27:26 GMT+0700 (Western Indo… │
+│ Launched in        │ 9374 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 91723                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:27:26.702] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:27:27.481] [32mhttp[39m: GET /admin (104 ms) 200
+[2026-04-27 12:27:27.494] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (20ms)
+[2026-04-27 12:27:27.549] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:27:27.602] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:27:32.013] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:27:32.019] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (131ms)
+- Creating admin
+✔ Creating admin (1309ms)
+✔ Loading Strapi (3855ms)
+- Generating types
+✔ Generating types (527ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (50ms)
+✔ Compiling TS (4400ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:27:44 GMT+0700 (Western Indo… │
+│ Launched in        │ 8821 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 92116                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:27:44.049] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:27:44.839] [32mhttp[39m: GET /admin (113 ms) 200
+[2026-04-27 12:27:44.851] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (16ms)
+[2026-04-27 12:27:44.934] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:27:49.399] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:27:49.407] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (138ms)
+- Creating admin
+✔ Creating admin (600ms)
+✔ Loading Strapi (3029ms)
+- Generating types
+✔ Generating types (507ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (55ms)
+✔ Compiling TS (4399ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:28:00 GMT+0700 (Western Indo… │
+│ Launched in        │ 7961 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 92474                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:28:00.591] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:28:01.279] [32mhttp[39m: GET /admin (86 ms) 200
+[2026-04-27 12:28:01.289] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (9ms)
+[2026-04-27 12:28:05.715] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:28:05.722] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (132ms)
+- Creating admin
+✔ Creating admin (567ms)
+✔ Loading Strapi (3048ms)
+- Generating types
+✔ Generating types (519ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (58ms)
+✔ Compiling TS (4449ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:28:16 GMT+0700 (Western Indo… │
+│ Launched in        │ 8045 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 92831                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:28:16.987] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:28:17.654] [32mhttp[39m: GET /admin (85 ms) 200
+[2026-04-27 12:28:17.677] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (16ms)
+[2026-04-27 12:28:22.257] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:28:22.265] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (151ms)
+- Creating admin
+✔ Creating admin (618ms)
+✔ Loading Strapi (3073ms)
+- Generating types
+✔ Generating types (529ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (56ms)
+✔ Compiling TS (4370ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:28:33 GMT+0700 (Western Indo… │
+│ Launched in        │ 7999 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 93136                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:28:33.564] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:28:34.312] [32mhttp[39m: GET /admin (95 ms) 200
+[2026-04-27 12:28:34.322] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (17ms)
+[2026-04-27 12:28:34.415] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:28:34.480] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:28:38.870] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:28:38.876] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (139ms)
+- Creating admin
+✔ Creating admin (584ms)
+✔ Loading Strapi (3017ms)
+- Generating types
+✔ Generating types (505ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (62ms)
+✔ Compiling TS (4755ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:28:50 GMT+0700 (Western Indo… │
+│ Launched in        │ 8299 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 93458                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:28:50.382] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:28:51.069] [32mhttp[39m: GET /admin (89 ms) 200
+[2026-04-27 12:28:51.081] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:28:55.438] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:28:55.446] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (131ms)
+- Creating admin
+✔ Creating admin (569ms)
+✔ Loading Strapi (3045ms)
+- Generating types
+✔ Generating types (541ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (101ms)
+✔ Compiling TS (4593ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:29:06 GMT+0700 (Western Indo… │
+│ Launched in        │ 8203 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 93760                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:29:06.943] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:29:07.631] [32mhttp[39m: GET /admin (94 ms) 200
+[2026-04-27 12:29:07.638] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (10ms)
+[2026-04-27 12:29:11.368] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:29:11.375] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (135ms)
+- Creating admin
+✔ Creating admin (638ms)
+✔ Loading Strapi (3004ms)
+- Generating types
+✔ Generating types (544ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (54ms)
+✔ Compiling TS (4401ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:29:22 GMT+0700 (Western Indo… │
+│ Launched in        │ 7977 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 94078                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:29:22.640] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:29:23.303] [32mhttp[39m: GET /admin (83 ms) 200
+[2026-04-27 12:29:23.313] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:29:26.999] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:29:27.006] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (134ms)
+- Creating admin
+✔ Creating admin (571ms)
+✔ Loading Strapi (3135ms)
+- Generating types
+✔ Generating types (499ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (50ms)
+✔ Compiling TS (4652ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:29:38 GMT+0700 (Western Indo… │
+│ Launched in        │ 8309 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 94366                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:29:38.655] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:29:39.306] [32mhttp[39m: GET /admin (86 ms) 200
+[2026-04-27 12:29:39.314] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (12ms)
+[2026-04-27 12:29:42.788] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:29:42.794] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (141ms)
+- Creating admin
+✔ Creating admin (1167ms)
+✔ Loading Strapi (3607ms)
+- Generating types
+✔ Generating types (511ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (52ms)
+✔ Compiling TS (4426ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:29:54 GMT+0700 (Western Indo… │
+│ Launched in        │ 8588 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 94782                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:29:54.682] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:29:55.436] [32mhttp[39m: GET /admin (94 ms) 200
+[2026-04-27 12:29:55.443] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:29:59.180] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:29:59.186] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (133ms)
+- Creating admin
+✔ Creating admin (584ms)
+✔ Loading Strapi (3040ms)
+- Generating types
+✔ Generating types (503ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (47ms)
+✔ Compiling TS (4462ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:30:10 GMT+0700 (Western Indo… │
+│ Launched in        │ 8034 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 95096                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:30:10.466] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:30:11.143] [32mhttp[39m: GET /admin (87 ms) 200
+[2026-04-27 12:30:11.154] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (19ms)
+[2026-04-27 12:30:14.731] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:30:14.738] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (145ms)
+- Creating admin
+✔ Creating admin (572ms)
+✔ Loading Strapi (3027ms)
+- Generating types
+✔ Generating types (518ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (52ms)
+✔ Compiling TS (4401ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:30:25 GMT+0700 (Western Indo… │
+│ Launched in        │ 7975 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 95408                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:30:25.886] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:30:26.594] [32mhttp[39m: GET /admin (88 ms) 200
+[2026-04-27 12:30:26.602] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:30:30.307] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:30:30.312] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (134ms)
+- Creating admin
+✔ Creating admin (567ms)
+✔ Loading Strapi (2946ms)
+- Generating types
+✔ Generating types (523ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (54ms)
+✔ Compiling TS (4494ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:30:41 GMT+0700 (Western Indo… │
+│ Launched in        │ 7985 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 95694                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:30:41.525] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:30:42.203] [32mhttp[39m: GET /admin (85 ms) 200
+[2026-04-27 12:30:42.213] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (20ms)
+[2026-04-27 12:30:45.989] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:30:45.995] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (134ms)
+- Creating admin
+✔ Creating admin (597ms)
+✔ Loading Strapi (3054ms)
+- Generating types
+✔ Generating types (514ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (55ms)
+✔ Compiling TS (4404ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:30:57 GMT+0700 (Western Indo… │
+│ Launched in        │ 8000 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 96005                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:30:57.165] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:30:57.870] [32mhttp[39m: GET /admin (86 ms) 200
+[2026-04-27 12:30:57.878] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (12ms)
+[2026-04-27 12:31:01.311] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:31:01.317] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (132ms)
+- Creating admin
+✔ Creating admin (585ms)
+✔ Loading Strapi (2979ms)
+- Generating types
+✔ Generating types (506ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (49ms)
+✔ Compiling TS (4470ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:31:12 GMT+0700 (Western Indo… │
+│ Launched in        │ 7986 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 96288                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:31:12.533] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:31:13.187] [32mhttp[39m: GET /admin (88 ms) 200
+[2026-04-27 12:31:13.204] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (20ms)
+[2026-04-27 12:31:16.693] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:31:16.700] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (139ms)
+- Creating admin
+✔ Creating admin (598ms)
+✔ Loading Strapi (3067ms)
+- Generating types
+✔ Generating types (518ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (54ms)
+✔ Compiling TS (4418ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:31:27 GMT+0700 (Western Indo… │
+│ Launched in        │ 8039 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 96599                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:31:27.873] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:31:28.581] [32mhttp[39m: GET /admin (87 ms) 200
+[2026-04-27 12:31:28.590] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (12ms)
+[2026-04-27 12:31:32.420] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:31:32.425] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (130ms)
+- Creating admin
+✔ Creating admin (636ms)
+✔ Loading Strapi (3140ms)
+- Generating types
+✔ Generating types (511ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (55ms)
+✔ Compiling TS (4625ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:31:44 GMT+0700 (Western Indo… │
+│ Launched in        │ 8308 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 96889                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:31:44.061] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:31:44.722] [32mhttp[39m: GET /admin (86 ms) 200
+[2026-04-27 12:31:44.732] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (18ms)
+[2026-04-27 12:31:44.806] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:31:44.862] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:31:48.415] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:31:48.420] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (129ms)
+- Creating admin
+✔ Creating admin (588ms)
+✔ Loading Strapi (3240ms)
+- Generating types
+✔ Generating types (511ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (56ms)
+✔ Compiling TS (4492ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:31:59 GMT+0700 (Western Indo… │
+│ Launched in        │ 8271 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 97208                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:31:59.864] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:32:00.563] [32mhttp[39m: GET /admin (98 ms) 200
+[2026-04-27 12:32:00.584] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:32:03.991] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:32:03.999] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (133ms)
+- Creating admin
+✔ Creating admin (584ms)
+✔ Loading Strapi (3003ms)
+- Generating types
+✔ Generating types (535ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (61ms)
+✔ Compiling TS (5036ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:32:15 GMT+0700 (Western Indo… │
+│ Launched in        │ 8632 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 97495                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:32:15.922] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:32:16.603] [32mhttp[39m: GET /api/members?filters%5BdocumentId%5D%5B$eq%5D=vsep6a4on1qeht9r5xz99kbl&populate%5B%5D=foto&populate%5B%5D=suara_kecamatan (70 ms) 200
+[2026-04-27 12:32:16.616] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (12ms)
+[2026-04-27 12:32:16.699] [32mhttp[39m: GET /api/members?populate%5B%5D=foto&populate%5B%5D=suara_kecamatan&sort=createdAt:asc (56 ms) 200
+[2026-04-27 12:32:16.749] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+[2026-04-27 12:32:20.540] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:32:20.546] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (137ms)
+- Creating admin
+✔ Creating admin (1030ms)
+✔ Loading Strapi (3605ms)
+- Generating types
+✔ Generating types (496ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (56ms)
+✔ Compiling TS (4724ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:32:32 GMT+0700 (Western Indo… │
+│ Launched in        │ 8847 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 97842                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:32:32.763] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:32:33.451] [32mhttp[39m: GET /admin (84 ms) 200
+[2026-04-27 12:32:33.459] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (12ms)
+[2026-04-27 12:32:37.331] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:32:37.337] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (146ms)
+- Creating admin
+✔ Creating admin (625ms)
+✔ Loading Strapi (3236ms)
+- Generating types
+✔ Generating types (533ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (49ms)
+✔ Compiling TS (5438ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:32:49 GMT+0700 (Western Indo… │
+│ Launched in        │ 9243 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 98228                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:32:49.834] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:32:49.950] [32mhttp[39m: GET /api/members?populate%5B%5D=foto&populate%5B%5D=suara_kecamatan&sort=createdAt:asc (78 ms) 200
+[2026-04-27 12:32:50.596] [32mhttp[39m: GET /admin (84 ms) 200
+[2026-04-27 12:32:50.602] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (12ms)
+[2026-04-27 12:32:54.468] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:32:54.477] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (144ms)
+- Creating admin
+✔ Creating admin (725ms)
+✔ Loading Strapi (3417ms)
+- Generating types
+✔ Generating types (611ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (49ms)
+✔ Compiling TS (4529ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:33:06 GMT+0700 (Western Indo… │
+│ Launched in        │ 8575 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 98680                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:33:06.689] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:33:07.388] [32mhttp[39m: GET /admin (81 ms) 200
+[2026-04-27 12:33:07.396] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:33:10.993] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:33:11.000] [32minfo[39m: Strapi has been shut down
+- Loading Strapi
+✓ Public permissions set for all APIs.
+✓ Categories verified/seeded.
+- Building build context
+
+[INFO] Including the following ENV variables as part of the JS bundle:
+    - ADMIN_PATH
+    - STRAPI_ADMIN_BACKEND_URL
+    - STRAPI_TELEMETRY_DISABLED
+    - STRAPI_AI_URL
+    - STRAPI_ANALYTICS_URL
+✔ Building build context (158ms)
+- Creating admin
+✔ Creating admin (730ms)
+✔ Loading Strapi (3699ms)
+- Generating types
+✔ Generating types (705ms)
+- Compiling TS
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (50ms)
+✔ Compiling TS (5197ms)
+
+ Project information
+
+┌────────────────────┬──────────────────────────────────────────────────┐
+│ Time               │ Mon Apr 27 2026 12:33:23 GMT+0700 (Western Indo… │
+│ Launched in        │ 9626 ms                                          │
+│ Environment        │ development                                      │
+│ Process PID        │ 99053                                            │
+│ Version            │ 5.42.1 (node v25.9.0)                            │
+│ Edition            │ Community                                        │
+│ Database           │ sqlite                                           │
+│ Database name      │ .tmp/data.db                                     │
+└────────────────────┴──────────────────────────────────────────────────┘
+
+ Actions available
+
+One more thing...
+Create your first administrator 💻 by going to the administration panel at:
+
+┌─────────────────────────────┐
+│ http://localhost:1337/admin │
+└─────────────────────────────┘
+
+[2026-04-27 12:33:23.736] [32minfo[39m: Strapi started successfully
+[2026-04-27 12:33:26.246] [32mhttp[39m: GET /admin (108 ms) 200
+[2026-04-27 12:33:26.252] [32minfo[39m: File changed: /home/mifenalash/Projects/Website-Fraksi-CMS/backend/strapi_log.txt
+- Cleaning dist dir /home/mifenalash/Projects/Website-Fraksi-CMS/backend/dist
+✔ Cleaning dist dir (11ms)
+[2026-04-27 12:33:30.038] [32minfo[39m: Shutting down Strapi
+[2026-04-27 12:33:30.058] [32minfo[39m: Strapi has been shut down

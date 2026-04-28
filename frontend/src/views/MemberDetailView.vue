@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import api, { STRAPI_URL } from '../services/api'
 import { useScrollReveal } from '../composables/useScrollReveal'
@@ -12,7 +12,16 @@ const member = ref(null)
 const allMembers = ref([])
 const loading = ref(true)
 const totalSuaraDisplay = ref('0')
-const totalSuaraVal = computed(() => Number(f('total_suara', 0)) || 0)
+const totalSuaraVal = computed(() => {
+  const manualTotal = Number(f('total_suara', 0)) || 0
+  if (manualTotal > 0) return manualTotal
+  
+  const breakdown = member.value?.suara_kecamatan || member.value?.attributes?.suara_kecamatan
+  if (Array.isArray(breakdown) && breakdown.length > 0) {
+    return breakdown.reduce((sum, item) => sum + (Number(item.suara) || 0), 0)
+  }
+  return 0
+})
 
 const hasVotes = computed(() => {
   const breakdown = member.value?.suara_kecamatan || member.value?.attributes?.suara_kecamatan
@@ -20,15 +29,15 @@ const hasVotes = computed(() => {
 })
 
 // Function to fetch data
-// Watch for member data to trigger animations once DOM is ready
-watch(member, (newVal) => {
-  if (newVal) {
-    console.log('Member data loaded, triggering animations for:', newVal.nama || newVal.attributes?.nama)
+// Watch for loading to finish to trigger animations once DOM is ready
+watch(loading, (newVal) => {
+  if (!newVal && member.value) {
+    console.log('Loading finished, triggering animations for:', member.value.nama || member.value.attributes?.nama)
     nextTick(() => {
       setTimeout(animateVotes, 200)
     })
   }
-}, { deep: true })
+})
 
 const fetchData = async (documentId) => {
   console.log('fetchData called with ID:', documentId)
@@ -93,7 +102,6 @@ onMounted(() => {
 })
 
 // Watch for route changes to refresh data
-import { watch } from 'vue'
 watch(() => route.params.documentId, (newId) => {
   if (newId) fetchData(newId)
 })
