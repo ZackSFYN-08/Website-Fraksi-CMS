@@ -568,11 +568,20 @@ export interface ApiFollowupFollowup extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    aspiration: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::aspiration.aspiration'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
+    followup_status: Schema.Attribute.Enumeration<
+      ['pending', 'progress', 'done']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -580,11 +589,6 @@ export interface ApiFollowupFollowup extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<['pending', 'progress', 'done']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'pending'>;
-    statusText: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -626,12 +630,50 @@ export interface ApiGalleryGallery extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiInternshipInternship extends Struct.CollectionTypeSchema {
+  collectionName: 'internships';
+  info: {
+    description: 'Program magang InternshipKS';
+    displayName: 'Internship';
+    pluralName: 'internships';
+    singularName: 'internship';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    end_date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::internship.internship'
+    > &
+      Schema.Attribute.Private;
+    poster: Schema.Attribute.Media<'images'>;
+    program_status: Schema.Attribute.Enumeration<
+      ['Coming Soon', 'Open', 'Closed']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Coming Soon'>;
+    publishedAt: Schema.Attribute.DateTime;
+    start_date: Schema.Attribute.Date;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLegislativeDocumentLegislativeDocument
   extends Struct.CollectionTypeSchema {
   collectionName: 'legislative_documents';
   info: {
-    description: 'Dokumen legislatif seperti Pansus dan Perda';
-    displayName: 'Legislative Document';
+    description: 'Dokumen Peraturan Daerah';
+    displayName: 'Perda';
     pluralName: 'legislative-documents';
     singularName: 'legislative-document';
   };
@@ -643,6 +685,7 @@ export interface ApiLegislativeDocumentLegislativeDocument
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    doc_status: Schema.Attribute.String;
     file: Schema.Attribute.Media<'files'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -652,10 +695,8 @@ export interface ApiLegislativeDocumentLegislativeDocument
       Schema.Attribute.Private;
     publish_date: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    type: Schema.Attribute.Enumeration<['Pansus', 'Perda']> &
-      Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<['Perda']> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -696,6 +737,42 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPansusPansus extends Struct.CollectionTypeSchema {
+  collectionName: 'pansuses';
+  info: {
+    description: 'Daftar Panitia Khusus (Pansus)';
+    displayName: 'Pansus';
+    pluralName: 'pansuses';
+    singularName: 'pansus';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    anggota: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    doc_status: Schema.Attribute.String;
+    file: Schema.Attribute.Media<'files'>;
+    ketua: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pansus.pansus'
+    > &
+      Schema.Attribute.Private;
+    publish_date: Schema.Attribute.Date;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    wakil_ketua: Schema.Attribute.String;
   };
 }
 
@@ -1216,8 +1293,10 @@ declare module '@strapi/strapi' {
       'api::event.event': ApiEventEvent;
       'api::followup.followup': ApiFollowupFollowup;
       'api::gallery.gallery': ApiGalleryGallery;
+      'api::internship.internship': ApiInternshipInternship;
       'api::legislative-document.legislative-document': ApiLegislativeDocumentLegislativeDocument;
       'api::member.member': ApiMemberMember;
+      'api::pansus.pansus': ApiPansusPansus;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

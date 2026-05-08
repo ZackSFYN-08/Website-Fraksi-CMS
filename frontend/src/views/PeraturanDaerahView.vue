@@ -38,14 +38,14 @@
             <h3>{{ getField(doc, 'title') }}</h3>
             <p>{{ getField(doc, 'description') }}</p>
             <div class="doc-meta">
-              <span class="status-badge">{{ getField(doc, 'status') || 'Berlaku' }}</span>
+              <span class="status-badge">{{ getField(doc, 'doc_status') || 'Berlaku' }}</span>
               <span class="doc-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(doc, 'publish_date')) }}</span>
             </div>
           </div>
           <div class="doc-actions">
-            <a v-if="getFileUrl(doc)" :href="getFileUrl(doc)" target="_blank" class="btn btn-navy-outline btn-sm">
-              <i class="fas fa-file-pdf"></i> Download PDF
-            </a>
+            <button v-if="getFileUrl(doc)" @click="handleDownload(doc)" class="btn btn-outline-orange btn-sm">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
             <span v-else class="no-file">File tidak tersedia</span>
           </div>
         </div>
@@ -58,6 +58,7 @@
 import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
 import api, { STRAPI_URL } from '../services/api'
+import { forceDownload } from '../utils/download'
 
 useScrollReveal()
 
@@ -85,6 +86,14 @@ const getFileUrl = (d) => {
 const formatDate = (d) => {
   if (!d) return '-'
   return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+const handleDownload = (doc) => {
+  const url = getFileUrl(doc)
+  const title = getField(doc, 'title') || 'Dokumen_Perda'
+  if (url) {
+    forceDownload(url, `${title.replace(/\s+/g, '_')}.pdf`)
+  }
 }
 </script>
 

@@ -28,6 +28,7 @@ const router = createRouter({
     { path: '/internshipks', name: 'internshipks', component: () => import('../views/InternshipksView.vue') },
     { path: '/peraturan-daerah', name: 'peraturan-daerah', component: () => import('../views/PeraturanDaerahView.vue') },
     { path: '/pansus', name: 'pansus', component: () => import('../views/PansusView.vue') },
+    { path: '/pansus/:documentId', name: 'pansus-detail', component: () => import('../views/PansusDetailView.vue') },
     { path: '/hasil-pemilu-2024', name: 'hasil-pemilu-2024', component: () => import('../views/HasilPemilu2024View.vue') },
   ],
 })

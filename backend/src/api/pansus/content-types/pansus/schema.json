@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "legislative_documents",
+  "collectionName": "pansuses",
   "info": {
-    "singularName": "legislative-document",
-    "pluralName": "legislative-documents",
-    "displayName": "Perda",
-    "description": "Dokumen Peraturan Daerah"
+    "singularName": "pansus",
+    "pluralName": "pansuses",
+    "displayName": "Pansus",
+    "description": "Daftar Panitia Khusus (Pansus)"
   },
   "options": {
     "draftAndPublish": true
@@ -18,15 +18,14 @@
     "description": {
       "type": "text"
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "Perda"
-      ],
-      "required": true
+    "ketua": {
+      "type": "string"
     },
-    "year": {
-      "type": "integer"
+    "wakil_ketua": {
+      "type": "string"
+    },
+    "anggota": {
+      "type": "text"
     },
     "file": {
       "type": "media",

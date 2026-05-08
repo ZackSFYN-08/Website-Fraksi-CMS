@@ -2,22 +2,16 @@
 import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
-import { pageTransition } from './utils/animations'
 </script>
 
 <template>
   <div class="app-layout">
+    <div class="fixed-bg"></div>
     <Navbar />
     
     <main class="main-content">
       <RouterView v-slot="{ Component, route }">
-        <Transition 
-          :css="false"
-          @before-enter="pageTransition.beforeEnter"
-          @enter="pageTransition.enter"
-          @leave="pageTransition.leave"
-          mode="out-in"
-        >
+        <Transition name="page" mode="out-in">
           <component :is="Component" :key="route.path" />
         </Transition>
       </RouterView>
@@ -30,10 +24,10 @@ import { pageTransition } from './utils/animations'
 <style>
 @import './assets/style.css';
 
-.app-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.fixed-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background-color: var(--pks-bg);
   background-image: 
     linear-gradient(rgba(248, 250, 252, 0.50), rgba(248, 250, 252, 0.50)),
@@ -41,7 +35,12 @@ import { pageTransition } from './utils/animations'
   background-repeat: repeat;
   background-position: top center;
   background-size: 80px;
-  background-attachment: fixed;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main-content {

@@ -26,7 +26,8 @@
 
       <!-- Result List -->
       <div v-else class="doc-list">
-        <div 
+        <router-link 
+          :to="`/pansus/${doc.documentId || doc.id}`"
           class="doc-card glass-card hover-lift" 
           v-for="(doc, index) in documents" 
           :key="doc.id" 
@@ -34,21 +35,18 @@
           :data-reveal-delay="index * 100"
         >
           <div class="doc-info">
-            <span class="doc-year">{{ getField(doc, 'year') }}</span>
-            <h3>{{ getField(doc, 'title') }}</h3>
-            <p>{{ getField(doc, 'description') }}</p>
+            <h3 class="pansus-title">{{ getField(doc, 'title') }}</h3>
+            <p class="pansus-desc">{{ getField(doc, 'description') }}</p>
+
             <div class="doc-meta">
-              <span class="status-badge">{{ getField(doc, 'status') || 'Aktif' }}</span>
+              <span class="status-badge">{{ getField(doc, 'doc_status') || 'Aktif' }}</span>
               <span class="doc-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(doc, 'publish_date')) }}</span>
             </div>
           </div>
           <div class="doc-actions">
-            <a v-if="getFileUrl(doc)" :href="getFileUrl(doc)" target="_blank" class="btn btn-navy-outline btn-sm">
-              <i class="fas fa-file-pdf"></i> Download PDF
-            </a>
-            <span v-else class="no-file">File tidak tersedia</span>
+            <span class="read-link">Cek Detail Anggota <i class="fas fa-chevron-right"></i></span>
           </div>
-        </div>
+        </router-link>
       </div>
     </section>
   </div>
@@ -57,7 +55,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
-import api, { STRAPI_URL } from '../services/api'
+import api from '../services/api'
 
 useScrollReveal()
 
@@ -66,7 +64,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const data = await api.getLegislativeDocuments('Pansus')
+    const data = await api.getPansuses()
     documents.value = data || []
   } catch (e) {
     console.error('Failed to fetch Pansus documents:', e)
@@ -76,12 +74,6 @@ onMounted(async () => {
 })
 
 const getField = (d, field) => d?.[field] || d?.attributes?.[field] || ''
-const getFileUrl = (d) => {
-  const file = d?.file || d?.attributes?.file
-  const url = file?.data?.attributes?.url || file?.url
-  if (!url) return null
-  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`
-}
 const formatDate = (d) => {
   if (!d) return '-'
   return new Date(d).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -105,6 +97,7 @@ const formatDate = (d) => {
   justify-content: space-between;
   align-items: center;
   gap: 30px;
+  text-decoration: none;
 }
 
 .doc-info {
@@ -122,18 +115,18 @@ const formatDate = (d) => {
   margin-bottom: 12px;
 }
 
-.doc-info h3 {
+.pansus-title {
   font-size: 1.35rem;
   color: var(--pks-navy);
   margin-bottom: 10px;
   line-height: 1.4;
 }
 
-.doc-info p {
+.pansus-desc {
   color: var(--pks-text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .doc-meta {
@@ -168,10 +161,13 @@ const formatDate = (d) => {
   flex-shrink: 0;
 }
 
-.no-file {
+.read-link {
   font-size: 0.85rem;
-  color: var(--pks-text-muted);
-  font-style: italic;
+  font-weight: 700;
+  color: var(--pks-orange);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .loading-state, .empty-state {
@@ -202,13 +198,6 @@ const formatDate = (d) => {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
-  }
-  .doc-actions {
-    width: 100%;
-  }
-  .doc-actions .btn {
-    width: 100%;
-    justify-content: center;
   }
 }
 </style>

@@ -77,7 +77,7 @@ export default {
 
   async getFollowups(params = {}) {
     const response = await apiClient.get('/api/followups', {
-      params: { sort: 'date:desc', ...params }
+      params: { sort: 'date:desc', populate: '*', ...params }
     })
     return response.data.data
   },
@@ -94,6 +94,38 @@ export default {
       params: {
         'filters[type][$eq]': type,
         sort: 'publish_date:desc',
+        populate: '*',
+        ...params
+      }
+    })
+    return response.data.data
+  },
+
+  async getPansuses(params = {}) {
+    const response = await apiClient.get('/api/pansuses', {
+      params: {
+        sort: 'publish_date:desc',
+        populate: '*',
+        ...params
+      }
+    })
+    return response.data.data
+  },
+
+  async getPansus(documentId) {
+    const response = await apiClient.get('/api/pansuses', {
+      params: {
+        'filters[documentId][$eq]': documentId,
+        populate: '*'
+      }
+    })
+    return response.data.data?.[0] || null
+  },
+
+  async getInternships(params = {}) {
+    const response = await apiClient.get('/api/internships', {
+      params: {
+        sort: 'createdAt:desc',
         populate: '*',
         ...params
       }

@@ -12,9 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string",
-      "required": true
+    "aspiration": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::aspiration.aspiration"
     },
     "description": {
       "type": "text",
@@ -23,7 +24,7 @@
     "date": {
       "type": "date"
     },
-    "status": {
+    "followup_status": {
       "type": "enumeration",
       "enum": [
         "pending",
@@ -32,9 +33,6 @@
       ],
       "required": true,
       "default": "pending"
-    },
-    "statusText": {
-      "type": "string"
     }
   }
 }

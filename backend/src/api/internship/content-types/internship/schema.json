@@ -1,45 +1,46 @@
 {
   "kind": "collectionType",
-  "collectionName": "legislative_documents",
+  "collectionName": "internships",
   "info": {
-    "singularName": "legislative-document",
-    "pluralName": "legislative-documents",
-    "displayName": "Perda",
-    "description": "Dokumen Peraturan Daerah"
+    "singularName": "internship",
+    "pluralName": "internships",
+    "displayName": "Internship",
+    "description": "Program magang InternshipKS"
   },
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
       "required": true
     },
     "description": {
-      "type": "text"
+      "type": "richtext"
     },
-    "type": {
+    "program_status": {
       "type": "enumeration",
       "enum": [
-        "Perda"
+        "Coming Soon",
+        "Open",
+        "Closed"
       ],
+      "default": "Coming Soon",
       "required": true
     },
-    "year": {
-      "type": "integer"
-    },
-    "file": {
+    "poster": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "files"
+        "images"
       ]
     },
-    "doc_status": {
-      "type": "string"
+    "start_date": {
+      "type": "date"
     },
-    "publish_date": {
+    "end_date": {
       "type": "date"
     }
   }

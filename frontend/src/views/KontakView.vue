@@ -233,6 +233,7 @@ const contacts = [
 
 .input-wrap input, 
 .input-wrap textarea {
+  font-family: inherit;
   width: 100%;
   padding: 14px 16px 14px 48px;
   background: var(--pks-white);
@@ -381,8 +382,7 @@ const contacts = [
   right: -50px;
   width: 250px;
   height: 250px;
-  background: var(--pks-orange);
-  filter: blur(80px);
+  background: radial-gradient(circle, var(--pks-orange) 0%, transparent 70%);
   opacity: 0.15;
 }
 

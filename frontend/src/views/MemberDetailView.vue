@@ -3,7 +3,7 @@ import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import api, { STRAPI_URL } from '../services/api'
 import { useScrollReveal } from '../composables/useScrollReveal'
-import anime from 'animejs'
+import { animateValue } from '../utils/animations'
 
 useScrollReveal()
 
@@ -11,6 +11,7 @@ const route = useRoute()
 const member = ref(null)
 const allMembers = ref([])
 const loading = ref(true)
+const showBars = ref(false)
 const totalSuaraDisplay = ref('0')
 const totalSuaraVal = computed(() => {
   const manualTotal = Number(f('total_suara', 0)) || 0
@@ -59,41 +60,16 @@ const fetchData = async (documentId) => {
 const animateVotes = () => {
   const total = totalSuaraVal.value
   if (total > 0) {
-    anime({
-      targets: { val: 0 },
-      val: total,
-      duration: 1500,
-      easing: 'easeOutExpo',
-      update: (anim) => {
-        totalSuaraDisplay.value = Math.round(anim.animations[0].currentValue).toLocaleString('id-ID')
-      }
-    })
+    animateValue(totalSuaraDisplay, 0, total, 1500)
   } else {
     totalSuaraDisplay.value = '0'
   }
 
   nextTick(() => {
-    const items = document.querySelectorAll('.vote-bar-item')
-    if (items.length > 0) {
-      anime({
-        targets: items,
-        opacity: [0, 1],
-        translateX: [-30, 0],
-        delay: anime.stagger(100),
-        duration: 800,
-        easing: 'easeOutQuad'
-      })
-
-      // Animate progress bars
-      const progressBars = document.querySelectorAll('.progress-fill')
-      anime({
-        targets: progressBars,
-        width: (el) => el.dataset.width + '%',
-        duration: 1200,
-        delay: anime.stagger(100, { start: 200 }),
-        easing: 'easeOutExpo'
-      })
-    }
+    // Trigger CSS transitions
+    setTimeout(() => {
+      showBars.value = true
+    }, 100)
   })
 }
 
@@ -285,9 +261,11 @@ const bioParagraphs = computed(() => {
                 <h3 class="breakdown-title">Distribusi per Wilayah</h3>
                 <div class="votes-list">
                   <div 
-                    v-for="item in (member.suara_kecamatan || member.attributes?.suara_kecamatan)" 
+                    v-for="(item, index) in (member.suara_kecamatan || member.attributes?.suara_kecamatan)" 
                     :key="item.id" 
                     class="vote-bar-item"
+                    :class="{ 'is-visible': showBars }"
+                    :style="{ transitionDelay: (index * 100) + 'ms' }"
                   >
                     <div class="v-header">
                       <span class="v-kec">{{ item.kecamatan }}</span>
@@ -296,8 +274,7 @@ const bioParagraphs = computed(() => {
                     <div class="v-progress-bg">
                       <div 
                         class="progress-fill" 
-                        :data-width="totalSuaraVal > 0 ? ((item.suara || 0) / totalSuaraVal * 100) : 0"
-                        style="width: 0%"
+                        :style="{ width: showBars ? (totalSuaraVal > 0 ? ((item.suara || 0) / totalSuaraVal * 100) : 0) + '%' : '0%', transitionDelay: (200 + index * 100) + 'ms' }"
                       ></div>
                     </div>
                     <div class="v-perc text-xs" v-if="totalSuaraVal > 0">
@@ -436,6 +413,7 @@ const bioParagraphs = computed(() => {
 .photo-frame img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: top center;
   transition: var(--transition-smooth);
 }
 
@@ -599,7 +577,15 @@ const bioParagraphs = computed(() => {
   gap: 24px;
 }
 
-.vote-bar-item { opacity: 0; }
+.vote-bar-item { 
+  opacity: 0; 
+  transform: translateX(-30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.vote-bar-item.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
 
 .v-header {
   display: flex;
@@ -623,6 +609,8 @@ const bioParagraphs = computed(() => {
   height: 100%;
   background: var(--pks-orange-gradient);
   border-radius: 4px;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .v-perc { color: var(--pks-text-muted); font-weight: 600; font-size: 0.72rem; text-align: right; }

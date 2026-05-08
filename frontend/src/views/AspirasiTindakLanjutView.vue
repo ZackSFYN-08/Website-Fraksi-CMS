@@ -30,7 +30,7 @@
           class="timeline-item" 
           v-for="(t, index) in items" 
           :key="t.id" 
-          :class="t.status" 
+          :class="getStatus(t)" 
           data-reveal="fade-left" 
           :data-reveal-delay="index * 120"
         >
@@ -41,15 +41,28 @@
           
           <div class="timeline-card glass-card hover-lift">
             <header class="card-header">
-              <span class="status-badge" :class="t.status">
-                <i :class="getStatusIcon(t.status)"></i>
-                {{ t.statusText || t.status }}
+              <span class="status-badge" :class="getStatus(t)">
+                <i :class="getStatusIcon(getStatus(t))"></i>
+                {{ translateStatus(getStatus(t)) }}
               </span>
               <span class="timeline-date"><i class="far fa-clock"></i> {{ formatDate(t.date || t.createdAt) }}</span>
             </header>
             <div class="card-body">
-              <h3>{{ t.title }}</h3>
-              <p>{{ t.description || t.desc }}</p>
+              <h3 class="subject-title">{{ getAspiration(t)?.subject || 'Menunggu Data Aspirasi' }}</h3>
+              
+              <div class="message-box user-message">
+                <div class="msg-header">
+                  <i class="fas fa-user-circle"></i> <span>Pesan Aspirasi</span>
+                </div>
+                <p>"{{ getAspiration(t)?.message || 'Keterangan tidak tersedia.' }}"</p>
+              </div>
+
+              <div class="message-box admin-reply" v-if="t.description || t.attributes?.description">
+                <div class="msg-header">
+                  <i class="fas fa-clipboard-check"></i> <span>Tindak Lanjut / Catatan Admin</span>
+                </div>
+                <p>{{ t.description || t.attributes?.description }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -78,6 +91,22 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+const getStatus = (t) => t?.followup_status || t?.attributes?.followup_status || t?.status || t?.attributes?.status || 'pending'
+
+const getAspiration = (t) => {
+  const rel = t?.aspiration || t?.attributes?.aspiration
+  return rel?.data?.attributes || rel || null
+}
+
+const translateStatus = (status) => {
+  switch (status?.toLowerCase()) {
+    case 'done': return 'Selesai'
+    case 'progress': return 'Sedang Diproses'
+    case 'pending': return 'Menunggu Antrean'
+    default: return status
+  }
+}
 
 const getStatusIcon = (status) => {
   switch (status?.toLowerCase()) {
@@ -186,17 +215,44 @@ const formatDate = (d) => {
   font-weight: 600;
 }
 
-.card-body h3 {
-  font-size: 1.25rem;
+.card-body h3.subject-title {
+  font-size: 1.3rem;
   color: var(--pks-navy);
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  line-height: 1.4;
 }
 
-.card-body p {
-  font-size: 0.95rem;
-  color: var(--pks-text-muted);
-  line-height: 1.7;
+.message-box {
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
 }
+.message-box:last-child { margin-bottom: 0; }
+
+.msg-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.user-message {
+  background: var(--pks-gray);
+  border-left: 4px solid #cbd5e1;
+}
+.user-message .msg-header { color: var(--pks-text-muted); }
+.user-message p { color: var(--pks-text-dark); font-style: italic; line-height: 1.6; }
+
+.admin-reply {
+  background: rgba(240, 122, 30, 0.05);
+  border-left: 4px solid var(--pks-orange);
+}
+.admin-reply .msg-header { color: var(--pks-orange); }
+.admin-reply p { color: var(--pks-navy); font-weight: 500; line-height: 1.6; }
 
 .banner-blob {
   position: absolute;
@@ -204,8 +260,7 @@ const formatDate = (d) => {
   right: -50px;
   width: 250px;
   height: 250px;
-  background: var(--pks-orange);
-  filter: blur(80px);
+  background: radial-gradient(circle, var(--pks-orange) 0%, transparent 70%);
   opacity: 0.15;
 }
 

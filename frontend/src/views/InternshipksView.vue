@@ -11,7 +11,12 @@
 
     <!-- Content Section -->
     <section class="container page-content">
-      <div class="glass-card coming-soon-box" data-reveal="fade-up">
+      <div v-if="loading" class="loading-state text-center" style="padding: 100px 0;">
+        <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--pks-orange);"></i>
+        <p style="margin-top: 20px;">Memuat informasi...</p>
+      </div>
+
+      <div v-else-if="internships.length === 0" class="glass-card coming-soon-box" data-reveal="fade-up">
         <div class="icon-wrap">
           <i class="fas fa-user-graduate"></i>
           <div class="icon-glow"></div>
@@ -29,13 +34,60 @@
           </div>
         </div>
       </div>
+
+      <div v-else class="internship-list">
+        <div 
+          class="internship-card glass-card hover-lift" 
+          v-for="(item, index) in internships" 
+          :key="item.id" 
+          data-reveal="fade-up" 
+          :style="{ transitionDelay: (index * 100) + 'ms' }"
+        >
+          <div class="poster-wrap" v-if="getImageUrl(item)">
+            <img :src="getImageUrl(item)" :alt="getField(item, 'title')" class="poster-img" decoding="async" />
+          </div>
+          <div class="card-content">
+            <span :class="['status-badge', 'status-' + getField(item, 'program_status').toLowerCase().replace(' ', '-')]">
+              {{ getField(item, 'program_status') }}
+            </span>
+            <h2 class="program-title">{{ getField(item, 'title') }}</h2>
+            <div class="program-desc" v-html="getField(item, 'description')"></div>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
+import api, { STRAPI_URL } from '../services/api'
+
 useScrollReveal()
+
+const internships = ref([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const data = await api.getInternships()
+    internships.value = data || []
+  } catch (e) {
+    console.error('Failed to fetch internships:', e)
+  } finally {
+    loading.value = false
+  }
+})
+
+const getField = (d, field) => d?.[field] || d?.attributes?.[field] || ''
+const getImageUrl = (d) => {
+  const media = getField(d, 'poster')
+  if (!media) return null
+  const url = media?.data?.attributes?.url || media?.url
+  if (!url) return null
+  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`
+}
 </script>
 
 <style scoped>
@@ -139,20 +191,84 @@ useScrollReveal()
   color: white;
 }
 
+@media (max-width: 640px) {
+  .coming-soon-box { padding: 50px 25px; }
+  .coming-soon-box h2 { font-size: 1.5rem; }
+  .internship-card { grid-template-columns: 1fr; }
+  .poster-wrap { height: 200px; }
+}
+
+.internship-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.internship-card {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.poster-wrap {
+  width: 100%;
+  height: 100%;
+  background: var(--pks-navy-light);
+  min-height: 250px;
+}
+
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.status-coming-soon { background: var(--pks-navy-light); color: var(--pks-text-muted); }
+.status-open { background: rgba(34, 197, 94, 0.1); color: #16a34a; }
+.status-closed { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+
+.program-title {
+  font-size: 1.8rem;
+  color: var(--pks-navy);
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.program-desc {
+  color: var(--pks-text-muted);
+  line-height: 1.7;
+}
+
 .banner-blob {
   position: absolute;
   top: -50px;
   right: -50px;
   width: 250px;
   height: 250px;
-  background: var(--pks-navy);
-  filter: blur(80px);
+  background: radial-gradient(circle, var(--pks-orange) 0%, transparent 70%);
   opacity: 0.1;
-}
-
-@media (max-width: 640px) {
-  .coming-soon-box { padding: 50px 25px; }
-  .coming-soon-box h2 { font-size: 1.5rem; }
 }
 </style>
 

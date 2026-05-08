@@ -40,7 +40,7 @@ const initials = computed(() => {
 <template>
   <router-link 
     :to="`/anggota/${props.member.documentId || props.member.id}`" 
-    class="member-card glass-card hover-lift" 
+    class="member-card hover-lift" 
     :aria-label="`Lihat profil ${nama}`"
   >
     <div class="member-image-box">
@@ -89,7 +89,10 @@ const initials = computed(() => {
   height: 100%;
   overflow: hidden;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--pks-gray);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -104,6 +107,7 @@ const initials = computed(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -206,7 +210,7 @@ const initials = computed(() => {
 
 .vote-badge {
   background: var(--pks-gray);
-  color: var(--pks-navy-light);
+  color: var(--pks-navy);
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 0.7rem;

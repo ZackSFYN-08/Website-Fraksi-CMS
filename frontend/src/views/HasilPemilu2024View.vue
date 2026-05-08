@@ -100,7 +100,7 @@
                 <tr v-for="(p, i) in electionData" :key="p.name" 
                   :class="{ 'is-pks': p.name === 'PKS' }"
                   data-reveal="fade-up" 
-                  :data-reveal-delay="300 + (i * 50)"
+                  :style="{ transitionDelay: (300 + i * 50) + 'ms' }"
                 >
                   <td class="t-no">{{ i + 1 }}</td>
                   <td class="t-name">{{ p.name }}</td>
@@ -128,8 +128,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import { useScrollReveal } from '../composables/useScrollReveal'
-import { staggerReveal } from '../utils/animations'
-import anime from 'animejs'
+import { animateValue } from '../utils/animations'
 
 useScrollReveal()
 
@@ -152,32 +151,11 @@ let charts = []
 
 onMounted(() => {
   // Counting Animation for Main Stats
-  anime({
-    targets: { val: 0 },
-    val: 366760,
-    duration: 2000,
-    easing: 'easeOutExpo',
-    update: (anim) => {
-      voteCountDisplay.value = Math.round(anim.animations[0].currentValue).toLocaleString('id-ID')
-    }
-  })
-
-  anime({
-    targets: { val: 0 },
-    val: 11,
-    duration: 1500,
-    delay: 500,
-    easing: 'easeOutExpo',
-    update: (anim) => {
-      seatCountDisplay.value = Math.round(anim.animations[0].currentValue)
-    }
-  })
-
-  // Stagger reveal for table rows
-  nextTick(() => {
-    const rows = document.querySelectorAll('.rekap-table tbody tr')
-    staggerReveal(rows, 800)
-  })
+  animateValue(voteCountDisplay, 0, 366760, 2000)
+  
+  setTimeout(() => {
+    animateValue(seatCountDisplay, 0, 11, 1500)
+  }, 500)
 
   // Load Chart.js CDN
   const script = document.createElement('script')

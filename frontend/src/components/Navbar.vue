@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import anime from 'animejs'
 
 const isMobileMenuOpen = ref(false)
 const activeDropdown = ref(null)
@@ -28,30 +27,6 @@ const handleClickOutside = (e) => {
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   window.addEventListener('scroll', handleScroll)
-
-  // Entrance Animation
-  const tl = anime.timeline({
-    easing: 'easeOutExpo',
-    duration: 1000
-  })
-
-  tl.add({
-    targets: '.brand-link',
-    translateX: [-30, 0],
-    opacity: [0, 1],
-    delay: 500
-  })
-  .add({
-    targets: '.nav-item',
-    translateY: [-20, 0],
-    opacity: [0, 1],
-    delay: anime.stagger(100)
-  }, '-=700')
-  .add({
-    targets: '.nav-cta',
-    scale: [0.8, 1],
-    opacity: [0, 1]
-  }, '-=500')
 })
 
 onUnmounted(() => {
@@ -91,10 +66,10 @@ onUnmounted(() => {
               Profil <i class="fas fa-chevron-down"></i>
             </button>
             <div :class="['glass-dropdown', { 'visible': activeDropdown === 'profil' }]">
-              <router-link to="/profil-partai" class="drop-link" @click="closeAll">Profil Partai</router-link>
-              <router-link to="/hasil-pemilu-2024" class="drop-link" @click="closeAll">Hasil Pemilu 2024</router-link>
               <router-link to="/profil" class="drop-link" @click="closeAll">Visi & Misi</router-link>
               <router-link to="/anggota" class="drop-link" @click="closeAll">Anggota Fraksi</router-link>
+              <router-link to="/hasil-pemilu-2024" class="drop-link" @click="closeAll">Hasil Pemilu 2024</router-link>
+              <router-link to="/profil-partai" class="drop-link" @click="closeAll">Profil Partai</router-link>
             </div>
           </li>
 
@@ -132,15 +107,12 @@ onUnmounted(() => {
             @mouseleave="!isMobileMenuOpen && (activeDropdown = null)"
           >
             <button :class="['menu-btn', { 'is-active': activeDropdown === 'publikasi' }]" @click.stop="toggleDropdown('publikasi')">
-              Publikasi <i class="fas fa-chevron-down"></i>
+              Produk <i class="fas fa-chevron-down"></i>
             </button>
             <div :class="['glass-dropdown', { 'visible': activeDropdown === 'publikasi' }]">
               <router-link to="/pandangan-fraksi" class="drop-link" @click="closeAll">Pandangan Fraksi</router-link>
               <router-link to="/peraturan-daerah" class="drop-link" @click="closeAll">Perda</router-link>
               <router-link to="/pansus" class="drop-link" @click="closeAll">Pansus</router-link>
-              <div class="drop-divider"></div>
-              <router-link to="/wawancara-opini" class="drop-link" @click="closeAll">Opini</router-link>
-              <router-link to="/kutipan-media" class="drop-link" @click="closeAll">Kutipan Media</router-link>
             </div>
           </li>
         </ul>
@@ -201,6 +173,12 @@ onUnmounted(() => {
   text-decoration: none;
   position: relative;
   z-index: 1011;
+  animation: brandEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+@keyframes brandEntrance {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .logo-wrapper {
@@ -244,6 +222,20 @@ onUnmounted(() => {
 .nav-menu { display: flex; align-items: center; gap: 40px; }
 .nav-list { display: flex; align-items: center; gap: 8px; list-style: none; }
 
+.nav-item {
+  animation: navEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.nav-item:nth-child(1) { animation-delay: 0.6s; }
+.nav-item:nth-child(2) { animation-delay: 0.7s; }
+.nav-item:nth-child(3) { animation-delay: 0.8s; }
+.nav-item:nth-child(4) { animation-delay: 0.9s; }
+.nav-item:nth-child(5) { animation-delay: 1.0s; }
+
+@keyframes navEntrance {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .menu-link, .menu-btn {
   padding: 10px 18px;
   font-size: 0.9rem;
@@ -255,7 +247,7 @@ onUnmounted(() => {
   display: flex; align-items: center; gap: 8px;
 }
 
-.menu-link:hover, .menu-btn:hover, .menu-btn.is-active, .router-link-active {
+.menu-link:hover, .menu-btn:hover, .menu-btn.is-active, .menu-link.router-link-active {
   color: var(--pks-orange);
   background: rgba(240, 122, 30, 0.08);
 }
@@ -309,6 +301,15 @@ onUnmounted(() => {
 .drop-divider { height: 1px; background: rgba(0, 34, 68, 0.05); margin: 6px 0; }
 
 .cta-nav { padding: 10px 24px; font-size: 0.85rem; }
+
+.nav-cta {
+  animation: ctaEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) 1s both;
+}
+
+@keyframes ctaEntrance {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
 
 /* Mobile Trigger */
 .mobile-trigger {
