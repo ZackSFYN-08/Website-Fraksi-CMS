@@ -131,6 +131,23 @@ export default {
       }
     })
     return response.data.data
+  },
+
+  async getAspirationArticles(params = {}) {
+    const response = await apiClient.get('/api/aspiration-articles', {
+      params: { sort: 'date:desc', populate: '*', ...params }
+    })
+    return response.data.data
+  },
+
+  async getAspirationArticle(documentId) {
+    const response = await apiClient.get('/api/aspiration-articles', {
+      params: {
+        'filters[documentId][$eq]': documentId,
+        populate: '*'
+      }
+    })
+    return response.data.data?.[0] || null
   }
 }
 

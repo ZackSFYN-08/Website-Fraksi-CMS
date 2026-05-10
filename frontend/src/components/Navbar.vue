@@ -69,7 +69,6 @@ onUnmounted(() => {
               <router-link to="/profil" class="drop-link" @click="closeAll">Visi & Misi</router-link>
               <router-link to="/anggota" class="drop-link" @click="closeAll">Anggota Fraksi</router-link>
               <router-link to="/hasil-pemilu-2024" class="drop-link" @click="closeAll">Hasil Pemilu 2024</router-link>
-              <router-link to="/profil-partai" class="drop-link" @click="closeAll">Profil Partai</router-link>
             </div>
           </li>
 
@@ -111,7 +110,7 @@ onUnmounted(() => {
             </button>
             <div :class="['glass-dropdown', { 'visible': activeDropdown === 'publikasi' }]">
               <router-link to="/pandangan-fraksi" class="drop-link" @click="closeAll">Pandangan Fraksi</router-link>
-              <router-link to="/peraturan-daerah" class="drop-link" @click="closeAll">Perda</router-link>
+              <a href="https://jdih.bandung.go.id/" target="_blank" rel="noopener noreferrer" class="drop-link" @click="closeAll">Perda</a>
               <router-link to="/pansus" class="drop-link" @click="closeAll">Pansus</router-link>
             </div>
           </li>

@@ -6,7 +6,7 @@
       <div class="hero-banner-wrap" data-reveal="fade-up">
         <img
           src="@/assets/hero-banner.png"
-          alt="Pimpinan Fraksi PKS Kota Bandung – Gedung DPRD Kota Bandung"
+          alt="Fraksi PKS Kota Bandung"
           class="hero-banner-img"
         />
       </div>

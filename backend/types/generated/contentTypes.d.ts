@@ -464,6 +464,40 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAspirationArticleAspirationArticle
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'aspiration_articles';
+  info: {
+    description: 'Tabel khusus untuk Berita Aspirasi';
+    displayName: 'Aspiration News';
+    pluralName: 'aspiration-articles';
+    singularName: 'aspiration-article';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    excerpt: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::aspiration-article.aspiration-article'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAspirationAspiration extends Struct.CollectionTypeSchema {
   collectionName: 'aspirations';
   info: {
@@ -1288,6 +1322,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
+      'api::aspiration-article.aspiration-article': ApiAspirationArticleAspirationArticle;
       'api::aspiration.aspiration': ApiAspirationAspiration;
       'api::category.category': ApiCategoryCategory;
       'api::event.event': ApiEventEvent;

@@ -27,7 +27,7 @@
       <!-- News List -->
       <div v-else class="news-list">
         <router-link 
-          :to="`/berita/${a.documentId}`" 
+          :to="`/aspirasi/berita/${a.documentId}`" 
           class="news-item glass-card hover-lift" 
           v-for="(a, index) in articles" 
           :key="a.id" 
@@ -68,10 +68,10 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const data = await api.getArticlesByCategory('Berita Aspirasi')
+    const data = await api.getAspirationArticles()
     articles.value = data || []
   } catch (e) {
-    console.error('Failed to fetch aspirasi-berita:', e)
+    console.error('Failed to fetch aspirasi-articles:', e)
   } finally {
     loading.value = false
   }
@@ -111,6 +111,7 @@ const formatDate = (d) => {
   gap: 30px;
   padding: 0;
   overflow: hidden;
+  height: 250px; /* Fixed height agar semua sama rata */
 }
 
 .news-thumb {
@@ -173,6 +174,11 @@ const formatDate = (d) => {
   margin-bottom: 10px;
   line-height: 1.4;
   transition: var(--transition-base);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .news-item:hover h3 {
@@ -257,8 +263,8 @@ const formatDate = (d) => {
 }
 
 @media (max-width: 640px) {
-  .news-item { flex-direction: column; }
-  .news-thumb { width: 100%; height: 200px; }
+  .news-item { flex-direction: column; height: auto; }
+  .news-thumb { width: 100%; height: 220px; min-height: 220px; }
   .news-body { padding: 25px; }
 }
 </style>

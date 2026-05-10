@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "aspiration_articles",
+  "info": {
+    "singularName": "aspiration-article",
+    "pluralName": "aspiration-articles",
+    "displayName": "Aspiration News",
+    "description": "Tabel khusus untuk Berita Aspirasi"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}

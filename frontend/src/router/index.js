@@ -22,6 +22,7 @@ const router = createRouter({
     { path: '/aspirasi/form', name: 'aspirasi-form', component: () => import('../views/KontakView.vue') },
     { path: '/aspirasi/tindak-lanjut', name: 'aspirasi-tindak-lanjut', component: () => import('../views/AspirasiTindakLanjutView.vue') },
     { path: '/aspirasi/berita', name: 'aspirasi-berita', component: () => import('../views/AspirasiBeritaView.vue') },
+    { path: '/aspirasi/berita/:documentId', name: 'aspirasi-berita-detail', component: () => import('../views/AspirasiBeritaDetailView.vue') },
     { path: '/event', name: 'event', component: () => import('../views/EventView.vue') },
     { path: '/pandangan-fraksi', name: 'pandangan-fraksi', component: () => import('../views/PandanganFraksiView.vue') },
     { path: '/kontak', name: 'kontak', component: () => import('../views/KontakView.vue') },

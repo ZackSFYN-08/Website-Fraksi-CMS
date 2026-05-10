@@ -217,14 +217,6 @@ const bioParagraphs = computed(() => {
                   <span class="label">Penugasan Komisi</span>
                   <p class="value">{{ f('komisi') }}</p>
                 </div>
-                <div class="detail-item">
-                  <span class="label">Fraksi</span>
-                  <p class="value">Partai Keadilan Sejahtera</p>
-                </div>
-                <div class="detail-item">
-                  <span class="label">Periode Bakti</span>
-                  <p class="value">2024 – 2029</p>
-                </div>
               </div>
             </div>
 
