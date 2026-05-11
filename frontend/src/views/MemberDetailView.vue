@@ -639,14 +639,25 @@ const bioParagraphs = computed(() => {
 .other-member-link:hover { background: var(--pks-white); }
 
 .m-avatar {
-  width: 50px; height: 50px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;   /* Jangan menyempit saat flex */
+  min-height: 50px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid white;
   box-shadow: var(--shadow-sm);
+  flex-shrink: 0;    /* Jangan diperkecil oleh flex parent */
 }
 
-.m-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.m-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* Fokus ke wajah (bagian atas foto) */
+  display: block;
+}
 
 .m-placeholder {
   width: 100%; height: 100%;
