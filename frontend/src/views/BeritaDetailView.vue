@@ -458,13 +458,24 @@ const whatsappShareUrl = computed(() => {
   .article-sidebar { order: 2; }
 }
 
-@media (max-width: 640px) {
-  .article-header { padding: 30px 20px; }
-  .article-title { font-size: 1.6rem; }
-  .article-hero-wrap { margin: 0 20px; border-radius: 12px; }
-  .article-body { padding: 25px 20px; }
+@media (max-width: 768px) {
+  .berita-detail-view { padding-top: calc(var(--nav-height) + 16px); }
+  .article-header { padding: 28px 24px 20px; }
+  .article-title { font-size: 1.7rem; }
+  .article-hero-wrap { margin: 0 24px; border-radius: 12px; }
+  .article-body { padding: 28px 24px; }
   .content-text { font-size: 1rem; }
-  .article-footer { padding: 25px 20px 30px; }
+  .article-footer { padding: 24px; }
+  .breadcrumb-glass { max-width: 100%; width: auto; font-size: 0.78rem; padding: 10px 16px; }
+}
+
+@media (max-width: 640px) {
+  .article-header { padding: 20px 16px; }
+  .article-title { font-size: 1.4rem; }
+  .article-hero-wrap { margin: 0 12px; border-radius: 10px; }
+  .article-body { padding: 20px 16px; }
+  .article-footer { padding: 18px 16px; }
+  .share-section { flex-direction: column; align-items: flex-start; }
 }
 </style>
 

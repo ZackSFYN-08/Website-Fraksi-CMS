@@ -1,6 +1,6 @@
 <script setup>
 import Hero from '../components/Hero.vue'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import api, { STRAPI_URL } from '../services/api'
 import { useScrollReveal } from '../composables/useScrollReveal'
 
@@ -15,50 +15,67 @@ const quickLinks = ref([
   { icon: 'fas fa-newspaper', title: 'BERITA', titleBold: 'FRAKSI', desc: 'Update kegiatan dan perjuangan di parlemen', link: '/berita' },
 ])
 
-const featuredArticle = ref(null)
-const sideNews = ref([])
-
+// Aspiration slider state
 const aspirationArticles = ref([])
-const activeAspirationIndex = ref(0)
-let sliderInterval = null
+const activeIndex = ref(0)
+const sideNews = ref([])
+let sliderTimer = null
+
+const currentAspiration = computed(() => aspirationArticles.value[activeIndex.value] || null)
 
 const startSlider = () => {
   if (aspirationArticles.value.length > 1) {
-    sliderInterval = setInterval(() => {
-      activeAspirationIndex.value = (activeAspirationIndex.value + 1) % aspirationArticles.value.length
+    sliderTimer = setInterval(() => {
+      activeIndex.value = (activeIndex.value + 1) % aspirationArticles.value.length
     }, 5000)
   }
 }
 
+const goToSlide = (index) => {
+  activeIndex.value = index
+  clearInterval(sliderTimer)
+  startSlider()
+}
+
+const prevSlide = () => {
+  const len = aspirationArticles.value.length
+  activeIndex.value = (activeIndex.value - 1 + len) % len
+  clearInterval(sliderTimer)
+  startSlider()
+}
+
+const nextSlide = () => {
+  activeIndex.value = (activeIndex.value + 1) % aspirationArticles.value.length
+  clearInterval(sliderTimer)
+  startSlider()
+}
+
 onMounted(async () => {
   loading.value = true
-  
-  // Fetch regular articles
-  try {
-    const data = await api.getArticles({ sort: 'date:desc', 'pagination[limit]': 4, populate: '*' })
-    articles.value = data || []
-    if (articles.value.length > 0) {
-      featuredArticle.value = articles.value[0]
-      sideNews.value = articles.value.slice(1, 4)
-    }
-  } catch (e) {
-    console.error('Failed to fetch regular articles:', e)
-  }
 
-  // Fetch aspiration articles separately
+  // Fetch aspiration articles (for featured slider)
   try {
     const aspData = await api.getAspirationArticles({ sort: 'date:desc', 'pagination[limit]': 5, populate: '*' })
     aspirationArticles.value = aspData || []
     startSlider()
   } catch (e) {
-    console.error('Failed to fetch aspiration articles. Did you set Public permissions in Strapi?', e)
+    console.error('Failed to fetch aspiration articles:', e)
+  }
+
+  // Fetch regular articles (for sidebar)
+  try {
+    const data = await api.getArticles({ sort: 'date:desc', 'pagination[limit]': 3, populate: '*' })
+    articles.value = data || []
+    sideNews.value = articles.value.slice(0, 3)
+  } catch (e) {
+    console.error('Failed to fetch regular articles:', e)
   }
 
   loading.value = false
 })
 
 onUnmounted(() => {
-  if (sliderInterval) clearInterval(sliderInterval)
+  clearInterval(sliderTimer)
 })
 
 const getImageUrl = (article) => {
@@ -96,40 +113,7 @@ const timeAgo = (dateStr) => {
   <div class="home-view">
     <Hero />
 
-    <!-- Aspiration Carousel Section -->
-    <section class="container aspiration-carousel-section" v-if="aspirationArticles.length > 0">
-      <div class="carousel-container glass-card" data-reveal="fade-up">
-        <div class="carousel-track">
-          <transition-group name="slide-fade" tag="div" class="carousel-items">
-            <router-link 
-              v-for="(item, index) in aspirationArticles" 
-              :key="item.id"
-              v-show="index === activeAspirationIndex"
-              :to="`/aspirasi/berita/${item.documentId}`" 
-              class="carousel-item"
-            >
-              <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="getField(item, 'title')" class="carousel-img" />
-              <div class="carousel-overlay">
-                <span class="badge-aspiration">Sorotan Aspirasi</span>
-                <h3>{{ getField(item, 'title') }}</h3>
-              </div>
-            </router-link>
-          </transition-group>
-        </div>
-        
-        <!-- Controls -->
-        <div class="carousel-indicators" v-if="aspirationArticles.length > 1">
-          <button 
-            v-for="(_, index) in aspirationArticles" 
-            :key="index"
-            :class="['indicator-dot', { active: index === activeAspirationIndex }]"
-            @click="() => { activeAspirationIndex = index; if(sliderInterval) { clearInterval(sliderInterval); startSlider(); } }"
-          ></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Berita Section -->
+    <!-- Berita & Kegiatan Fraksi Section -->
     <section class="container news-section">
       <div class="section-header" data-reveal="fade-up">
         <span class="section-tag">Update Terbaru</span>
@@ -141,29 +125,62 @@ const timeAgo = (dateStr) => {
         <span>Menyelaraskan data berita...</span>
       </div>
 
-      <div v-else-if="articles.length === 0" class="empty-state glass-card" data-reveal="fade-up">
-        <i class="fas fa-newspaper"></i>
-        <p>Belum ada berita yang diterbitkan.</p>
-        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Buka Admin Panel</a>
-      </div>
-
       <div v-else class="news-layout">
-        <router-link :to="`/berita/${featuredArticle.documentId}`" class="news-featured glass-card hover-lift" v-if="featuredArticle" data-reveal="fade-up">
-          <div class="featured-img-wrap">
-            <img v-if="getImageUrl(featuredArticle)" :src="getImageUrl(featuredArticle)" :alt="getField(featuredArticle, 'title')" class="featured-img" />
-            <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
-            <div class="img-overlay"></div>
+        <!-- Featured: Slider Berita Aspirasi -->
+        <div class="news-featured glass-card" data-reveal="fade-up" v-if="aspirationArticles.length > 0">
+          <div class="featured-slider">
+            <transition name="featured-slide" mode="out-in">
+              <router-link
+                :key="activeIndex"
+                :to="`/aspirasi/berita/${currentAspiration.documentId}`"
+                class="featured-slide-link"
+              >
+                <div class="featured-img-wrap">
+                  <img v-if="getImageUrl(currentAspiration)" :src="getImageUrl(currentAspiration)" :alt="getField(currentAspiration, 'title')" class="featured-img" />
+                  <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
+                  <div class="img-overlay"></div>
+                  <span class="featured-badge"><i class="fas fa-bullhorn"></i> Sorotan Aspirasi</span>
+                  <template v-if="aspirationArticles.length > 1">
+                    <button class="slider-arrow slider-prev" @click.prevent="prevSlide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow slider-next" @click.prevent="nextSlide"><i class="fas fa-chevron-right"></i></button>
+                  </template>
+                </div>
+                <div class="featured-content">
+                  <span class="news-time"><i class="far fa-clock"></i> {{ timeAgo(getField(currentAspiration, 'date') || getField(currentAspiration, 'createdAt')) }}</span>
+                  <h3>{{ getField(currentAspiration, 'title') }}</h3>
+                  <p>{{ getField(currentAspiration, 'excerpt') }}</p>
+                  <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+                </div>
+              </router-link>
+            </transition>
           </div>
-          <div class="featured-content">
-            <span class="news-time"><i class="far fa-clock"></i> {{ timeAgo(getField(featuredArticle, 'date') || getField(featuredArticle, 'createdAt')) }}</span>
-            <h3>{{ getField(featuredArticle, 'title') }}</h3>
-            <p>{{ getField(featuredArticle, 'excerpt') }}</p>
-            <span class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></span>
+          <!-- Indikator titik -->
+          <div class="featured-indicators" v-if="aspirationArticles.length > 1">
+            <button
+              v-for="(_, i) in aspirationArticles"
+              :key="i"
+              :class="['feat-dot', { active: i === activeIndex }]"
+              @click="goToSlide(i)"
+            ></button>
           </div>
-        </router-link>
+        </div>
 
+        <!-- Fallback jika belum ada berita aspirasi -->
+        <div v-else class="news-featured-empty glass-card" data-reveal="fade-up">
+          <i class="fas fa-bullhorn"></i>
+          <p>Belum ada Berita Aspirasi. Tambahkan di Admin Panel.</p>
+        </div>
+
+        <!-- Sidebar: Berita Fraksi Biasa -->
         <div class="news-sidebar">
-          <router-link :to="`/berita/${item.documentId}`" class="sidebar-item glass-card hover-lift" v-for="(item, index) in sideNews" :key="item.id" data-reveal="fade-left" :data-reveal-delay="index * 100">
+          <router-link
+            :to="`/berita/${item.documentId}`"
+            class="sidebar-item glass-card hover-lift"
+            v-for="(item, index) in sideNews"
+            :key="item.id"
+            data-reveal="fade-left"
+            :data-reveal-delay="index * 100"
+          >
             <div class="sidebar-img-wrap">
               <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="getField(item, 'title')" />
               <div v-else class="img-placeholder-sm"><i class="fas fa-image"></i></div>
@@ -173,6 +190,11 @@ const timeAgo = (dateStr) => {
               <h4>{{ getField(item, 'title') }}</h4>
             </div>
           </router-link>
+
+          <div v-if="sideNews.length === 0 && !loading" class="sidebar-empty">
+            <p>Belum ada berita fraksi.</p>
+          </div>
+
           <router-link to="/berita" class="btn btn-nav btn-dark see-more-btn" data-reveal="fade-up" data-reveal-delay="400">
             Lihat Semua Berita <i class="fas fa-chevron-right"></i>
           </router-link>
@@ -199,120 +221,6 @@ const timeAgo = (dateStr) => {
 <style scoped>
 .news-section { padding: 80px 0 40px; }
 
-/* Carousel Section */
-.aspiration-carousel-section {
-  padding: 60px 0 0;
-}
-
-.carousel-container {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  padding: 0;
-  height: 450px;
-  background: var(--pks-navy);
-}
-
-.carousel-track {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.carousel-items {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.carousel-item {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 6s ease;
-}
-
-.carousel-item:hover .carousel-img {
-  transform: scale(1.05);
-}
-
-.carousel-overlay {
-  position: absolute;
-  bottom: 0; left: 0; width: 100%;
-  padding: 80px 40px 40px;
-  background: linear-gradient(to top, rgba(0,34,68,0.9), transparent);
-  color: white;
-}
-
-.badge-aspiration {
-  background: var(--pks-orange-gradient);
-  color: white;
-  padding: 6px 18px;
-  border-radius: 30px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 15px;
-  display: inline-block;
-  box-shadow: 0 4px 15px rgba(240, 122, 30, 0.4);
-}
-
-.carousel-overlay h3 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  margin: 0;
-  line-height: 1.3;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  max-width: 800px;
-}
-
-.carousel-indicators {
-  position: absolute;
-  bottom: 30px;
-  right: 40px;
-  display: flex;
-  gap: 10px;
-  z-index: 10;
-}
-
-.indicator-dot {
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.indicator-dot.active {
-  background: var(--pks-orange);
-  width: 35px;
-  border-radius: 10px;
-}
-
-/* Vue Transitions for Carousel */
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: opacity 1s ease, transform 1s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.slide-fade-enter-from {
-  opacity: 0;
-  transform: scale(1.02);
-}
-
-.slide-fade-leave-to {
-  opacity: 0;
-}
-
 .news-layout {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
@@ -325,7 +233,91 @@ const timeAgo = (dateStr) => {
   flex-direction: column;
   overflow: hidden;
   height: 100%;
+  position: relative;
 }
+
+/* Slider wrapper */
+.featured-slider {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.featured-slide-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+}
+
+/* Transition animasi slide */
+.featured-slide-enter-active,
+.featured-slide-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.featured-slide-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.featured-slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+/* Indikator titik di bawah card */
+.featured-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 0 10px;
+  background: white;
+}
+
+.feat-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0, 34, 68, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.feat-dot.active {
+  background: var(--pks-orange);
+  width: 28px;
+  border-radius: 8px;
+}
+
+/* Tombol panah kiri/kanan */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--pks-navy);
+  font-size: 0.9rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  transition: all 0.25s ease;
+  z-index: 5;
+}
+
+.slider-arrow:hover {
+  background: var(--pks-orange);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-prev { left: 15px; }
+.slider-next { right: 15px; }
 
 .featured-img-wrap {
   position: relative;
@@ -348,6 +340,51 @@ const timeAgo = (dateStr) => {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.6));
+}
+
+/* Badge "Sorotan Aspirasi" di atas gambar featured */
+.featured-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--pks-orange);
+  color: white;
+  padding: 7px 18px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(240, 122, 30, 0.45);
+  z-index: 2;
+}
+
+/* Fallback jika belum ada berita aspirasi */
+.news-featured-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  text-align: center;
+  padding: 60px 30px;
+  color: var(--pks-text-muted);
+}
+
+.news-featured-empty i {
+  font-size: 3rem;
+  color: var(--pks-gray);
+}
+
+/* Sidebar empty */
+.sidebar-empty {
+  text-align: center;
+  padding: 30px;
+  color: var(--pks-text-muted);
+  font-size: 0.9rem;
 }
 
 .featured-content {
@@ -536,21 +573,36 @@ const timeAgo = (dateStr) => {
 @media (max-width: 992px) {
   .news-layout { grid-template-columns: 1fr; }
   .quicklinks-grid { grid-template-columns: 1fr 1fr; }
+  .news-featured { height: auto; }
+}
+
+@media (max-width: 768px) {
+  .news-section { padding: 50px 0 30px; }
+  .quicklinks-section { padding: 20px 0 60px; }
+  .featured-content { padding: 20px; }
+  .featured-content h3 { font-size: 1.35rem; }
+  .featured-img-wrap { height: 260px; }
+  .news-featured-empty { padding: 40px 20px; }
+  .feat-dot { width: 8px; height: 8px; }
+  .feat-dot.active { width: 22px; }
+  .slider-arrow { width: 34px; height: 34px; font-size: 0.8rem; }
 }
 
 @media (max-width: 640px) {
-  .carousel-container { height: 280px; }
-  .carousel-overlay { padding: 40px 20px 20px; }
-  .carousel-overlay h3 { font-size: 1.3rem; }
-  .carousel-indicators { right: 20px; bottom: 20px; }
   .news-section { padding: 40px 0; }
-  .quicklink-card { padding: 25px; }
+  .quicklink-card { padding: 20px; gap: 14px; }
   .quicklinks-grid { grid-template-columns: 1fr; }
-  .featured-img-wrap { height: 250px; }
-  .featured-content h3 { font-size: 1.4rem; }
+  .featured-img-wrap { height: 220px; }
+  .featured-content h3 { font-size: 1.2rem; }
+  .featured-content p { font-size: 0.88rem; margin-bottom: 15px; }
+  .featured-content { padding: 16px; }
   .sidebar-img-wrap { width: 90px; height: 70px; min-width: 90px; }
-  .sidebar-item { gap: 15px; padding: 12px; }
+  .sidebar-item { gap: 12px; padding: 12px; }
+  .sidebar-text h4 { font-size: 0.88rem; }
   .see-more-btn { width: 100%; justify-content: center; }
+  .ql-icon { width: 48px; height: 48px; font-size: 1.4rem; }
+  .ql-text h3 { font-size: 1rem; }
+  .featured-indicators { padding: 10px 0 8px; }
 }
 </style>
 

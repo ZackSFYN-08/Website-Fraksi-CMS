@@ -231,8 +231,14 @@ const formatDate = (dateStr) => {
 }
 
 @media (max-width: 640px) {
-  .gallery-grid { grid-template-columns: 1fr; }
-  .gallery-overlay { opacity: 1; padding: 20px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+  .gallery-overlay { opacity: 1; padding: 16px; }
   .overlay-content { transform: none; }
+  .gallery-title { font-size: 0.88rem; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .page-content { padding: 30px 0 60px; }
 }
 </style>

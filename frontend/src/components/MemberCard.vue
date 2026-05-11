@@ -259,9 +259,13 @@ const initials = computed(() => {
 }
 
 @media (max-width: 640px) {
-  .member-image-box { height: 320px; }
+  .member-image-box { height: 300px; }
   .profile-hint { opacity: 1; transform: none; }
   .social-mini { opacity: 0.5; }
+}
+
+@media (max-width: 380px) {
+  .member-image-box { height: 260px; }
 }
 </style>
 

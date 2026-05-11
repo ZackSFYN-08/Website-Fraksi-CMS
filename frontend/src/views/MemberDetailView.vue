@@ -718,11 +718,28 @@ const bioParagraphs = computed(() => {
   .details-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 640px) {
-  .profile-hero-card { padding: 30px 20px; }
+@media (max-width: 768px) {
+  .profile-hero-card { padding: 28px 20px; }
   .header-info h1 { font-size: 2rem; }
-  .photo-wrapper { width: 160px; height: 160px; }
-  .details-card, .bio-card { padding: 30px 20px; }
+  .votes-summary-row { flex-direction: column; align-items: flex-start; gap: 15px; padding: 24px; }
+  .ts-value { font-size: 2.2rem; }
+  .details-card, .bio-card, .votes-card { padding: 24px 18px; }
+}
+
+@media (max-width: 640px) {
+  .profile-hero-card { padding: 24px 16px; }
+  .header-info h1 { font-size: 1.65rem; }
+  .photo-wrapper { width: 140px; height: 140px; }
+  .details-card, .bio-card { padding: 20px 16px; }
+  .q-stat { padding: 8px 14px; font-size: 0.82rem; }
+  .sidebar-list { padding: 20px 16px; }
+}
+
+@media (max-width: 480px) {
+  .header-info h1 { font-size: 1.4rem; }
+  .photo-wrapper { width: 120px; height: 120px; }
+  .badge-accent { font-size: 0.72rem; padding: 5px 14px; }
+  .quick-stats { gap: 10px; }
 }
 </style>
 

@@ -300,11 +300,23 @@ const values = [
   .stats-overview { margin-bottom: 0; }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .profil-side { grid-template-columns: 1fr; }
-  .content-card { padding: 30px 20px; }
-  .content-card h2 { font-size: 1.5rem; }
-  .vision-box p { font-size: 1rem; }
+  .content-card { padding: 28px 20px; }
+  .content-card h2 { font-size: 1.6rem; }
+}
+
+@media (max-width: 640px) {
+  .content-card { padding: 24px 16px; }
+  .content-card h2 { font-size: 1.4rem; }
+  .vision-box p { font-size: 0.95rem; }
+  .stat-card { padding: 18px 20px; gap: 18px; }
+  .stat-num { font-size: 1.65rem; }
+}
+
+@media (max-width: 480px) {
+  .section-content { padding: 30px 0 60px; }
+  .content-card h2 { font-size: 1.25rem; }
 }
 </style>
 

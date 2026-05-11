@@ -460,4 +460,63 @@ img {
   .section-header h2 {
     font-size: 1.75rem;
   }
+
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 1.45rem;
+  }
+
+  .banner-card {
+    padding: 48px 20px;
+  }
+
+  .banner-card h1 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Utility: hide on mobile */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Prevent horizontal overflow globally */
+.home-view,
+.berita-detail-view,
+[class*="-view"] {
+  overflow-x: hidden;
+}
+
+
+/* Fix: prevent min-width dari menyebabkan horizontal scroll */
+* {
+  min-width: 0;
+}
+
+/* Improvement: section-tag mobile */
+@media (max-width: 480px) {
+  .section-tag {
+    font-size: 0.7rem;
+    padding: 4px 12px;
+  }
+
+  .section-header {
+    margin-bottom: 20px;
+  }
+
+  .section-header h2 {
+    font-size: 1.35rem;
+  }
 }

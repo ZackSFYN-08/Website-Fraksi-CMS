@@ -338,13 +338,21 @@ const filteredArticles = computed(() => {
   .news-body h3 { font-size: 1.2rem; }
 }
 
-@media (max-width: 640px) {
-  .news-item { flex-direction: column; }
-  .news-thumb { width: 100%; height: 220px; min-width: 100%; }
-  .news-body { padding: 25px; }
-  .news-footer { margin-top: 20px; }
+@media (max-width: 768px) {
+  .news-item { flex-direction: column; height: auto; }
+  .news-thumb { width: 100%; height: 230px; min-width: 100%; }
+  .news-body { padding: 20px; }
+  .news-body h3 { font-size: 1.15rem; }
+  .news-body p { -webkit-line-clamp: 3; }
+  .news-footer { margin-top: 15px; }
   .filter-wrapper { margin-bottom: 25px; }
-  .filter-btn { padding: 8px 20px; font-size: 0.85rem; }
+}
+
+@media (max-width: 640px) {
+  .news-thumb { height: 200px; }
+  .news-body { padding: 16px; }
+  .filter-btn { padding: 8px 16px; font-size: 0.82rem; }
+  .berita-content { padding: 30px 0 60px; }
 }
 </style>
 

@@ -349,16 +349,26 @@ onUnmounted(() => {
 @media (max-width: 1100px) {
   .nav-menu {
     position: fixed; top: 0; right: -100%;
-    width: 340px; height: 100vh;
+    width: min(340px, 88vw); height: 100vh;
     background: white;
     flex-direction: column;
-    padding: 120px 30px;
-    box-shadow: -15px 0 40px rgba(0,34,68,0.08);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    padding: 100px 24px 40px;
+    box-shadow: none;
+    transition: right 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.45s ease,
+                visibility 0s linear 0.45s;
     z-index: 1005;
     overflow-y: auto;
+    visibility: hidden;
   }
-  .nav-menu.mobile-active { right: 0; }
+  .nav-menu.mobile-active {
+    right: 0;
+    box-shadow: -15px 0 50px rgba(0,34,68,0.18);
+    visibility: visible;
+    transition: right 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.45s ease,
+                visibility 0s linear 0s;
+  }
   .nav-list { flex-direction: column; width: 100%; align-items: flex-start; gap: 4px; }
   .nav-item { width: 100%; }
   .menu-link, .menu-btn { 

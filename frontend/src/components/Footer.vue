@@ -255,16 +255,27 @@ useScrollReveal()
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 80px;
+    gap: 50px;
   }
   
   .footer-info {
     align-items: center;
     text-align: center;
   }
-  
-  .pks-logo-box {
-    margin-top: -60px;
-  }
+}
+
+@media (max-width: 640px) {
+  .footer-logos { gap: 20px; }
+  .logo-box { width: 110px; height: 110px; padding: 15px; border-radius: 18px; }
+  .gradient-title { font-size: 1.4rem; }
+  .highlight-subtitle { font-size: 0.95rem; }
+  .pks-footer-dark { padding-top: 60px; }
+  .footer-content { gap: 40px; padding-bottom: 40px; }
+}
+
+@media (max-width: 480px) {
+  .logo-box { width: 90px; height: 90px; padding: 12px; }
+  .gradient-title { font-size: 1.25rem; }
+  .social-btn { width: 38px; height: 38px; font-size: 1rem; }
 }
 </style>

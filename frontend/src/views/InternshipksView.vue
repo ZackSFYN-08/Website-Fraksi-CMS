@@ -270,5 +270,25 @@ const getImageUrl = (d) => {
   background: radial-gradient(circle, var(--pks-orange) 0%, transparent 70%);
   opacity: 0.1;
 }
+
+@media (max-width: 768px) {
+  .internship-card {
+    grid-template-columns: 1fr;
+  }
+  .poster-wrap {
+    width: 100%;
+    height: 260px;
+    min-height: unset;
+    position: relative;
+  }
+  .program-title { font-size: 1.4rem; }
+  .card-content { padding: 24px; }
+}
+
+@media (max-width: 480px) {
+  .poster-wrap { height: 210px; }
+  .card-content { padding: 18px 16px; }
+  .program-title { font-size: 1.2rem; }
+}
 </style>
 

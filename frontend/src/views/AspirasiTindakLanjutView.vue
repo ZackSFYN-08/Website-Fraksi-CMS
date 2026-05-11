@@ -291,12 +291,19 @@ const formatDate = (d) => {
   display: block;
 }
 
+@media (max-width: 768px) {
+  .timeline { padding-left: 55px; }
+  .timeline-dot-wrap { left: -55px; width: 35px; }
+  .timeline-card { padding: 24px 20px; }
+  .card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .timeline-date { margin-left: 0; }
+  .subject-title { font-size: 1.1rem !important; }
+}
+
 @media (max-width: 640px) {
   .timeline { padding-left: 50px; }
   .timeline-dot-wrap { left: -50px; width: 30px; }
-  .timeline-card { padding: 20px; }
-  .card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .timeline-date { margin-left: 0; }
+  .timeline-card { padding: 16px; }
 }
 </style>
 

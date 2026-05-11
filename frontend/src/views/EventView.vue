@@ -250,5 +250,12 @@ const getFullTime = (dateStr) => {
   .event-details { text-align: center; }
   .event-footer { justify-content: center; }
 }
+
+@media (max-width: 480px) {
+  .event-item { padding: 20px 16px; }
+  .date-box { width: 76px; height: 76px; }
+  .date-box .day { font-size: 1.9rem; }
+  .event-details h3 { font-size: 1.2rem; }
+}
 </style>
 
