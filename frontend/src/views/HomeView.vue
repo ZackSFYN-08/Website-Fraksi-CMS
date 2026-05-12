@@ -64,9 +64,9 @@ onMounted(async () => {
 
   // Fetch regular articles (for sidebar)
   try {
-    const data = await api.getArticles({ sort: 'date:desc', 'pagination[limit]': 3, populate: '*' })
+    const data = await api.getArticles({ sort: 'date:desc', 'pagination[limit]': 5, populate: '*' })
     articles.value = data || []
-    sideNews.value = articles.value.slice(0, 3)
+    sideNews.value = articles.value.slice(0, 5)
   } catch (e) {
     console.error('Failed to fetch regular articles:', e)
   }
@@ -434,20 +434,24 @@ const timeAgo = (dateStr) => {
 .news-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between; /* Berita tersebar mengisi ruang */
+  gap: 10px;
+  height: 100%;               /* Isi seluruh tinggi sidebar */
 }
 
 .sidebar-item {
   display: flex;
-  gap: 20px;
-  padding: 15px;
+  gap: 14px;
+  padding: 12px;
   align-items: center;
+  flex: 1;                    /* Setiap item tumbuh sama rata */
+  min-height: 0;              /* Cegah overflow di flex */
 }
 
 .sidebar-img-wrap {
-  width: 120px;
-  height: 90px;
-  min-width: 120px;
+  width: 105px;
+  height: 78px;
+  min-width: 105px;
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -458,8 +462,13 @@ const timeAgo = (dateStr) => {
   object-fit: cover;
 }
 
+.sidebar-text {
+  flex: 1;
+  min-width: 0; /* Cegah teks meluber */
+}
+
 .sidebar-text h4 {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.4;
   color: var(--pks-navy);
   display: -webkit-box;
@@ -467,11 +476,13 @@ const timeAgo = (dateStr) => {
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin-bottom: 2px;
 }
 
 .see-more-btn {
-  margin-top: 10px;
+  margin-top: 4px;
   align-self: flex-start;
+  flex-shrink: 0;
 }
 
 /* Quick Links */
