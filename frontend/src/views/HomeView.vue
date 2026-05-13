@@ -182,7 +182,7 @@ const timeAgo = (dateStr) => {
             :data-reveal-delay="index * 100"
           >
             <div class="sidebar-img-wrap">
-              <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="getField(item, 'title')" />
+              <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="getField(item, 'title')" loading="lazy" />
               <div v-else class="img-placeholder-sm"><i class="fas fa-image"></i></div>
             </div>
             <div class="sidebar-text">

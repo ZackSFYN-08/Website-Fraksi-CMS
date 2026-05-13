@@ -49,7 +49,7 @@
           :data-reveal-delay="index * 100"
         >
           <div class="news-thumb">
-            <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" />
+            <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" loading="lazy" />
             <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
             <div class="thumb-overlay"></div>
           </div>

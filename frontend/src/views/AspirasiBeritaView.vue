@@ -1,7 +1,7 @@
 <template>
   <div class="aspirasi-berita-view">
     <!-- Page Header -->
-    <section class="container page-banner" data-reveal="fade-up">
+    <section v-if="!selectedMember" class="container page-banner" data-reveal="fade-up">
       <div class="banner-card">
         <h1>Berita Aspirasi</h1>
         <p>Liputan lengkap seputar perjuangan dan advokasi aspirasi warga oleh Fraksi PKS di parlemen.</p>
@@ -14,68 +14,173 @@
       <!-- Loading State -->
       <div v-if="loading" class="loading-state">
         <i class="fas fa-circle-notch fa-spin"></i>
-        <span>Menyelaraskan berita aspirasi...</span>
+        <span>Menyelaraskan data...</span>
       </div>
 
-      <!-- Empty State -->
-      <div v-else-if="articles.length === 0" class="empty-state glass-card" data-reveal="fade-up">
-        <i class="fas fa-bullhorn"></i>
-        <p>Belum ada berita aspirasi yang diterbitkan.</p>
-        <a href="http://localhost:1337/admin" target="_blank" class="btn btn-sm btn-primary">Kelola di Admin Panel</a>
-      </div>
+      <template v-else>
+        <!-- Mode 1: Daftar Anggota (Belum ada yang dipilih) -->
+        <div v-if="!selectedMember" class="member-selection-grid" data-reveal="fade-up">
+          <div class="selection-intro">
+            <h3>Pilih Anggota Fraksi</h3>
+            <p>Klik pada profil anggota untuk melihat rekam jejak aspirasi dan pelatihan yang dikawal.</p>
+          </div>
+          
+          <div class="members-list">
+            <div 
+              v-for="m in members" 
+              :key="m.id" 
+              class="member-selection-card glass-card hover-lift"
+              @click="selectMember(m)"
+            >
+              <div class="m-select-avatar">
+                <img v-if="getMemberFoto(m)" :src="getMemberFoto(m)" :alt="getField(m, 'nama')" loading="lazy" />
+                <div v-else class="m-placeholder"><i class="fas fa-user"></i></div>
+              </div>
+              <div class="m-select-info">
+                <h4>{{ getField(m, 'nama') }}</h4>
+                <span>{{ getField(m, 'jabatan') }}</span>
+              </div>
+              <div class="m-select-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
 
-      <!-- News List -->
-      <div v-else class="news-list">
-        <router-link 
-          :to="`/aspirasi/berita/${a.documentId}`" 
-          class="news-item glass-card hover-lift" 
-          v-for="(a, index) in articles" 
-          :key="a.id" 
-          data-reveal="fade-up" 
-          :data-reveal-delay="index * 100"
-        >
-          <div class="news-thumb">
-            <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" />
-            <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
-            <div class="thumb-overlay"></div>
+          <div v-if="members.length === 0" class="empty-state">
+            <p>Data anggota belum tersedia.</p>
           </div>
-          <div class="news-body">
-            <div class="news-meta">
-              <span class="cat-tag">Aspirasi</span>
-              <span class="news-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(a, 'date') || getField(a, 'createdAt')) }}</span>
-            </div>
-            <h3>{{ getField(a, 'title') }}</h3>
-            <p>{{ getField(a, 'excerpt') }}</p>
-            <div class="news-footer">
-              <span class="read-more">Baca Selengkapnya <i class="fas fa-chevron-right"></i></span>
+        </div>
+
+        <!-- Mode 2: Daftar Berita (Setelah anggota dipilih) -->
+        <div v-else class="member-articles-view" data-reveal="fade-up">
+          <div class="view-header">
+            <div class="active-member-banner glass-card">
+              <div class="banner-avatar">
+                <img v-if="getMemberFoto(selectedMember)" :src="getMemberFoto(selectedMember)" />
+              </div>
+              <div class="banner-text">
+                <h2>Berita Aspirasi: {{ getField(selectedMember, 'nama') }}</h2>
+                <p>Kumpulan advokasi dan program pelatihan yang dikawal oleh {{ getField(selectedMember, 'nama') }}.</p>
+              </div>
             </div>
           </div>
-        </router-link>
-      </div>
+
+          <!-- Article List for Selected Member -->
+          <div v-if="memberArticles.length > 0" class="news-list">
+            <router-link 
+              :to="`/aspirasi/berita/${a.documentId}`" 
+              class="news-item glass-card hover-lift" 
+              v-for="(a, index) in memberArticles" 
+              :key="a.id" 
+              data-reveal="fade-up" 
+              :data-reveal-delay="index * 100"
+            >
+              <div class="news-thumb">
+                <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" />
+                <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
+              </div>
+              <div class="news-body">
+                <div class="news-meta">
+                  <span class="cat-tag">Aspirasi & Pelatihan</span>
+                  <span class="news-date"><i class="far fa-calendar-alt"></i> {{ formatDate(getField(a, 'date') || getField(a, 'createdAt')) }}</span>
+                </div>
+                <h3>{{ getField(a, 'title') }}</h3>
+                <p>{{ getField(a, 'excerpt') }}</p>
+                <div class="news-footer">
+                  <span class="read-more">Baca Detail Aspirasi <i class="fas fa-chevron-right"></i></span>
+                </div>
+              </div>
+            </router-link>
+          </div>
+
+          <div v-else class="empty-state glass-card">
+            <i class="fas fa-folder-open"></i>
+            <p>Belum ada berita aspirasi spesifik untuk anggota ini.</p>
+            <button @click="selectedMember = null" class="btn btn-sm btn-navy-outline">Pilih Anggota Lain</button>
+          </div>
+        </div>
+      </template>
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useScrollReveal } from '../composables/useScrollReveal'
 import api, { STRAPI_URL } from '../services/api'
 
 useScrollReveal()
 
+const route = useRoute()
+const router = useRouter()
+const members = ref([])
 const articles = ref([])
+const selectedMember = ref(null)
+const memberArticles = ref([])
 const loading = ref(true)
+
+const selectMember = (member) => {
+  router.push({ query: { member: member.documentId || member.id } })
+}
+
+const handleSelectionChange = () => {
+  const memberId = route.query.member
+  if (!memberId) {
+    selectedMember.value = null
+    memberArticles.value = []
+    return
+  }
+
+  const found = members.value.find(m => (m.documentId || m.id).toString() === memberId.toString())
+  if (found) {
+    selectedMember.value = found
+    // Filter articles
+    const mId = found.documentId || found.id
+    memberArticles.value = articles.value.filter(a => {
+      const aMember = a.member || a.attributes?.member
+      const aMemberId = aMember?.data?.documentId || aMember?.data?.id || aMember?.documentId || aMember?.id
+      return aMemberId === mId
+    })
+  } else {
+    selectedMember.value = null
+  }
+}
+
+watch(() => route.query.member, () => {
+  handleSelectionChange()
+})
 
 onMounted(async () => {
   try {
-    const data = await api.getAspirationArticles()
-    articles.value = data || []
+    const [membersData, articlesData] = await Promise.all([
+      api.getMembers({ sort: 'createdAt:asc' }),
+      api.getAspirationArticles({ populate: '*' })
+    ])
+    members.value = membersData || []
+    articles.value = articlesData || []
+    
+    // Check initial query
+    handleSelectionChange()
   } catch (e) {
-    console.error('Failed to fetch aspirasi-articles:', e)
+    console.error('Failed to fetch data:', e)
   } finally {
     loading.value = false
   }
 })
+
+const getMemberFoto = (m) => {
+  const foto = m?.foto || m?.attributes?.foto
+  if (foto?.data?.attributes?.url) {
+    const url = foto.data.attributes.url
+    return url.startsWith('http') ? url : `${STRAPI_URL}${url}`
+  }
+  if (foto?.url) {
+    const url = foto.url
+    return url.startsWith('http') ? url : `${STRAPI_URL}${url}`
+  }
+  return null
+}
 
 const getField = (a, field) => a?.[field] || a?.attributes?.[field] || ''
 const getImageUrl = (a) => {
@@ -99,6 +204,126 @@ const formatDate = (d) => {
 <style scoped>
 .page-content { padding: 40px 0 80px; }
 
+/* Member Selection UI */
+.selection-intro {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.selection-intro h3 {
+  font-size: 1.8rem;
+  color: var(--pks-navy);
+  margin-bottom: 10px;
+}
+
+.selection-intro p {
+  color: var(--pks-text-muted);
+}
+
+.members-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.member-selection-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.m-select-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--pks-orange-light);
+  flex-shrink: 0;
+}
+
+.m-select-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.m-select-info {
+  flex: 1;
+}
+
+.m-select-info h4 {
+  font-size: 1.1rem;
+  color: var(--pks-navy);
+  margin-bottom: 5px;
+  font-weight: 800;
+}
+
+.m-select-info span {
+  font-size: 0.8rem;
+  color: var(--pks-text-muted);
+  font-weight: 600;
+}
+
+.m-select-arrow {
+  color: var(--pks-orange);
+  opacity: 0.5;
+}
+
+.member-selection-card:hover .m-select-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* Member Articles View */
+.member-articles-view {
+  margin-top: 100px;
+}
+
+.view-header {
+  margin-bottom: 40px;
+}
+
+.active-member-banner {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 30px;
+  background: var(--pks-navy-gradient);
+  border: none;
+}
+
+.banner-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid rgba(255,255,255,0.2);
+}
+
+.banner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.banner-text h2 {
+  color: white;
+  margin-bottom: 8px;
+  font-size: 1.8rem;
+}
+
+.banner-text p {
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+}
+
 /* News List Modernized */
 .news-list {
   display: flex;
@@ -111,7 +336,7 @@ const formatDate = (d) => {
   gap: 30px;
   padding: 0;
   overflow: hidden;
-  height: 250px; /* Fixed height agar semua sama rata */
+  height: 250px;
 }
 
 .news-thumb {
@@ -126,17 +351,13 @@ const formatDate = (d) => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: var(--transition-smooth);
+  display: block;
 }
 
 .news-item:hover .news-thumb img {
   transform: scale(1.1);
-}
-
-.thumb-overlay {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
 }
 
 .news-body {
@@ -238,7 +459,7 @@ const formatDate = (d) => {
 
 .empty-state {
   text-align: center;
-  padding: 80px;
+  padding: 60px;
 }
 
 .empty-state i {
@@ -248,24 +469,15 @@ const formatDate = (d) => {
   display: block;
 }
 
-.img-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,0.3);
-  font-size: 2.5rem;
-}
-
-@media (max-width: 900px) {
-  .news-thumb { width: 240px; min-width: 240px; }
-}
-
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .active-member-banner { flex-direction: column; text-align: center; gap: 15px; }
   .news-item { flex-direction: column; height: auto; }
-  .news-thumb { width: 100%; height: 220px; min-height: 220px; }
-  .news-body { padding: 25px; }
+  .news-thumb { width: 100%; height: 200px; min-width: 100%; }
+  .news-body { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  .members-list { grid-template-columns: 1fr; }
 }
 </style>
 

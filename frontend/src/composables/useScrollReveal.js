@@ -41,12 +41,15 @@ export function useScrollReveal() {
     observeElements()
 
     // 3. Setup MutationObserver to watch for new dynamic elements
+    let timeoutId = null;
     mutationObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length) {
-          observeElements()
-        }
-      })
+      const hasAddedNodes = mutations.some(mutation => mutation.addedNodes.length > 0);
+      if (hasAddedNodes) {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          observeElements();
+        }, 100); // Debounce 100ms
+      }
     })
 
     mutationObserver.observe(document.body, {

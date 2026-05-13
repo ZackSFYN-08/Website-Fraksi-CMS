@@ -14,9 +14,9 @@ export { STRAPI_URL }
 export default {
   async getMembers(params = {}) {
     const response = await apiClient.get('/api/members', {
-      params: { 
+      params: {
         populate: '*',
-        ...params 
+        ...params
       }
     })
     return response.data.data
@@ -25,7 +25,7 @@ export default {
   async getMember(documentId) {
     // Menggunakan endpoint koleksi dengan filter sebagai solusi untuk masalah populasi endpoint tunggal di Strapi v5
     const response = await apiClient.get('/api/members', {
-      params: { 
+      params: {
         'filters[documentId][$eq]': documentId,
         populate: '*'
       }
@@ -150,4 +150,3 @@ export default {
     return response.data.data?.[0] || null
   }
 }
-

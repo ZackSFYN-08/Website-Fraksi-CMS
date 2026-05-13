@@ -490,6 +490,7 @@ export interface ApiAspirationArticleAspirationArticle
       'api::aspiration-article.aspiration-article'
     > &
       Schema.Attribute.Private;
+    member: Schema.Attribute.Relation<'manyToOne', 'api::member.member'>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
