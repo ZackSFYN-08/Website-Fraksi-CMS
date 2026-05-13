@@ -116,7 +116,7 @@ const whatsappShareUrl = computed(() => {
           </header>
 
           <div class="article-hero-wrap" v-if="getImageUrl(article)">
-            <img :src="getImageUrl(article)" :alt="getField(article, 'title')" class="hero-image" />
+            <img :src="getImageUrl(article)" :alt="getField(article, 'title')" class="hero-image" loading="lazy" />
             <div class="hero-overlay"></div>
           </div>
 
@@ -158,7 +158,7 @@ const whatsappShareUrl = computed(() => {
                 class="related-card hover-lift"
               >
                 <div class="related-thumb">
-                  <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="getField(item, 'title')" />
+                  <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="getField(item, 'title')" loading="lazy" />
                   <div v-else class="img-placeholder-sm"><i class="fas fa-image"></i></div>
                 </div>
                 <div class="related-info">

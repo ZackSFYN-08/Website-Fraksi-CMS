@@ -217,8 +217,9 @@ const initials = computed(() => {
   font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .vote-badge i {

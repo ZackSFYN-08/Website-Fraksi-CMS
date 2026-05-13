@@ -56,7 +56,7 @@
           <div class="view-header">
             <div class="active-member-banner glass-card">
               <div class="banner-avatar">
-                <img v-if="getMemberFoto(selectedMember)" :src="getMemberFoto(selectedMember)" />
+                <img v-if="getMemberFoto(selectedMember)" :src="getMemberFoto(selectedMember)" loading="lazy" />
               </div>
               <div class="banner-text">
                 <h2>Berita Aspirasi: {{ getField(selectedMember, 'nama') }}</h2>
@@ -76,7 +76,7 @@
               :data-reveal-delay="index * 100"
             >
               <div class="news-thumb">
-                <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" />
+                <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" loading="lazy" />
                 <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
               </div>
               <div class="news-body">

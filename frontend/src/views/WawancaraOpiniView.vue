@@ -35,7 +35,7 @@
           :data-reveal-delay="index * 120"
         >
           <div class="article-img">
-            <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" />
+            <img v-if="getImageUrl(a)" :src="getImageUrl(a)" :alt="getField(a, 'title')" loading="lazy" />
             <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
             <div class="img-overlay"></div>
           </div>

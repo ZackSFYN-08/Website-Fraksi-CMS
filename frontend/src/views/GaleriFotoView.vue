@@ -34,7 +34,7 @@
           :data-reveal-delay="index * 100"
         >
           <div class="gallery-img-wrap">
-            <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="item.title" class="gallery-img" />
+            <img v-if="getImageUrl(item)" :src="getImageUrl(item)" :alt="item.title" class="gallery-img" loading="lazy" />
             <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
             
             <div class="gallery-overlay">

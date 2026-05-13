@@ -1,72 +1,68 @@
 import { onMounted, onUnmounted } from 'vue'
 
-/**
- * Composable that adds scroll-reveal animations using IntersectionObserver.
- * Elements with [data-reveal] attribute will animate in when scrolled into view using CSS transitions.
- */
+let globalObserver = null
+let globalMutationObserver = null
+let activeComponents = 0
+
+const observeElements = () => {
+  if (!globalObserver) return
+  const elements = document.querySelectorAll('[data-reveal]:not(.is-visible)')
+  elements.forEach((el) => {
+    globalObserver.observe(el)
+  })
+}
+
 export function useScrollReveal() {
-  let observer = null
-  let mutationObserver = null
-
-  const observeElements = (container = document) => {
-    const elements = container.querySelectorAll('[data-reveal]')
-    elements.forEach((el) => {
-      if (!el.classList.contains('is-visible')) {
-        observer.observe(el)
-      }
-    })
-  }
-
-  const initObserver = () => {
-    // 1. Setup IntersectionObserver
-    observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target
-
-            // Add is-visible class to trigger CSS transition
-            el.classList.add('is-visible')
-            observer.unobserve(el)
-          }
-        })
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
-      }
-    )
-
-    // 2. Initial observation
-    observeElements()
-
-    // 3. Setup MutationObserver to watch for new dynamic elements
-    let timeoutId = null;
-    mutationObserver = new MutationObserver((mutations) => {
-      const hasAddedNodes = mutations.some(mutation => mutation.addedNodes.length > 0);
-      if (hasAddedNodes) {
-        if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          observeElements();
-        }, 100); // Debounce 100ms
-      }
-    })
-
-    mutationObserver.observe(document.body, {
-      childList: true,
-      subtree: true
-    })
-  }
-
   onMounted(() => {
-    // Small delay to ensure initial paint
+    activeComponents++
+    
+    // Inisialisasi observer hanya pada komponen pertama yang me-mount
+    if (activeComponents === 1) {
+      globalObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible')
+              globalObserver.unobserve(entry.target)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      )
+
+      let timeoutId = null
+      globalMutationObserver = new MutationObserver((mutations) => {
+        const hasAddedNodes = mutations.some(mutation => mutation.addedNodes.length > 0)
+        if (hasAddedNodes) {
+          if (timeoutId) clearTimeout(timeoutId)
+          timeoutId = setTimeout(() => {
+            observeElements()
+          }, 200) // Debounce lebih panjang (200ms) agar tidak membebani CPU
+        }
+      })
+
+      globalMutationObserver.observe(document.body, { childList: true, subtree: true })
+    }
+
+    // Panggil sekali saat mount dengan jeda kecil
     setTimeout(() => {
-      initObserver()
+      observeElements()
     }, 100)
   })
 
   onUnmounted(() => {
-    if (observer) observer.disconnect()
-    if (mutationObserver) mutationObserver.disconnect()
+    activeComponents--
+    
+    // Bersihkan observer hanya jika tidak ada lagi komponen yang menggunakannya
+    if (activeComponents === 0) {
+      if (globalObserver) {
+        globalObserver.disconnect()
+        globalObserver = null
+      }
+      if (globalMutationObserver) {
+        globalMutationObserver.disconnect()
+        globalMutationObserver = null
+      }
+    }
   })
 }

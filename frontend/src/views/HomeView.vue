@@ -136,7 +136,7 @@ const timeAgo = (dateStr) => {
                 class="featured-slide-link"
               >
                 <div class="featured-img-wrap">
-                  <img v-if="getImageUrl(currentAspiration)" :src="getImageUrl(currentAspiration)" :alt="getField(currentAspiration, 'title')" class="featured-img" />
+                  <img v-if="getImageUrl(currentAspiration)" :src="getImageUrl(currentAspiration)" :alt="getField(currentAspiration, 'title')" class="featured-img" loading="lazy" />
                   <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
                   <div class="img-overlay"></div>
                   <span class="featured-badge"><i class="fas fa-bullhorn"></i> Sorotan Aspirasi</span>

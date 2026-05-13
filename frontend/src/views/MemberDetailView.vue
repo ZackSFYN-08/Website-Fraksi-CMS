@@ -162,7 +162,7 @@ const bioParagraphs = computed(() => {
             <div class="photo-wrapper">
               <div class="photo-glow"></div>
               <div class="photo-frame">
-                <img v-if="fotoUrl" :src="fotoUrl" :alt="f('nama')" />
+                <img v-if="fotoUrl" :src="fotoUrl" :alt="f('nama')" loading="lazy" />
                 <div v-else class="photo-placeholder"><i class="fas fa-user"></i></div>
               </div>
             </div>
@@ -290,7 +290,7 @@ const bioParagraphs = computed(() => {
                   class="other-member-link hover-lift"
                 >
                   <div class="m-avatar">
-                    <img v-if="getMemberFoto(m)" :src="getMemberFoto(m)" :alt="m.nama || m.attributes?.nama" />
+                    <img v-if="getMemberFoto(m)" :src="getMemberFoto(m)" :alt="m.nama || m.attributes?.nama" loading="lazy" />
                     <div v-else class="m-placeholder"><i class="fas fa-user"></i></div>
                   </div>
                   <div class="m-meta">
