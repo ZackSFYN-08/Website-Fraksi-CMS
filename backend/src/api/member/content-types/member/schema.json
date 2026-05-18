@@ -41,6 +41,11 @@
       "type": "component",
       "repeatable": true,
       "component": "member.vote-breakdown"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

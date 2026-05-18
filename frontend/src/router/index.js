@@ -31,6 +31,12 @@ const router = createRouter({
     { path: '/pansus', name: 'pansus', component: () => import('../views/PansusView.vue') },
     { path: '/pansus/:documentId', name: 'pansus-detail', component: () => import('../views/PansusDetailView.vue') },
     { path: '/hasil-pemilu-2024', name: 'hasil-pemilu-2024', component: () => import('../views/HasilPemilu2024View.vue') },
+
+    // Portal Anggota
+    { path: '/anggota/login', name: 'anggota-login', component: () => import('../views/MemberLoginView.vue') },
+    { path: '/anggota/portal', name: 'anggota-portal', component: () => import('../views/MemberPortalView.vue') },
+    { path: '/anggota/portal/tambah-berita', name: 'anggota-tambah-berita', component: () => import('../views/MemberCreateArticleView.vue') },
+    { path: '/anggota/portal/edit-berita/:documentId', name: 'anggota-edit-berita', component: () => import('../views/MemberCreateArticleView.vue') },
   ],
 })
 

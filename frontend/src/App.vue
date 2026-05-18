@@ -1,13 +1,20 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { computed, onMounted } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import { restoreSession } from './stores/authStore'
+
+const route = useRoute()
+const isPortalPage = computed(() => route.path.startsWith('/anggota/portal') || route.path === '/anggota/login')
+
+onMounted(() => { restoreSession() })
 </script>
 
 <template>
   <div class="app-layout">
     <div class="fixed-bg"></div>
-    <Navbar />
+    <Navbar v-if="!isPortalPage" />
     
     <main class="main-content">
       <RouterView v-slot="{ Component, route }">
@@ -17,7 +24,7 @@ import Footer from './components/Footer.vue'
       </RouterView>
     </main>
 
-    <Footer />
+    <Footer v-if="!isPortalPage" />
   </div>
 </template>
 

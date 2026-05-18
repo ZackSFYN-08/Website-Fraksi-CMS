@@ -12,25 +12,25 @@ const apiClient = axios.create({
 export { STRAPI_URL }
 
 export default {
-  async getMembers(params = {}) {
+  async getMembers(params = {}, token = null) {
+    const headers = token ? { Authorization: `Bearer ${token}` } : {}
     const response = await apiClient.get('/api/members', {
-      params: {
+      params: { 
         populate: '*',
-        ...params
-      }
+        ...params 
+      },
+      headers
     })
     return response.data.data
   },
 
   async getMember(documentId) {
-    // Menggunakan endpoint koleksi dengan filter sebagai solusi untuk masalah populasi endpoint tunggal di Strapi v5
     const response = await apiClient.get('/api/members', {
-      params: {
+      params: { 
         'filters[documentId][$eq]': documentId,
         populate: '*'
       }
     })
-    // Mengembalikan item pertama dari hasil filter
     return response.data.data?.[0] || null
   },
 
@@ -148,5 +148,52 @@ export default {
       }
     })
     return response.data.data?.[0] || null
+  },
+
+  // ─── Auth ─────────────────────────────────────────────────────────
+  async login(identifier, password) {
+    const response = await apiClient.post('/api/auth/local', { identifier, password })
+    return response.data
+  },
+
+  async getMe(token) {
+    const response = await apiClient.get('/api/users/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    return response.data
+  },
+
+  // ─── Aspiration Article CRUD (authenticated) ──────────────────────
+  async createAspirationArticle(data, token) {
+    const response = await apiClient.post('/api/members/articles', { data }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    return response.data.data
+  },
+
+  async updateAspirationArticle(documentId, data, token) {
+    const response = await apiClient.put(`/api/members/articles/${documentId}`, { data }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    return response.data.data
+  },
+
+  async deleteAspirationArticle(documentId, token) {
+    const response = await apiClient.delete(`/api/members/articles/${documentId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    return response.data
+  },
+
+  async uploadMedia(file, token) {
+    const form = new FormData()
+    form.append('files', file)
+    const response = await apiClient.post('/api/members/upload', form, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data[0]
   }
 }
