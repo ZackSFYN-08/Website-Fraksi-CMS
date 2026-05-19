@@ -62,10 +62,13 @@ const formatDate = (d) => {
         <span>Portal Anggota</span>
       </div>
       <div class="member-profile" v-if="member">
-        <div class="avatar"><i class="fas fa-user-circle"></i></div>
+        <div class="avatar">
+          <img v-if="getImageUrl(member.foto || member.attributes?.foto)" :src="getImageUrl(member.foto || member.attributes?.foto)" alt="Profil" class="profile-img" />
+          <i v-else class="fas fa-user-circle"></i>
+        </div>
         <div class="info">
           <p class="name">{{ member.nama || member.attributes?.nama }}</p>
-          <p class="role">Anggota Fraksi PKS</p>
+          <p class="role">{{ member.jabatan || member.attributes?.jabatan || 'Anggota Fraksi PKS' }}</p>
         </div>
       </div>
       <nav class="sidebar-nav">
@@ -119,9 +122,12 @@ const formatDate = (d) => {
 .sidebar-brand { display: flex; align-items: center; gap: 12px; color: white; font-weight: 800; font-size: 1.1rem; }
 .sidebar-brand i { font-size: 1.5rem; color: var(--pks-orange); }
 .member-profile { display: flex; align-items: center; gap: 12px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
-.avatar i { font-size: 2.5rem; color: var(--pks-orange); }
-.info .name { color: white; font-weight: 700; font-size: 0.9rem; line-height: 1.2; margin-bottom: 2px; }
-.info .role { color: rgba(255,255,255,0.5); font-size: 0.75rem; }
+.avatar { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex-shrink: 0; }
+.avatar i { font-size: 3rem; color: var(--pks-orange); }
+.profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid var(--pks-orange); }
+.info { flex: 1; min-width: 0; }
+.info .name { color: white; font-weight: 700; font-size: 0.9rem; line-height: 1.3; margin-bottom: 2px; word-wrap: break-word; }
+.info .role { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
 .sidebar-nav { display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: rgba(255,255,255,0.65); border-radius: 12px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s; text-decoration: none; }
 .nav-item:hover, .nav-item.active { background: rgba(240,122,30,0.25); color: var(--pks-orange); }

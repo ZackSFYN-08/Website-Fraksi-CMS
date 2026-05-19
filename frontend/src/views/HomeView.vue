@@ -117,7 +117,7 @@ const timeAgo = (dateStr) => {
     <section class="container news-section">
       <div class="section-header" data-reveal="fade-up">
         <span class="section-tag">Update Terbaru</span>
-        <h2>Berita & Kegiatan Fraksi</h2>
+        <h2>Aspirasi Pelatihan & Berita Fraksi</h2>
       </div>
 
       <div v-if="loading" class="loading-state">
@@ -139,7 +139,7 @@ const timeAgo = (dateStr) => {
                   <img v-if="getImageUrl(currentAspiration)" :src="getImageUrl(currentAspiration)" :alt="getField(currentAspiration, 'title')" class="featured-img" loading="lazy" />
                   <div v-else class="img-placeholder"><i class="fas fa-image"></i></div>
                   <div class="img-overlay"></div>
-                  <span class="featured-badge"><i class="fas fa-bullhorn"></i> Sorotan Aspirasi</span>
+                  <span class="featured-badge"><i class="fas fa-bullhorn"></i> Aspirasi Pelatihan</span>
                   <template v-if="aspirationArticles.length > 1">
                     <button class="slider-arrow slider-prev" @click.prevent="prevSlide"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-arrow slider-next" @click.prevent="nextSlide"><i class="fas fa-chevron-right"></i></button>

@@ -4,7 +4,7 @@
     <section v-if="!selectedMember" class="container page-banner" data-reveal="fade-up">
       <div class="banner-card">
         <h1>Berita Aspirasi</h1>
-        <p>Liputan lengkap seputar perjuangan dan advokasi aspirasi warga oleh Fraksi PKS di parlemen.</p>
+        <p>berita lengkap tentang aspirasi pelatihan yang diadakan oleh anggota Fraksi PKS</p>
         <div class="banner-blob"></div>
       </div>
     </section>
@@ -60,7 +60,7 @@
               </div>
               <div class="banner-text">
                 <h2>Berita Aspirasi: {{ getField(selectedMember, 'nama') }}</h2>
-                <p>Kumpulan advokasi dan program pelatihan yang dikawal oleh {{ getField(selectedMember, 'nama') }}.</p>
+                <p>Kumpulan program pelatihan yang dikawal oleh {{ getField(selectedMember, 'nama') }}.</p>
               </div>
             </div>
           </div>
